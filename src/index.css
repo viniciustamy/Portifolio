@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+
+  /* Removed overflow-x-hidden from html, body to fix position: sticky */
+  html,
+  body {
+    width: 100%;
+  }
+
+  /* Espelha o padding do container do Layout (px-6 md:px-10 lg:px-12) */
+  :root {
+    --page-px: 1.5rem;
+    /* px-6 */
+    --page-py: 2.5rem;
+    /* py-10 */
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --page-px: 2.5rem;
+      /* md:px-10 */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --page-px: 3rem;
+      /* lg:px-12 */
+      --page-py: 4rem;
+      /* lg:py-16 */
+    }
+  }
+}
+
+@theme {
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer utilities {
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer utilities {
+  .mask-image-linear {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+}
+
+/* Custom Styles */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.project-content-container img {
+  cursor: zoom-in;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.project-content-container img:hover {
+  opacity: 0.9;
+}
+
+.project-content-container .group {
+  cursor: pointer;
+}
+
+.project-content-container .group img {
+  cursor: pointer;
+}
+
+#root {
+  overflow-x: clip;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Handoff 1 — fade in de baixo pra cima */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.handoff-slide-in {
+  opacity: 0;
+}
+
+.handoff-slide-in.handoff-visible {
+  animation: fadeInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hero Section — grid responsivo: 1 coluna mobile / 1fr 1fr (50%/50%) no desktop */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+}
+
+.hero-grid .hero-text-col {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-grid .hero-img-col {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    align-items: center;
+  }
+
+  .hero-grid .hero-text-col {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: calc(38%);
+    height: 100%;
+  }
+
+  .hero-grid .hero-img-col {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    height: 100%;
+    min-height: unset;
+  }
+}
