@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { containerVariants, itemVariants, visualVariants } from './SlideVariants';
-import { Users, Shield, Briefcase, Network, Layers, DollarSign, TrendingUp, Lock, Zap, Upload, FileText, ChevronDown, ChevronUp, Play, Monitor } from 'lucide-react';
+import { Users, Shield, Briefcase, Network, Layers, DollarSign, TrendingUp, Lock, Zap, Upload, FileText, ChevronDown, ChevronUp, Play } from 'lucide-react';
 
 export function Slide11() {
   return (

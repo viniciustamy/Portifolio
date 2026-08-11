@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Link, useParams, Navigate, useLocation } from 'react-router-dom';
-import { ArrowLeft as ArrowLeftIcon, ExternalLink as ExternalLinkIcon, Monitor as MonitorIcon } from 'lucide-react';
+import { Link, useParams, useLocation } from 'react-router-dom';
+import { ArrowLeft as ArrowLeftIcon, Monitor as MonitorIcon } from 'lucide-react';
 import { useProjects } from '../context/ProjectsContext';
 import { PresentationMode } from '../components/PresentationMode';
 import { motion } from 'motion/react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { FloatingPostHeader } from '../components/FloatingPostHeader';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { Button } from '../components/ui/Button';
+import { Typography } from '../components/ui/Typography';
 
 export default function Project() {
   const { id } = useParams();
@@ -231,33 +233,36 @@ export default function Project() {
         <div className="flex-1 min-w-0 w-full max-w-[1100px] order-2 xl:order-1">
           {/* Breadcrumb back navigation link */}
           <div className="mb-8">
-            <Link to="/" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#787265] hover:text-[#2C3539] transition-colors group">
-              <ArrowLeftIcon className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              Voltar para o início
-            </Link>
+            <Button variant="ghost" size="sm" className="group text-muted-foreground hover:text-primary hover:bg-transparent -ml-3" asChild>
+              <Link to="/" state={{ restoreScroll: true }}>
+                <ArrowLeftIcon className="w-4 h-4 mr-1.5 transition-transform group-hover:-translate-x-1" />
+                Voltar para o início
+              </Link>
+            </Button>
           </div>
 
           {/* Title & Subtitle Header */}
           <div className="mb-8">
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-              <h1 className="font-serif text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.25rem] leading-[1.12] font-bold text-[#2C3539]">
+              <Typography variant="h2" className="text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.25rem] leading-[1.12] mb-0 border-none">
                 {project.title}
-              </h1>
+              </Typography>
 
               {project.id === 'admin-global-docs' && (
-                <button
+                <Button
+                  variant="outline"
                   onClick={() => setIsPresentationOpen(true)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#DCD7CA] bg-transparent hover:bg-[#006266]/5 hover:border-[#006266] text-[#006266] font-semibold text-[13px] transition-all active:scale-[0.98] cursor-pointer shrink-0 sm:mt-1"
+                  className="rounded-full border-border hover:bg-brand/5 hover:border-brand text-brand font-semibold transition-all shrink-0 sm:mt-1 h-auto py-2.5 px-4"
                 >
-                  <MonitorIcon className="w-4 h-4" />
+                  <MonitorIcon className="w-4 h-4 mr-2" />
                   Apresentar Case (Slide Deck)
-                </button>
+                </Button>
               )}
             </div>
 
-            <p className="text-lg md:text-xl text-[#4A5559] leading-relaxed mb-6">
+            <Typography variant="lead" className="md:text-xl text-muted-foreground leading-relaxed mb-6 mt-0">
               {project.description}
-            </p>
+            </Typography>
           </div>
 
           {/* Hero Image / Animation (Main Image) */}
@@ -295,7 +300,7 @@ export default function Project() {
           {/* Metadata Columns: Roles, Ferramentas, Time */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 py-8 mb-12">
             <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-[#787265] uppercase mb-3">
+              <h4 className="text-[11px] font-bold tracking-widest text-muted-foreground uppercase mb-3">
                 ROLES
               </h4>
               <div className="text-[14px] font-medium text-[#2C3539] space-y-1.5">
@@ -306,10 +311,10 @@ export default function Project() {
             </div>
 
             <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-[#787265] uppercase mb-3">
+              <h4 className="text-[11px] font-bold tracking-widest text-muted-foreground uppercase mb-3">
                 FERRAMENTAS
               </h4>
-              <div className="text-[14px] font-medium text-[#2C3539] space-y-1.5">
+              <div className="text-[14px] font-medium text-primary space-y-1.5">
                 {toolsList.map((t, i) => (
                   <p key={i}>{t}</p>
                 ))}
@@ -317,10 +322,10 @@ export default function Project() {
             </div>
 
             <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-[#787265] uppercase mb-3">
+              <h4 className="text-[11px] font-bold tracking-widest text-muted-foreground uppercase mb-3">
                 TIME
               </h4>
-              <div className="text-[14px] font-medium text-[#2C3539] space-y-1.5">
+              <div className="text-[14px] font-medium text-primary space-y-1.5">
                 {teamList.map((tm, i) => (
                   <p key={i}>{tm}</p>
                 ))}
@@ -331,23 +336,23 @@ export default function Project() {
           {/* TLDR Block */}
           {project.tldr && (
             <div className="mb-16">
-              <p className="text-[12px] font-bold tracking-widest text-[#006266] uppercase mb-4">
+              <p className="text-[12px] font-bold tracking-widest text-brand uppercase mb-4">
                 TL;DR
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose">
-                <div className="bg-white border border-[#EBE7DD] p-10 flex flex-col justify-between hover:border-[#006266]/20 transition-all duration-300">
+                <div className="bg-card border border-border p-10 flex flex-col justify-between hover:border-brand/20 transition-all duration-300">
                   <div>
-                    <span className="text-[#787265] font-sans font-bold text-[11px] uppercase tracking-wider block mb-3">PROBLEMA</span>
-                    <p className="text-sm font-sans text-[#4A5559] leading-relaxed">{project.tldr.problem}</p>
+                    <span className="text-muted-foreground font-sans font-bold text-[11px] uppercase tracking-wider block mb-3">PROBLEMA</span>
+                    <p className="text-sm font-sans text-muted-foreground leading-relaxed">{project.tldr.problem}</p>
                   </div>
                 </div>
-                <div className="bg-white border border-[#EBE7DD] p-10 flex flex-col justify-between hover:border-[#006266]/20 transition-all duration-300">
+                <div className="bg-card border border-border p-10 flex flex-col justify-between hover:border-brand/20 transition-all duration-300">
                   <div>
-                    <span className="text-[#787265] font-sans font-bold text-[11px] uppercase tracking-wider block mb-3">O QUE EU FIZ</span>
-                    <p className="text-sm font-sans text-[#4A5559] leading-relaxed">{project.tldr.action}</p>
+                    <span className="text-muted-foreground font-sans font-bold text-[11px] uppercase tracking-wider block mb-3">O QUE EU FIZ</span>
+                    <p className="text-sm font-sans text-muted-foreground leading-relaxed">{project.tldr.action}</p>
                   </div>
                 </div>
-                <div className="bg-[#1F4E5B] p-10 flex flex-col justify-between transition-all duration-300 text-white">
+                <div className="bg-brand p-10 flex flex-col justify-between transition-all duration-300 text-brand-foreground">
                   <div>
                     <span className="text-white/80 font-sans font-bold text-[11px] uppercase tracking-wider block mb-3">RESULTADO</span>
                     <p className="text-sm font-sans text-white leading-relaxed font-semibold">{project.tldr.result}</p>
@@ -359,7 +364,7 @@ export default function Project() {
 
           <div
             onClick={handleImageClick}
-            className="project-content-container prose prose-lg prose-p:text-[#4A5559] prose-headings:font-serif prose-headings:text-[#2C3539] prose-h2:mt-24 first:prose-h2:mt-0 prose-h3:mt-16 max-w-none"
+            className="project-content-container prose prose-lg prose-p:text-muted-foreground prose-headings:font-serif prose-headings:text-primary prose-h2:mt-24 first:prose-h2:mt-0 prose-h3:mt-16 max-w-none"
           >
             {project.contentHtml ? (
               <div dangerouslySetInnerHTML={{ __html: project.contentHtml }} />
@@ -413,12 +418,12 @@ export default function Project() {
           </div>
 
           {/* Next Project Footer */}
-          <div className="mt-24 pt-12 border-t border-[#EBE7DD] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="mt-24 pt-12 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
-              <p className="text-[11px] font-semibold tracking-widest text-[#787265] uppercase mb-2">Próximo Projeto</p>
-              <h4 className="font-serif text-2xl font-bold text-[#2C3539]">{nextProject.title}</h4>
+              <p className="text-[11px] font-semibold tracking-widest text-muted-foreground uppercase mb-2">Próximo Projeto</p>
+              <h4 className="font-serif text-2xl font-bold text-primary">{nextProject.title}</h4>
             </div>
-            <Link to={`/project/${nextProject.id}`} className="px-7 py-3 rounded-full bg-[#2C3539] text-white font-medium text-[14px] hover:bg-[#1a2022] transition-colors shadow-sm">
+            <Link to={`/project/${nextProject.id}`} className="px-7 py-3 rounded-full bg-primary text-primary-foreground font-medium text-[14px] hover:bg-primary/90 transition-colors shadow-sm">
               Ver Projeto →
             </Link>
           </div>
@@ -428,10 +433,10 @@ export default function Project() {
         {sections.length > 0 && !isSimplified && (
           <div className="hidden xl:block xl:w-[200px] 2xl:w-[240px] shrink-0 xl:pt-[120px] xl:order-2">
             <div className="relative xl:sticky top-0 xl:top-[120px] self-start max-h-none xl:max-h-[calc(100vh-120px)] overflow-visible xl:overflow-y-auto pb-4 xl:pb-8 pr-4 scrollbar-hide">
-              <p className="text-[11px] font-bold tracking-widest text-[#787265] uppercase mb-6">
+              <p className="text-[11px] font-bold tracking-widest text-muted-foreground uppercase mb-6">
                 Neste Case
               </p>
-              <ul className="relative border-l border-[#EBE7DD] pl-4 space-y-4 text-sm">
+              <ul className="relative border-l border-border pl-4 space-y-4 text-sm">
                 {sections.map((section) => {
                   const isActive = activeId === section.id;
                   return (
@@ -444,12 +449,12 @@ export default function Project() {
                           }
                         }}
                         className={`block w-full text-left transition-all duration-300 select-none break-words whitespace-normal leading-relaxed ${isActive
-                          ? 'text-[#006266] font-semibold translate-x-1'
-                          : 'text-[#787265] hover:text-[#2C3539] font-normal hover:translate-x-0.5'
+                          ? 'text-brand font-semibold translate-x-1'
+                          : 'text-muted-foreground hover:text-primary font-normal hover:translate-x-0.5'
                           }`}
                       >
                         {isActive && (
-                          <span className="absolute left-[-17px] top-0 bottom-0 w-[2px] bg-[#006266] transition-all duration-300" />
+                          <span className="absolute left-[-17px] top-0 bottom-0 w-[2px] bg-brand transition-all duration-300" />
                         )}
                         {section.text}
                       </button>
@@ -471,17 +476,3 @@ export default function Project() {
   );
 }
 
-function MockHeroUI({ isLight }: { isLight?: boolean }) {
-  const bgClass = isLight ? 'bg-white/10 backdrop-blur-md border-white/20' : 'bg-white/40 backdrop-blur-md border-white/40';
-  const barDark = isLight ? 'bg-white/80' : 'bg-[#2C3539]';
-  const barLight = isLight ? 'bg-white/20' : 'bg-black/10';
-
-  return (
-    <div className={`w-[85%] max-w-[600px] h-48 rounded-[1.5rem] shadow-2xl p-8 border flex flex-col justify-center gap-4 transition-transform duration-700 hover:scale-[1.02] ${bgClass}`}>
-      <div className={`w-[35%] h-6 rounded-[6px] ${barDark}`}></div>
-      <div className={`w-full h-[8px] rounded-full mt-2 ${barLight}`}></div>
-      <div className={`w-[85%] h-[8px] rounded-full ${barLight}`}></div>
-      <div className={`w-[60%] h-[8px] rounded-full ${barLight}`}></div>
-    </div>
-  );
-}

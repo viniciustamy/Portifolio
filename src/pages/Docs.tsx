@@ -1,4 +1,3 @@
-import { FileText } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Docs() {

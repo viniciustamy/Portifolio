@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Briefcase, Award, Heart, Sparkles, MapPin, Activity, Compass, Mail, Palette, Wrench, Globe, Lightbulb, Instagram, Linkedin, ArrowLeft } from 'lucide-react';
+import { Briefcase, Heart, MapPin, Palette, Wrench, Lightbulb, Instagram, Linkedin, ArrowLeft } from 'lucide-react';
 import perfilImg from '../assets/images/perfil 2.jpg';
 import { motion } from 'motion/react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';

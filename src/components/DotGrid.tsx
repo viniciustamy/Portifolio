@@ -74,7 +74,6 @@ export default function DotGrid({
   shockRadius = 250,
   shockStrength = 5,
   maxSpeed = 5000,
-  resistance = 750, // Kept for API compatibility
   returnDuration = 1.5,
   className = '',
   style

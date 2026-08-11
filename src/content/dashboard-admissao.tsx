@@ -1,44 +1,13 @@
 import React, { useState } from 'react';
 import {
-  Building,
-  UserCog,
-  User,
   Sparkles,
   BookOpen,
-  Pencil,
-  LayoutGrid,
-  GitFork,
-  Paperclip,
-  EyeOff,
   CheckCircle,
   AlertCircle,
-  Image,
-  Flag,
   Bell,
   AlertTriangle,
   Check
 } from 'lucide-react';
-import performanceCycleLabeled from '../assets/images/Devolutiva/performance_cycle_labeled_1783032402492.jpg';
-import contexto1 from '../assets/images/Devolutiva/Contexto-1.jpg';
-import contexto2 from '../assets/images/Devolutiva/Contexto-2.jpg';
-import contexto3 from '../assets/images/Devolutiva/Contexto-3.jpg';
-import csdImg from '../assets/images/Devolutiva/CSD.png';
-import benchImg from '../assets/images/Devolutiva/bench.png';
-import fazNaoFazImg from '../assets/images/Devolutiva/faz nao faz.png';
-import pesquisasImg from '../assets/images/Devolutiva/Pesquisas.png';
-import mapaImg from '../assets/images/Devolutiva/Mapa.jpg';
-import fluxoGestorImg from '../assets/images/Devolutiva/fluxo-gestor.png';
-import fluxoColabImg from '../assets/images/Devolutiva/Fluxo-colab.png';
-import fluxoRhImg from '../assets/images/Devolutiva/Fluxo-rh.png';
-import wire1Img from '../assets/images/Devolutiva/wire-1.png';
-import wire2Img from '../assets/images/Devolutiva/wire-2.png';
-import planilhaErrosImg from '../assets/images/Devolutiva/planilha de erros.png';
-import ia1Img from '../assets/images/Devolutiva/IA 1.png';
-import ia2Img from '../assets/images/Devolutiva/IA 2.png';
-import rh1Img from '../assets/images/Devolutiva/RH-1.png';
-import gestor1Img from '../assets/images/Devolutiva/Gestor-1.png';
-import colab1Img from '../assets/images/Devolutiva/Colab-1.png';
-import { Carousel } from '../components/Carousel';
 import { Gallery } from '../components/Gallery';
 import { PlatformToday } from '../components/PlatformToday';
 import dash01 from '../assets/images/Dash/Dash - 01.png';
@@ -48,12 +17,6 @@ import dash04 from '../assets/images/Dash/Dash-04.png';
 import dash05 from '../assets/images/Dash/Dash-05.png';
 import dash06 from '../assets/images/Dash/Dash-06.png';
 import dash07 from '../assets/images/Dash/Dash-07.png';
-import dash08 from '../assets/images/Dash/Dash-08.png';
-import dash09 from '../assets/images/Dash/Dash-09.png';
-import dash10 from '../assets/images/Dash/Dash-10.png';
-import dash11 from '../assets/images/Dash/Dash-11.png';
-import dash12 from '../assets/images/Dash/Dash-12.png';
-import dash13 from '../assets/images/Dash/Dash-13.png';
 import dash14 from '../assets/images/Dash/Dash-14.png';
 import dash15 from '../assets/images/Dash/Dash-15.png';
 import dash16 from '../assets/images/Dash/Dash-16.png';
@@ -61,8 +24,6 @@ import dash17 from '../assets/images/Dash/Dash-17.png';
 import dash18 from '../assets/images/Dash/Dash-18.png';
 import dash19 from '../assets/images/Dash/Dash-19.png';
 import dash20 from '../assets/images/Dash/Dash-20.png';
-import cursorCortada from '../assets/images/Cursor cortada.png';
-import logoCursor from '../assets/images/Logos IA/Cursor.png';
 import principalHandoff from '../assets/images/Admin/Seção Handoff/Pincipal.png';
 import logoCursorHandoff from '../assets/images/Admin/Seção Handoff/logocursorcompleta.png';
 import dash18Handoff from '../assets/images/Admin/Seção Handoff/Dash-18 1.png';
@@ -83,65 +44,16 @@ import logoPetz from '../assets/images/Admin/petz.png';
 import logoAjinomoto from '../assets/images/Admin/ajinomoto.png';
 import logoSoma from '../assets/images/Admin/soma.png';
 import logoClaro from '../assets/images/Admin/claro.png';
-import flutuante1Img from '../assets/images/Imagem recorte/Flutuante 1.png';
 import dash21 from '../assets/images/Dash/Dash-21.png';
 import dash22 from '../assets/images/Dash/Dash-22.mov';
 import dash23 from '../assets/images/Dash/Dash-23.png';
 import dash24 from '../assets/images/Dash/Dash-24.png';
-import k01 from '../assets/images/KBA/Completa/k-01.png';
-import k02 from '../assets/images/KBA/Completa/k-02.png';
-import k03 from '../assets/images/KBA/Completa/k-03.png';
-import k04 from '../assets/images/KBA/Completa/k-04.png';
-import k05 from '../assets/images/KBA/Completa/k-05.png';
-import k06 from '../assets/images/KBA/Completa/k-06.png';
-import k07 from '../assets/images/KBA/Completa/k-07.png';
-import k08 from '../assets/images/KBA/Completa/k-08.jpg';
-import k09 from '../assets/images/KBA/Completa/k-09.png';
-import k10 from '../assets/images/KBA/Completa/k-10.png';
-import k11 from '../assets/images/KBA/Completa/k-11.png';
-import k12 from '../assets/images/KBA/Completa/k-12.png';
-import k13 from '../assets/images/KBA/Completa/k-13.png';
-import k14 from '../assets/images/KBA/Completa/k-14.png';
 import LogoLM from '../assets/images/logoLM.png';
 import LogoGoogleIA from '../assets/images/google ia.png';
 import logocursor from '../assets/images/logocursor.png';
-import thumbDashboard from '../assets/images/Thumbs/Thumb Dashboard.png';
-import thumbDevolutiva from '../assets/images/Thumbs/Thumb Devolutiva.png';
-import thumbKba from '../assets/images/Thumbs/Thumb KBA.png';
-import thumbAdmin from '../assets/images/Thumbs/Thumb Admin.png';
-import capaDashboard from '../assets/images/Capas/Capa Dashboard.png';
-import capaDevolutiva from '../assets/images/Capas/Capa Devolutiva.png';
-import capaKba from '../assets/images/Capas/Capa KBA.png';
-import capaAdmin from '../assets/images/Capas/Capa Admin.png';
 
-const ImagePlaceholder = ({ label = 'Espaço para Imagem' }: { label?: string }) => (
-  <div className="w-full aspect-[16/9] bg-[#EBE7DD] rounded-[2rem] flex items-center justify-center my-12 border border-[#DCD7CA]">
-    <span className="text-[#787265] font-medium tracking-widest uppercase text-sm">{label}</span>
-  </div>
-);
 
-const VisualImageWrapper = ({ src, alt, caption }: { src: string; alt: string; caption?: string }) => (
-  <div className="my-10 overflow-hidden rounded-2xl border border-[#DCD7CA] bg-[#F9F8F6] p-2 transition-all duration-300 hover:hover:border-[#006266]/30">
-    <img src={src} alt={alt} className="w-full h-auto rounded-xl object-contain cursor-zoom-in" />
-    {caption && (
-      <p className="text-center text-xs text-[#787265] mt-3 font-sans font-medium tracking-wide uppercase">
-        {caption}
-      </p>
-    )}
-  </div>
-);
 
-const VisualPlaceholder = ({ label }: { label: string }) => (
-  <div className="w-full aspect-[16/7] bg-[#F4F2EB] rounded-[1.5rem] flex flex-col items-center justify-center p-6 border border-dashed border-[#DCD7CA] my-10 relative overflow-hidden group hover:border-[#006266]/30 transition-all duration-300">
-    <div className="absolute inset-0 bg-[radial-gradient(#DCD7CA_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
-    <div className="relative z-10 flex flex-col items-center text-center">
-      <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#787265] mb-3 border border-[#EBE7DD]">
-        <Image size={20} />
-      </div>
-      <span className="text-[#787265] font-sans font-bold text-[11px] tracking-widest uppercase">{label}</span>
-    </div>
-  </div>
-);
 
 const discoveryGalleryItems = [
   {
@@ -270,37 +182,11 @@ const handoffGalleryItems = [
   }
 ];
 
-const kbaContextGallery1 = [
-  { src: k01, title: 'Contexto', description: 'Oportunidade e impacto de negócio gerado pelo processo de recuperação', fullWidth: true }
-];
 
-const kbaContextGallery2 = [
-  { src: k02, title: 'Processo', description: 'Problemas enfrentados ao recuperar o acesso com os antigos fluxos', fullWidth: true }
-];
 
-const kbaDiscoveryGallery = [
-  { src: k03, title: 'Fluxo anterior', description: 'Mapeamento do fluxo anterior de autenticação' },
-  { src: k04, title: 'Análise quantitativa', description: 'Métricas de engajamento das jornadas' },
-  { src: k05, title: 'Comportamento do usuário', description: 'Identificação de problemas de usabilidade na recuperação' },
-  { src: k06, title: 'Login Social', description: 'Uso de Login Social e fluxos de criação de conta' },
-  { src: k07, title: 'Falhas e inconsistências', description: 'Visão das mensagens de erro e inconsistências' }
-];
 
-const kbaEstrategiaGallery = [
-  { src: k08, title: 'Estudo das opções de KBA', description: 'Análise sobre a arquitetura e fluxos de segurança do KBA', fullWidth: true }
-];
 
-const kbaPrototiposGallery = [
-  { src: k09, title: 'Prototipação via IA', description: 'Fluxos iniciais criados e validados no Figma Make' },
-  { src: k10, title: 'Testes de mesa', description: 'Discussão de fluxos com Stakeholders e Engenharia' },
-  { src: k11, title: 'Refinamento', description: 'Evolução da fidelidade usando Design System' },
-  { src: k12, title: 'Edge Cases e Limites', description: 'Mapeamento de cenários críticos e limites de tentativas' },
-  { src: k13, title: 'Especificações', description: 'Regras de segurança, erros e recuperações malsucedidas' }
-];
 
-const kbaEntregaGallery = [
-  { src: k14, title: 'Entrega Final e Handoff', description: 'Documentação completa com estados e mapeamentos para Analytics', fullWidth: true }
-];
 
 export const DashboardAdmissaoContent = () => {
   const [viewMode, setViewMode] = useState<'simplificado' | 'relatorio'>('simplificado');

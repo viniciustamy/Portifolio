@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { containerVariants, itemVariants, visualVariants } from './SlideVariants';
-import { FileMinus, Table, Lock, Database, Link, HelpCircle, EyeOff, Maximize2, Users, Shield, Briefcase, Network, Layers, DollarSign, TrendingUp, Zap, Upload, FileText, ChevronDown, ChevronUp, Sparkles, User, Building2, FileSearch, ArrowRight } from 'lucide-react';
+import { FileMinus, Table, Lock, Database, Link, HelpCircle, Users, Building2, FileSearch, ArrowRight } from 'lucide-react';
 
 export function Slide7() {
   const [activePopover, setActivePopover] = React.useState<'pesquisas' | 'empresas' | 'pessoas' | null>(null);
@@ -698,7 +698,6 @@ export function Slide9() {
           <div className="relative flex-1 aspect-[1.62/1] mt-8 flex justify-center items-center">
             {images.map((img, idx) => {
               const cardStyle = getCardStyle(idx);
-              const isActive = idx === activeIndex;
 
               return (
                 <motion.div

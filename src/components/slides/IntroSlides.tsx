@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Sparkles } from 'lucide-react';
 import { containerVariants, itemVariants, visualVariants } from './SlideVariants';
 
 export function Slide0() {

@@ -26,7 +26,7 @@ const oqPrototiposGallery = [
 ];
 
 export const OrquestracaoAgentesContent = () => (
-  <>
+  <div className="mode-simplificado">
     <div className="mb-12">
       <h2 className="text-2xl font-bold mb-4 text-[#1a1a1a]">Como estruturamos uma visão unificada para agentes de IA em diferentes produtos antes mesmo da implementação.</h2>
     </div>
@@ -114,5 +114,5 @@ export const OrquestracaoAgentesContent = () => (
     <p className="mb-8 leading-relaxed">
       Mesmo sem chegar à implementação, esse projeto reforçou a importância de tratar IA como um sistema de produto com arquitetura, padrões e governança compartilhados, em vez de um conjunto de funcionalidades isoladas.
     </p>
-  </>
+  </div>
 );

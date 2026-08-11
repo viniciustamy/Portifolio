@@ -1,76 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Building, UserCog, User, Puzzle, FileSpreadsheet, Headphones, AlertTriangle, Plug, Brain, Sparkles, BookOpen } from 'lucide-react';
-import performanceCycleLabeled from '../assets/images/Devolutiva/performance_cycle_labeled_1783032402492.jpg';
-import contexto1 from '../assets/images/Devolutiva/Contexto-1.jpg';
-import contexto2 from '../assets/images/Devolutiva/Contexto-2.jpg';
-import contexto3 from '../assets/images/Devolutiva/Contexto-3.jpg';
-import csdImg from '../assets/images/Devolutiva/CSD.png';
-import benchImg from '../assets/images/Devolutiva/bench.png';
-import fazNaoFazImg from '../assets/images/Devolutiva/faz nao faz.png';
-import pesquisasImg from '../assets/images/Devolutiva/Pesquisas.png';
-import mapaImg from '../assets/images/Devolutiva/Mapa.jpg';
-import fluxoGestorImg from '../assets/images/Devolutiva/fluxo-gestor.png';
-import fluxoColabImg from '../assets/images/Devolutiva/Fluxo-colab.png';
-import fluxoRhImg from '../assets/images/Devolutiva/Fluxo-rh.png';
-import wire1Img from '../assets/images/Devolutiva/wire-1.png';
-import wire2Img from '../assets/images/Devolutiva/wire-2.png';
-import planilhaErrosImg from '../assets/images/Devolutiva/planilha de erros.png';
-import ia1Img from '../assets/images/Devolutiva/IA 1.png';
-import ia2Img from '../assets/images/Devolutiva/IA 2.png';
-import rh1Img from '../assets/images/Devolutiva/RH-1.png';
-import gestor1Img from '../assets/images/Devolutiva/Gestor-1.png';
-import colab1Img from '../assets/images/Devolutiva/Colab-1.png';
-import { Carousel } from '../components/Carousel';
-import { Gallery } from '../components/Gallery';
-import { PlatformToday } from '../components/PlatformToday';
-import dash01 from '../assets/images/Dash/Dash - 01.png';
-import dash02 from '../assets/images/Dash/Dash - 02.png';
-import dash03 from '../assets/images/Dash/Dash - 03.png';
-import dash04 from '../assets/images/Dash/Dash-04.png';
-import dash05 from '../assets/images/Dash/Dash-05.png';
-import dash06 from '../assets/images/Dash/Dash-06.png';
-import dash07 from '../assets/images/Dash/Dash-07.png';
-import dash08 from '../assets/images/Dash/Dash-08.png';
-import dash09 from '../assets/images/Dash/Dash-09.png';
-import dash10 from '../assets/images/Dash/Dash-10.png';
-import dash11 from '../assets/images/Dash/Dash-11.png';
-import dash12 from '../assets/images/Dash/Dash-12.png';
-import dash13 from '../assets/images/Dash/Dash-13.png';
-import dash14 from '../assets/images/Dash/Dash-14.png';
-import dash15 from '../assets/images/Dash/Dash-15.png';
-import dash16 from '../assets/images/Dash/Dash-16.png';
-import dash17 from '../assets/images/Dash/Dash-17.png';
-import dash18 from '../assets/images/Dash/Dash-18.png';
-import dash19 from '../assets/images/Dash/Dash-19.png';
-import dash20 from '../assets/images/Dash/Dash-20.png';
-import dash21 from '../assets/images/Dash/Dash-21.png';
-import dash22 from '../assets/images/Dash/Dash-22.mov';
-import dash23 from '../assets/images/Dash/Dash-23.png';
-import dash24 from '../assets/images/Dash/Dash-24.png';
-import k01 from '../assets/images/KBA/Completa/k-01.png';
-import k02 from '../assets/images/KBA/Completa/k-02.png';
-import k03 from '../assets/images/KBA/Completa/k-03.png';
-import k04 from '../assets/images/KBA/Completa/k-04.png';
-import k05 from '../assets/images/KBA/Completa/k-05.png';
-import k06 from '../assets/images/KBA/Completa/k-06.png';
-import k07 from '../assets/images/KBA/Completa/k-07.png';
-import k08 from '../assets/images/KBA/Completa/k-08.jpg';
-import k09 from '../assets/images/KBA/Completa/k-09.png';
-import k10 from '../assets/images/KBA/Completa/k-10.png';
-import k11 from '../assets/images/KBA/Completa/k-11.png';
-import k12 from '../assets/images/KBA/Completa/k-12.png';
-import k13 from '../assets/images/KBA/Completa/k-13.png';
-import k14 from '../assets/images/KBA/Completa/k-14.png';
-import thumbDashboard from '../assets/images/Thumbs/Thumb Dashboard.png';
-import thumbDevolutiva from '../assets/images/Thumbs/Thumb Devolutiva.png';
-import thumbKba from '../assets/images/Thumbs/Thumb KBA.png';
-import thumbAdmin from '../assets/images/Thumbs/Thumb Admin.png';
-import capaDashboard from '../assets/images/Capas/Capa Dashboard.png';
-import capaDevolutiva from '../assets/images/Capas/Capa Devolutiva.png';
-import capaKba from '../assets/images/Capas/Capa KBA.png';
-import capaAdmin from '../assets/images/Capas/Capa Admin.png';
+import { Puzzle, FileSpreadsheet, Headphones, AlertTriangle, Plug, Brain, Sparkles, BookOpen } from 'lucide-react';
 
 import reset1 from '../assets/images/Imagem Reset/1.png';
 import reset2 from '../assets/images/Imagem Reset/2.png';
@@ -88,7 +18,6 @@ import map2 from '../assets/images/Imagens versionamento/Mapeamento de campos 2.
 import v1v2 from '../assets/images/Imagens versionamento/v1 e v2 .png';
 import v3v4 from '../assets/images/Imagens versionamento/v3 e v4.png';
 import googleIa from '../assets/images/IA Studio.png';
-import cursorImg from '../assets/images/Cursor cortada.png';
 import c1 from '../assets/images/C-1.png';
 import c2 from '../assets/images/C-2.png';
 import videoCursor from '../assets/Video Cursor.mov';
@@ -104,18 +33,11 @@ import handoff3 from '../assets/images/Admin/Admin simplificado/Handoff 3.png';
 import handoff4 from '../assets/images/Admin/Admin simplificado/Handoff 4.png';
 import handoff5 from '../assets/images/Admin/Admin simplificado/Handoff 5.png';
 
-import claudeLogo from '../assets/images/Logos IA/Claude.webp';
 import notebookLmLogo from '../assets/images/Logos IA/Notebook LM.svg';
 import figmaMakeLogo from '../assets/images/Logos IA/Figma Make.png';
 import googleIaStudioLogo from '../assets/images/Logos IA/Google IA Studio.png';
 import cursorLogo from '../assets/images/Logos IA/Cursor.png';
 
-const ImagePlaceholder = ({ label = 'Espaço para Imagem' }: { label?: string }) => (
-
-  <div className="w-full aspect-[16/9] bg-[#EBE7DD] rounded-[2rem] flex items-center justify-center my-12 border border-[#DCD7CA]">
-    <span className="text-[#787265] font-medium tracking-widest uppercase text-sm">{label}</span>
-  </div>
-);
 
 const HandoffSlideIn = ({ src, alt }: { src: string; alt: string }) => {
   const ref = useRef<HTMLImageElement>(null);
@@ -146,158 +68,17 @@ const HandoffSlideIn = ({ src, alt }: { src: string; alt: string }) => {
   );
 };
 
-const discoveryGalleryItems = [
 
-  {
-    src: dash04,
-    title: "NotebookLM e Análise Semântica",
-    description: "Uso do NotebookLM para analisar dados de canais de suporte e organizar semanticamente os principais gargalos burocráticos relatados.",
-    fullWidth: true
-  }
-];
 
-const prototipacaoGalleryItems = [
-  {
-    src: dash05,
-    title: "Mapeamento de SLAs de Contratação",
-    description: "Mapeamento detalhado das etapas críticas do processo admissional e definição de SLAs ideais para alertar sobre atrasos operacionais."
-  },
-  {
-    src: dash06,
-    title: "Primeira Ideação Estrutural",
-    description: "Exploração de layouts em wireframes funcionais no Google AI Studio para testar visões de prateleiras com foco operacional."
-  },
-  {
-    src: dash07,
-    title: "Filtros de Janelas de Contratação",
-    description: "Variação de filtros focando na data prevista de admissão e no acompanhamento de SLAs de lotes semanais/mensais."
-  }
-];
 
-const validacaoGalleryItems = [
-  {
-    src: dash08,
-    title: "Resumo Executivo Inteligente",
-    description: "Desenho da funcionalidade de resumo apoiada por IA, projetada para destacar furos de prazos, anomalias e riscos imediatos de forma textual."
-  },
-  {
-    src: dash09,
-    title: "Explorando a Densidade de Informação",
-    description: "Estudo de grids e tabelas para entender a melhor relação entre quantidade de dados exibidos e usabilidade em telas de baixa resolução."
-  },
-  {
-    src: dash10,
-    title: "Acompanhamento Integrado do Funil",
-    description: "Visualização experimental do funil cruzando R&S e Admissão digital para localizar gargalos entre a proposta aceita e o primeiro dia de trabalho."
-  },
-  {
-    src: dash11,
-    title: "Estudo de Layout de Gráficos",
-    description: "Exploração de visualizações gráficas de barras e barras empilhadas para representar a velocidade de validação documental."
-  },
-  {
-    src: dash12,
-    title: "Gravação Qualitativa das Sessões",
-    description: "Entrevistas individuais em profundidade e testes de usabilidade gravados com analistas e gestores de DP de contas estratégicas."
-  },
-  {
-    src: dash13,
-    title: "Análise e Mapeamento de Feedbacks",
-    description: "Matriz qualitativa consolidando comentários, reações a novos componentes e avaliações de utilidade de cada indicador proposto."
-  }
-];
 
-const altaFidelidadeGalleryItems = [
-  {
-    src: dash24,
-    title: "Dashboard de Admissão - Alta Fidelidade",
-    description: "Visão consolidada da nova interface do dashboard projetada com alta fidelidade para os operadores e gestores de admissão.",
-    fullWidth: true
-  }
-];
 
-const onePageGalleryItems = [
-  {
-    src: dash14,
-    title: "Análise de Transcrições no NotebookLM",
-    description: "Processamento de dezenas de horas de entrevistas gravadas para agrupar automaticamente os feedbacks mais comuns e recorrentes."
-  },
-  {
-    src: dash15,
-    title: "Dashboard de Admissão - Visão Geral",
-    description: "Telas finais de alta fidelidade integrando a inteligência da Gupy para controle total das próximas contratações."
-  },
-  {
-    src: dash16,
-    title: "Gargalos em Detalhes por Etapa",
-    description: "Gráfico dinâmico que exibe o tempo médio de permanência em cada etapa e aponta os maiores atrasos de aprovação de documentos."
-  },
-  {
-    src: dash17,
-    title: "Ação Rápida de Cobrança Contextual",
-    description: "Ação direta que permite ao operador entrar em contato com candidatos parados via WhatsApp com mensagens geradas automaticamente."
-  }
-];
 
-const handoffGalleryItems = [
-  {
-    src: dash20,
-    title: "One Page Estratégico para Liderança",
-    description: "Material consolidando o ROI, dores mapeadas e direcionamento estratégico do novo Dashboard para apresentação executiva à diretoria."
-  },
-  {
-    src: dash21,
-    title: "Drill-down Técnico do Roadmap",
-    description: "Detalhamento das fases de entrega e metas operacionais alinhadas com as prioridades corporativas."
-  },
-  {
-    src: dash18,
-    title: "Status de Validação de Documentos",
-    description: "Gráficos de barras que detalham a proporção de documentos corretos, pendentes de envio e reprovados pela equipe ou IA."
-  },
-  {
-    src: dash19,
-    title: "Painel de Filtros Avançados",
-    description: "Filtros poderosos que refinam as listagens por filiais geográficas, responsáveis de contratação, cargos e lotes específicos."
-  },
-  {
-    src: dash23,
-    title: "Handoff Técnico",
-    description: "Handoff técnico refinado utilizando Storybook, garantindo fidelidade pixel-perfect em múltiplos estados de dados da aplicação."
-  }
-];
 
-const kbaContextGallery1 = [
-  { src: k01, title: 'Contexto', description: 'Oportunidade e impacto de negócio gerado pelo processo de recuperação', fullWidth: true }
-];
 
-const kbaContextGallery2 = [
-  { src: k02, title: 'Processo', description: 'Problemas enfrentados ao recuperar o acesso com os antigos fluxos', fullWidth: true }
-];
 
-const kbaDiscoveryGallery = [
-  { src: k03, title: 'Fluxo anterior', description: 'Mapeamento do fluxo anterior de autenticação' },
-  { src: k04, title: 'Análise quantitativa', description: 'Métricas de engajamento das jornadas' },
-  { src: k05, title: 'Comportamento do usuário', description: 'Identificação de problemas de usabilidade na recuperação' },
-  { src: k06, title: 'Login Social', description: 'Uso de Login Social e fluxos de criação de conta' },
-  { src: k07, title: 'Falhas e inconsistências', description: 'Visão das mensagens de erro e inconsistências' }
-];
 
-const kbaEstrategiaGallery = [
-  { src: k08, title: 'Estudo das opções de KBA', description: 'Análise sobre a arquitetura e fluxos de segurança do KBA', fullWidth: true }
-];
 
-const kbaPrototiposGallery = [
-  { src: k09, title: 'Prototipação via IA', description: 'Fluxos iniciais criados e validados no Figma Make' },
-  { src: k10, title: 'Testes de mesa', description: 'Discussão de fluxos com Stakeholders e Engenharia' },
-  { src: k11, title: 'Refinamento', description: 'Evolução da fidelidade usando Design System' },
-  { src: k12, title: 'Edge Cases e Limites', description: 'Mapeamento de cenários críticos e limites de tentativas' },
-  { src: k13, title: 'Especificações', description: 'Regras de segurança, erros e recuperações malsucedidas' }
-];
-
-const kbaEntregaGallery = [
-  { src: k14, title: 'Entrega Final e Handoff', description: 'Documentação completa com estados e mapeamentos para Analytics', fullWidth: true }
-];
 
 const AdminGlobalDocsRelatorio = () => (
   (
@@ -1011,18 +792,6 @@ const AdminGlobalDocsRelatorio = () => (
   )
 );
 
-const VisualPlaceholder = ({ label }: { label: string }) => (
-  <div className="w-full aspect-[16/8] bg-[#F4F2EB] rounded-none flex flex-col items-center justify-center p-6 border border-dashed border-[#DCD7CA] my-10 relative overflow-hidden group hover:border-[#006266]/30 transition-all duration-300">
-    <div className="absolute inset-0 bg-[radial-gradient(#DCD7CA_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
-    <div className="relative z-10 flex flex-col items-center text-center">
-      <div className="w-12 h-12 rounded-none bg-white flex items-center justify-center text-[#787265] mb-3 border border-[#EBE7DD] shadow-none">
-        <Sparkles size={20} className="text-[#787265]/70" />
-      </div>
-      <span className="text-[#787265] font-sans font-bold text-[11px] tracking-widest uppercase">{label}</span>
-      <span className="text-[#A09A8E] font-sans text-[10px] mt-1">Espaço reservado para upload de imagem posterior</span>
-    </div>
-  </div>
-);
 
 const AdminGlobalDocsSimplificado = () => (
   <>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ChevronLeft, ChevronRight, Sparkles, ArrowRight, Activity, Layers, Settings, Users, HelpCircle, Monitor, Briefcase, Award, Heart, Compass, Mail, BookOpen } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Slide0, Slide1, Slide2 } from './slides/IntroSlides';
 import { Slide3, Slide4, Slide5, Slide6, SlideDorCrescimento } from './slides/CaseSlides1';
