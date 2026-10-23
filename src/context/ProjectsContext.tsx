@@ -4,6 +4,7 @@ import { projects as initialProjects } from '../data';
 export type ProjectData = typeof initialProjects[0] & {
   contentHtml?: string;
   thumbnail?: string;
+  thumbBg?: string;
   coverImage?: string;
   roles?: string | string[];
   tools?: string | string[];

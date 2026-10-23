@@ -231,7 +231,7 @@ export function PresentationMode({ isOpen, onClose, projectTitle }: Presentation
       }}
     >
       {/* Background Soft Glows */}
-      <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#006266]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#9E4322]/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#00CBC6]/3 blur-[120px] pointer-events-none" />
 
       {/* TOP HEADER - Step Progress indicator bar */}

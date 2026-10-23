@@ -105,7 +105,7 @@ export const projects = [
   {
     id: 'devolutiva',
     title: 'Fechando o ciclo da Avaliação de Desempenho',
-    tag: 'Discovery & Delivery',
+    tag: 'Agente de IA implementado',
     description: 'Como transformamos um processo descentralizado em uma experiência integrada, criando a funcionalidade de devolutivas dentro do produto de Performance.',
     role: 'Product Designer',
     roles: ['Product Design'],
@@ -115,6 +115,7 @@ export const projects = [
     platform: 'Gupy Performance',
     readingTime: '4 min de leitura',
     thumbnail: thumbDevolutiva,
+    thumbBg: '#21858A',
     coverImage: capaDevolutiva,
     tldr: {
       problem: 'Devolutiva acontecia toda fora da plataforma, sem histórico nem padrão.',
@@ -123,14 +124,14 @@ export const projects = [
     },
     bg: 'bg-[#D2CBB6]',
     heroBg: 'bg-[#D2CBB6]',
-    textColor: 'text-[#2C3539]',
-    tagColor: 'text-[#006266]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
     content: <DevolutivaContent />
   },
   {
     id: 'dashboard-admissao',
     title: 'Redesenhando o Dashboard de Admissão',
-    tag: 'Discovery & IA',
+    tag: 'Dashboards e dados complexos',
     description: 'Transformando um dashboard de análise histórica em uma ferramenta operacional orientada à tomada de decisão.',
     role: 'Product Designer',
     roles: ['Product Design'],
@@ -139,6 +140,7 @@ export const projects = [
     platform: 'Gupy Admissão',
     readingTime: '5 min de leitura',
     thumbnail: thumbDashboard,
+    thumbBg: '#F1F2F6',
     coverImage: capaDashboard,
     tldr: {
       problem: 'O dashboard mostrava o passado, mas o RH precisava agir sobre admissões em risco, agora.',
@@ -147,39 +149,14 @@ export const projects = [
     },
     bg: 'bg-[#E1DCD3]',
     heroBg: 'bg-[#E1DCD3]',
-    textColor: 'text-[#2C3539]',
-    tagColor: 'text-[#006266]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
     content: <DashboardAdmissaoContent />
   },
   {
-    id: 'kba-senha',
-    title: 'Recuperação de senha self-service (KBA)',
-    tag: 'Knowledge-Based Auth',
-    description: 'Transformação de um processo manual em self-service através do fluxo de recuperação via Knowledge-Based Authentication.',
-    role: 'Product Designer',
-    roles: ['Product Design'],
-    tools: ['Figma', 'Figma Make', 'Claude', 'Cursor'],
-    team: ['Cross - Gestão de Contas'],
-    year: '2024',
-    platform: 'Web',
-    readingTime: '4 min de leitura',
-    thumbnail: thumbKba,
-    coverImage: capaKba,
-    tldr: {
-      problem: 'Recuperação de acesso era um dos principais motivos de contato com o suporte.',
-      action: 'Conduzi a descoberta, desenhei o fluxo self-service via KBA e validei cenários com prototipação em IA.',
-      result: 'Potencial de redução relevante no volume de tickets, com mais autonomia e menos tempo de espera para o candidato.'
-    },
-    bg: 'bg-[#B1BDC4]',
-    heroBg: 'bg-[#B1BDC4]',
-    textColor: 'text-[#2C3539]',
-    tagColor: 'text-[#006266]',
-    content: <KbaSenhaContent />
-  },
-  {
     id: 'admin-global-docs',
-    title: 'Admin Global',
-    tag: 'Plataforma · Ecossistema',
+    title: 'Unificando três produtos em um admin global',
+    tag: 'Plataforma e ecossistema',
     description: 'Unificando a administração entre produtos para reduzir esforço de implantação e criar uma base escalável para crescimento',
     role: 'Liderança de UX',
     roles: ['Liderança de UX', 'Product Design'],
@@ -189,6 +166,7 @@ export const projects = [
     platform: 'Plataforma Gupy',
     readingTime: '5 min de leitura',
     thumbnail: thumbAdmin,
+    thumbBg: '#061329',
     coverImage: capaAdmin,
     tldr: {
       problem: 'Cada produto tinha sua própria camada administrativa. O cliente reconfigurava tudo a cada novo produto contratado.',
@@ -200,6 +178,32 @@ export const projects = [
     textColor: 'text-white',
     tagColor: 'text-[#C5D2D6]',
     content: <AdminGlobalDocsContent />
+  },
+  {
+    id: 'kba-senha',
+    title: 'Recuperação de senha self-service (KBA)',
+    tag: 'Fluxo de alta demanda',
+    description: 'Transformação de um processo manual em self-service através do fluxo de recuperação via Knowledge-Based Authentication.',
+    role: 'Product Designer',
+    roles: ['Product Design'],
+    tools: ['Figma', 'Figma Make', 'Claude', 'Cursor'],
+    team: ['Cross - Gestão de Contas'],
+    year: '2024',
+    platform: 'Web',
+    readingTime: '4 min de leitura',
+    thumbnail: thumbKba,
+    thumbBg: '#1671FE',
+    coverImage: capaKba,
+    tldr: {
+      problem: 'Recuperação de acesso era um dos principais motivos de contato com o suporte.',
+      action: 'Conduzi a descoberta, desenhei o fluxo self-service via KBA e validei cenários com prototipação em IA.',
+      result: 'Potencial de redução relevante no volume de tickets, com mais autonomia e menos tempo de espera para o candidato.'
+    },
+    bg: 'bg-[#B1BDC4]',
+    heroBg: 'bg-[#B1BDC4]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
+    content: <KbaSenhaContent />
   },
   {
     id: 'ia-dia-dia',
@@ -218,10 +222,10 @@ export const projects = [
       action: 'Incorporei ferramentas de IA, como Google AI Studio, Claude, NotebookLM, Cursor e Figma Make, ao meu processo de trabalho, utilizando cada uma delas conforme a etapa do projeto.',
       result: 'Reduzi significativamente o tempo de descoberta, exploração e validação de soluções, produzi protótipos mais próximos do produto final e desenvolvi ferramentas internas para resolver necessidades específicas do time.'
     },
-    bg: 'bg-[#E5E0D5]',
+    bg: 'bg-[#FAF9F7]',
     heroBg: 'bg-[#E5E0D5]',
-    textColor: 'text-[#2C3539]',
-    tagColor: 'text-[#006266]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
     content: <IaDiaDiaContent />
   },
   {
@@ -241,10 +245,10 @@ export const projects = [
       action: 'Condução de workshops presenciais estruturados utilizando Light Decision Jam (LDJ), aplicação sistemática de Atomic Research e análises dinâmicas através do Cine Hotjar.',
       result: 'Priorização de oportunidades estruturantes com dezenas de clientes estratégicos de RH, aceleração no ciclo de Discovery e engajamento genuíno de times multidisciplinares.'
     },
-    bg: 'bg-[#C1C9C8]',
+    bg: 'bg-[#FAF9F7]',
     heroBg: 'bg-[#C1C9C8]',
-    textColor: 'text-[#2C3539]',
-    tagColor: 'text-[#006266]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
     content: <FrameworkDynamicsContent />
   },
   {
@@ -264,10 +268,10 @@ export const projects = [
       action: 'Mapeamento das iniciativas, criação de uma taxonomia de comportamentos de agentes (proativos, reativos, etc.) e definição de uma arquitetura única de design system conversacional.',
       result: 'Apesar de despriorizada antes de codar, serviu como base estratégica e framework de design para a evolução unificada de IA na empresa.'
     },
-    bg: 'bg-gradient-to-br from-[#8C9A9E] to-[#4A5559]',
+    bg: 'bg-[#FAF9F7]',
     heroBg: 'bg-gradient-to-br from-[#8C9A9E] to-[#4A5559]',
-    textColor: 'text-white',
-    tagColor: 'text-[#A8C6C7]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
     content: <OrquestracaoAgentesContent />
   },
   {
@@ -287,10 +291,10 @@ export const projects = [
       action: 'Estruturei a primeira rotina de métricas de experiência focada no CES, mapeando 11 jornadas chave para 3 personas principais (RH, Líder e Colaborador).',
       result: 'Em 6 meses, coletamos mais de 3.700 respostas e analisamos centenas de comentários, transformando feedback em direcionamentos reais para o time de Design.'
     },
-    bg: 'bg-[#7D888B]',
+    bg: 'bg-[#FAF9F7]',
     heroBg: 'bg-[#7D888B]',
-    textColor: 'text-white',
-    tagColor: 'text-[#C4D0D1]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
     content: <MetricasExperienciaContent />
   },
   {
@@ -312,8 +316,8 @@ export const projects = [
     },
     bg: 'bg-[#D1C7BD]',
     heroBg: 'bg-[#D1C7BD]',
-    textColor: 'text-[#2C3539]',
-    tagColor: 'text-[#006266]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
     content: <AprendizadosRhContent />
   },
 ];

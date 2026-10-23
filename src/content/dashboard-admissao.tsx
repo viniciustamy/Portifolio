@@ -6,7 +6,10 @@ import {
   AlertCircle,
   Bell,
   AlertTriangle,
-  Check
+  Check,
+  ChevronDown,
+  ArrowLeft,
+  ArrowRight
 } from 'lucide-react';
 import { Gallery } from '../components/Gallery';
 import { PlatformToday } from '../components/PlatformToday';
@@ -51,6 +54,7 @@ import dash24 from '../assets/images/Dash/Dash-24.png';
 import LogoLM from '../assets/images/logoLM.png';
 import LogoGoogleIA from '../assets/images/google ia.png';
 import logocursor from '../assets/images/logocursor.png';
+import { AtuacaoInfo } from '../components/AtuacaoInfo';
 
 
 
@@ -200,12 +204,12 @@ export const DashboardAdmissaoContent = () => {
     <div className={viewMode === 'simplificado' ? 'mode-simplificado' : 'mode-relatorio'}>
       {/* Switcher - hidden */}
       <div className="hidden justify-center mb-12 not-prose">
-        <div className="bg-[#EBE7DD]/60 p-1.5 rounded-full flex gap-1 border border-[#DCD7CA]">
+        <div className="bg-[#E2DCD4]/60 p-1.5 rounded-full flex gap-1 border border-[#E2DCD4]">
           <button
             onClick={() => setViewMode('simplificado')}
             className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-300 flex items-center gap-2 cursor-pointer ${viewMode === 'simplificado'
-              ? 'bg-[#006266] text-white '
-              : 'text-[#787265] hover:text-[#2C3539]'
+              ? 'bg-[#9E4322] text-white '
+              : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
             <Sparkles size={16} />
@@ -214,8 +218,8 @@ export const DashboardAdmissaoContent = () => {
           <button
             onClick={() => setViewMode('relatorio')}
             className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-300 flex items-center gap-2 cursor-pointer ${viewMode === 'relatorio'
-              ? 'bg-[#006266] text-white '
-              : 'text-[#787265] hover:text-[#2C3539]'
+              ? 'bg-[#9E4322] text-white '
+              : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
             <BookOpen size={16} />
@@ -230,9 +234,8 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 2: Contexto */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Contexto</span>
-            <h2 id="contexto" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Um dashboard defasado</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-6">
+            <h2 id="contexto" className="font-serif text-3xl font-bold text-[#241510] mb-4">Um dashboard defasado</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-6">
               Além da necessidade técnica de migrar para uma nova biblioteca de componentes, havia a oportunidade de repensar a experiência inteira. Analisando anos de solicitações de clientes, feedbacks de Customer Success e demandas internas, o problema real não era falta de gráficos: era o desalinhamento entre o dashboard e a rotina operacional do RH.
             </p>
 
@@ -241,35 +244,34 @@ export const DashboardAdmissaoContent = () => {
               alt="Print do Dashboard anterior defasado"
             />
             {/* Legenda */}
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">
               Print do Dashboard anterior defasado
             </p>
           </div>
 
           {/* Seção 3: O Desafio */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">O desafio</span>
-            <h2 id="desafio" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Não era sobre replicar o que foi feito em R&S</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
+            <h2 id="desafio" className="font-serif text-3xl font-bold text-[#241510] mb-4">Não era sobre replicar o que foi feito em R&S</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
               Antes de investigar qualquer solução, precisávamos garantir que Produto, Design e Tecnologia partissem do mesmo entendimento do problema.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose mb-8">
-              <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                <h4 className="font-sans font-bold text-[#2C3539] text-base mb-2">Sobre o que já temos?</h4>
-                <p className="text-sm text-[#787265] leading-relaxed">
+              <div className="bg-[#FAF9F6] border-l-2 border-[#9E4322] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300 rounded-2xl">
+                <h4 className="font-sans font-bold text-[#241510] text-base mb-2">Sobre o que já temos?</h4>
+                <p className="text-sm text-[#6F625B] leading-relaxed">
                   Quais informações realmente geravam valor.
                 </p>
               </div>
-              <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                <h4 className="font-sans font-bold text-[#2C3539] text-base mb-2">O que precisa ter?</h4>
-                <p className="text-sm text-[#787265] leading-relaxed">
+              <div className="bg-[#FAF9F6] border-l-2 border-[#9E4322] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300 rounded-2xl">
+                <h4 className="font-sans font-bold text-[#241510] text-base mb-2">O que precisa ter?</h4>
+                <p className="text-sm text-[#6F625B] leading-relaxed">
                   Quais decisões o DP precisava tomar diariamente.
                 </p>
               </div>
-              <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                <h4 className="font-sans font-bold text-[#2C3539] text-base mb-2">Contexto admissão</h4>
-                <p className="text-sm text-[#787265] leading-relaxed">
+              <div className="bg-[#FAF9F6] border-l-2 border-[#9E4322] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300 rounded-2xl">
+                <h4 className="font-sans font-bold text-[#241510] text-base mb-2">Contexto admissão</h4>
+                <p className="text-sm text-[#6F625B] leading-relaxed">
                   Como virar ferramenta de trabalho, não só de consulta.
                 </p>
               </div>
@@ -278,9 +280,8 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 4: Discovery */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Discovery</span>
-            <h2 id="discovery" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Centenas de registros, uma direção clara</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-6">
+            <h2 id="discovery" className="font-serif text-3xl font-bold text-[#241510] mb-4">Centenas de registros, uma direção clara</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-6">
               Consolidei solicitações históricas de clientes, feedbacks de Customer Success, demandas do time de Produto e a evolução do Dashboard de Recrutamento. Com apoio do NotebookLM, organizei esse volume, identifiquei padrões recorrentes e transformei informação dispersa em prioridade.
             </p>
 
@@ -289,141 +290,91 @@ export const DashboardAdmissaoContent = () => {
               alt="Planilha com solicitações de clientes consolidadas e NotebookLM"
             />
             {/* Legenda */}
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">
               Planilha com solicitações de clientes consolidadas
             </p>
 
-            <p className="text-[#4A5559] leading-relaxed mt-6">
+            <p className="text-[#7D7169] leading-relaxed mt-6">
               A análise mostrou algo importante: muitos pedidos já tinham sido resolvidos manualmente em ferramentas paralelas, enquanto as necessidades realmente estratégicas seguiam sem solução.
             </p>
           </div>
 
           {/* Seção 5: Resultado da Análise */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Resultado da análise</span>
-            <h2 id="analise" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Três níveis de urgência, um padrão em comum</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
-              O produto de Performance já cobria a configuração de ciclos, as avaliações e os comitês de calibração. A jornada era interrompida bem antes da etapa mais importante: a conversa entre gestor e colaborador sobre os resultados.
+            <h2 id="analise" className="font-serif text-3xl font-bold text-[#241510] mb-4">Três níveis de urgência, um padrão em comum</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              Organizei as solicitações em três níveis de urgência. Todas apontavam para a mesma lacuna: o produto não respondia nativamente às perguntas operacionais do DP.
             </p>
 
-            <div className="space-y-4 not-prose">
-              {/* Verde: 6 frentes */}
-              <div className="border-l-3 border-[#006266] transition-all duration-300 overflow-hidden hover:bg-[#FAF9F6]">
-                <div
-                  onClick={() => setShowGreenDetails(!showGreenDetails)}
-                  className="flex items-center justify-between p-6 cursor-pointer hover:bg-[#006266]/5 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-6">
-                    <div className="text-[#006266] shrink-0">
-                      <Check size={28} className="stroke-[3]" />
-                    </div>
-                    <div>
-                      <h4 className="font-sans font-bold text-[#2C3539] text-base mb-1">6 frentes já atendidos, via soluções pontuais</h4>
-                      <p className="text-sm text-[#787265] leading-relaxed">Superset / Metabase, caso a caso, sem solução escalável</p>
-                    </div>
-                  </div>
-                  <div className="text-xs font-bold text-[#006266] hover:text-[#004d4f] transition-colors uppercase tracking-wider whitespace-nowrap ml-6">
-                    {showGreenDetails ? '- Ocultar itens' : '+ Ver mais itens'}
-                  </div>
-                </div>
-
-                {showGreenDetails && (
-                  <div className="px-6 pb-6 pl-20 animate-in fade-in duration-300">
-                    <div className="pt-4 border-t border-[#EBE7DD]">
-                      <ul className="list-disc pl-5 text-sm space-y-2 text-[#4A5559]">
-                        <li>Dados de admissão e etapas (entrada/saída, SLA por etapa) — Panvel, Piracanjuba, Sabesp, Ecolabs, Ero Brasil, Usina Santa Adélia.</li>
-                        <li>Volume de documentos (enviados, validados, reenviados, recusa) — validado via consulta paralela no Superset.</li>
-                        <li>Relatórios customizados — Ailos (planilha manual), Panvel (2x).</li>
-                        <li>PPCs inseridos manualmente, responsáveis por movimentação (produtividade do time), admissões por filial.</li>
-                        <li>Créditos consumidos e quantidade de admissões concluídas — via queries específicas.</li>
-                        <li>PPCs com documentos pendentes — automatizado via Airflow.</li>
+            <div className="not-prose rounded-2xl border border-[#E2DCD4] divide-y divide-[#E2DCD4] overflow-hidden">
+              {[
+                {
+                  open: showGreenDetails, toggle: () => setShowGreenDetails(!showGreenDetails), color: '#9E4322', Icon: Check,
+                  title: '6 frentes já atendidas, via soluções pontuais', sub: 'Superset / Metabase, caso a caso, sem solução escalável',
+                  items: [
+                    'Dados de admissão e etapas (entrada/saída, SLA por etapa) — Panvel, Piracanjuba, Sabesp, Ecolabs, Ero Brasil, Usina Santa Adélia.',
+                    'Volume de documentos (enviados, validados, reenviados, recusa) — via consulta paralela no Superset.',
+                    'Relatórios customizados — Ailos (planilha manual), Panvel (2x).',
+                    'PPCs inseridos manualmente, produtividade do time e admissões por filial.',
+                    'Créditos consumidos e admissões concluídas — via queries específicas.',
+                    'PPCs com documentos pendentes — automatizado via Airflow.',
+                  ],
+                  note: 'Quase tudo foi resolvido com soluções manuais no Superset, não de forma nativa na plataforma.',
+                },
+                {
+                  open: showYellowDetails, toggle: () => setShowYellowDetails(!showYellowDetails), color: '#BF6A02', Icon: Bell,
+                  title: 'Alguns ainda não atendidos ou pendentes', sub: 'Mapeados, mas precisam de uma análise maior',
+                  items: [
+                    'Funil de candidatura + admissão (RTE Rodonaves) — não localizado nos registros.',
+                    'SLA de admissão no Dashboard Customizado — sem detalhes de empresa ou status.',
+                    'Nome da mãe do dependente no relatório — pedido parado sem retorno.',
+                    '% de documentos validados por IA vs manual (Iguá Saneamento) — tratado como melhoria de produto.',
+                  ],
+                  note: '',
+                },
+                {
+                  open: showRedDetails, toggle: () => setShowRedDetails(!showRedDetails), color: '#C00F0C', Icon: AlertTriangle,
+                  title: 'Pedidos recentes de clientes-chave', sub: 'Prioritários para o novo Analisar Dados',
+                  items: [
+                    'Status em tempo real dos candidatos, com filtros por etapa (Imediato Nexway, WEG, Axia Energia).',
+                    'Funil completo cruzando R&S + Admissão digital (RTE Rodonaves, Central Ailos).',
+                    'Visibilidade de admissões não iniciadas (Fortbras).',
+                    'Tempo de movimentação entre etapas, com SLA nativo.',
+                    'Motivo de desistência dos candidatos fora do processo.',
+                    'Qual documento demora mais para ser enviado.',
+                  ],
+                  note: '',
+                },
+              ].map(level => (
+                <div key={level.title}>
+                  <button onClick={level.toggle} className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-[#FAF9F6] transition-colors">
+                    <span className="flex items-center justify-center w-9 h-9 rounded-xl shrink-0" style={{ background: `${level.color}14`, color: level.color }}>
+                      <level.Icon size={18} strokeWidth={2.5} />
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className="block font-semibold text-[15px] text-[#241510]">{level.title}</span>
+                      <span className="block text-[13px] text-[#6F625B]">{level.sub}</span>
+                    </span>
+                    <span className="text-[13px] font-semibold text-[#9E4322] whitespace-nowrap">{level.open ? 'Ocultar' : 'Ver itens'}</span>
+                    <ChevronDown size={16} className={`text-[#9E4322] transition-transform ${level.open ? 'rotate-180' : ''}`} />
+                  </button>
+                  {level.open && (
+                    <div className="px-5 pb-4 pl-[72px] animate-in fade-in duration-300">
+                      <ul className="list-disc pl-4 text-[13.5px] space-y-1.5 text-[#4F4440]">
+                        {level.items.map(item => <li key={item}>{item}</li>)}
                       </ul>
-                      <p className="text-[#787265] text-xs mt-3 italic">
-                        <strong>Padrão importante:</strong> quase todos esses "atendidos" foram soluções manuais/pontuais no Superset, não algo nativo da plataforma — ou seja, hoje são gambiarras que o produto deveria resolver nativamente.
-                      </p>
+                      {level.note && <p className="text-[12.5px] text-[#6F625B] mt-2 italic">{level.note}</p>}
                     </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Amarelo: Alguns ainda não atendidos */}
-              <div className="border-l-3 border-[#BF6A02] transition-all duration-300 overflow-hidden hover:bg-[#FAF9F6]">
-                <div
-                  onClick={() => setShowYellowDetails(!showYellowDetails)}
-                  className="flex items-center justify-between p-6 cursor-pointer hover:bg-[#BF6A02]/5 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-6">
-                    <div className="text-[#BF6A02] shrink-0">
-                      <Bell size={28} className="stroke-[2.5]" />
-                    </div>
-                    <div>
-                      <h4 className="font-sans font-bold text-[#2C3539] text-base mb-1">Alguns ainda não atendidos ou pendentes</h4>
-                      <p className="text-sm text-[#787265] leading-relaxed">Mapeados mas necessitam de uma análises maior.</p>
-                    </div>
-                  </div>
-                  <div className="text-xs font-bold text-[#006266] hover:text-[#004d4f] transition-colors uppercase tracking-wider whitespace-nowrap ml-6">
-                    {showYellowDetails ? '- Ocultar itens' : '+ Ver mais itens'}
-                  </div>
+                  )}
                 </div>
-
-                {showYellowDetails && (
-                  <div className="px-6 pb-6 pl-20 animate-in fade-in duration-300">
-                    <div className="pt-4 border-t border-[#EBE7DD]">
-                      <ul className="list-disc pl-5 text-sm space-y-2 text-[#4A5559]">
-                        <li>Funil de candidatura + admissão (RTE Rodonaves) — não localizado nos registros.</li>
-                        <li>SLA de admissão no Dashboard Customizado — sem detalhes de empresa ou status.</li>
-                        <li>Nome da mãe do dependente no relatório — pedido parado sem retorno.</li>
-                        <li>% de documentos validados por IA vs manual (Iguá Saneamento) — tratado como melhoria de produto, não demanda de dados.</li>
-                        <li>Alguns erros técnicos/operacionais que não são responsabilidade do time de Data.</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Vermelho: Pedidos recentes */}
-              <div className="border-l-3 border-[#C00F0C] transition-all duration-300 overflow-hidden hover:bg-[#FAF9F6]">
-                <div
-                  onClick={() => setShowRedDetails(!showRedDetails)}
-                  className="flex items-center justify-between p-6 cursor-pointer hover:bg-[#C00F0C]/5 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-6">
-                    <div className="text-[#C00F0C] shrink-0">
-                      <AlertTriangle size={28} className="stroke-[2.5]" />
-                    </div>
-                    <div>
-                      <h4 className="font-sans font-bold text-[#2C3539] text-base mb-1">Pedidos recentes de clientes-chave</h4>
-                      <p className="text-sm text-[#787265] leading-relaxed">Mapeados como prioritários para o novo Analisar Dados</p>
-                    </div>
-                  </div>
-                  <div className="text-xs font-bold text-[#006266] hover:text-[#004d4f] transition-colors uppercase tracking-wider whitespace-nowrap ml-6">
-                    {showRedDetails ? '- Ocultar itens' : '+ Ver mais itens'}
-                  </div>
-                </div>
-
-                {showRedDetails && (
-                  <div className="px-6 pb-6 pl-20 animate-in fade-in duration-300">
-                    <div className="pt-4 border-t border-[#EBE7DD]">
-                      <ul className="list-disc pl-5 text-sm space-y-2 text-[#4A5559]">
-                        <li>Dashboard consolidado com status em tempo real dos candidatos, filtros por etapa (Imediato Nexway, WEG, Axia Energia).</li>
-                        <li>Funil completo cruzando R&S + Admissão digital (RTE Rodonaves, Central Ailos).</li>
-                        <li>Visibilidade de admissões não iniciadas (Fortbras).</li>
-                        <li>Tempo de movimentação entre etapas (cálculo de SLA nativo).</li>
-                        <li>Motivo de desistência dos candidatos "fora do processo".</li>
-                        <li>Qual documento demora mais para ser enviado.</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-              </div>
+              ))}
             </div>
           </div>
 
           {/* Seção 6: Prototipação com IA */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Prototipação com IA</span>
-            <h2 id="prototipacao" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Explorando ideias em média fidelidade</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-6">
+            <h2 id="prototipacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Explorando ideias em média fidelidade</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-6">
               Em vez de wireframes estáticos no Figma, usei o Google AI Studio para construir protótipos navegáveis de média fidelidade que evoluíam junto com as discussões, reduzindo o tempo entre hipótese e validação.
             </p>
 
@@ -432,22 +383,17 @@ export const DashboardAdmissaoContent = () => {
               alt="Protótipo em média fidelidade no Google AI Studio"
             />
             {/* Legenda */}
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">
               Protótipo em média fidelidade no Google AI Studio
             </p>
           </div>
 
           {/* Seção 7: Validação */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">VALIDAÇÃO COM CLIENTES</span>
-            <h2 id="validacao" className="font-serif text-3xl md:text-4xl font-bold text-[#2C3539] mb-6">Testando com quem enfrenta o problema todo dia</h2>
+            <h2 id="validacao" className="font-serif text-3xl md:text-4xl font-bold text-[#241510] mb-6">Testando com clientes estratégicos</h2>
 
-            <p className="text-[#4A5559] text-base leading-relaxed mb-4">
-              <strong className="font-bold text-[#2C3539]">6 clientes estratégicos</strong> testaram novas categorias, gráficos operacionais, Minhas Análises, Resumo Executivo e configurações gerais.
-            </p>
-
-            <p className="text-[#4A5559] text-base leading-relaxed mb-10">
-              As transcrições foram consolidadas no NotebookLM para identificar padrões qualitativos recorrentes entre as sessões.
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              <strong className="font-semibold text-[#241510]">6 clientes</strong> testaram novas categorias, gráficos operacionais, Minhas Análises, Resumo Executivo e configurações. As transcrições foram consolidadas no NotebookLM para encontrar padrões entre as sessões.
             </p>
 
             {/* Linha de Logos dos Clientes */}
@@ -477,7 +423,7 @@ export const DashboardAdmissaoContent = () => {
                 ].map((item, idx) => (
                   <div
                     key={idx}
-                    className="w-[360px] md:w-[440px] shrink-0 rounded-2xl overflow-hidden border border-[#DCD7CA] bg-[#151516] shadow-md transition-transform duration-300 hover:scale-[1.02] flex flex-col justify-between"
+                    className="w-[360px] md:w-[440px] shrink-0 rounded-2xl overflow-hidden border border-[#E2DCD4] bg-[#151516] shadow-md transition-transform duration-300 hover:scale-[1.02] flex flex-col justify-between"
                   >
                     <img
                       src={item.src}
@@ -487,7 +433,7 @@ export const DashboardAdmissaoContent = () => {
                   </div>
                 ))}
               </div>
-              <p className="text-center text-xs text-[#787265] mt-6 font-sans font-medium tracking-wide">
+              <p className="text-center text-xs text-[#6F625B] mt-6 font-sans font-medium tracking-wide">
                 Registros em vídeo das sessões individuais de testes de usabilidade e prototipação conduzidas com clientes reais.
               </p>
             </div>
@@ -495,183 +441,99 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 8: Principal Descoberta */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Principal descoberta</span>
-            <h2 id="descoberta-risco" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">O foco não é o passado, é o risco em tempo real</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-6">
+            <h2 id="descoberta-risco" className="font-serif text-3xl font-bold text-[#241510] mb-4">O foco não é o passado, é o risco em tempo real</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-6">
               Os usuários não usavam o dashboard para entender o passado. Eles precisavam saber quais admissões corriam risco, quem estava parado e quais etapas exigiam atenção imediata.
             </p>
 
-            {/* Componente Visual Recriado */}
-            <div className="w-full overflow-visible my-10 not-prose flex flex-col md:flex-row relative">
-              {/* Coluna 1: ANTES */}
-              <div className="w-full md:w-1/2 bg-[#E2DDD5] p-14 flex flex-col justify-between relative">
-                <div>
-                  <span className="text-[#787265] font-sans font-bold text-xs uppercase tracking-wider block mb-4">Antes</span>
-                  <h3 className="font-serif text-3xl font-bold text-[#2C3539] mb-6">Dashboard descritivo</h3>
-                  <ul className="space-y-3 text-sm text-[#4A5559] list-disc pl-5">
-                    <li>Responde "o que já aconteceu"</li>
-                    <li>Indicadores históricos e acumulados</li>
-                    <li>Navegação colaborador por colaborador</li>
-                  </ul>
-                </div>
-
-                <div className="mt-12 flex flex-col items-center">
-                  {/* Bar Chart Mock */}
-                  <div className="flex items-end gap-3 h-28 mb-4">
-                    <div className="w-10 bg-[#9B958B] rounded-sm" style={{ height: '55px' }}></div>
-                    <div className="w-10 bg-[#9B958B] rounded-sm" style={{ height: '90px' }}></div>
-                    <div className="w-10 bg-[#9B958B] rounded-sm" style={{ height: '65px' }}></div>
-                    <div className="w-10 bg-[#9B958B] rounded-sm" style={{ height: '55px' }}></div>
-                    <div className="w-10 bg-[#9B958B] rounded-sm" style={{ height: '95px' }}></div>
+            {/* Antes e depois */}
+            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 my-10 not-prose">
+              <div className="rounded-2xl border border-[#E2DCD4] bg-[#FAF9F7] p-8 flex flex-col">
+                <span className="self-start rounded-full bg-[#ECE7E1] px-3 py-1 text-[12px] font-semibold text-[#6F625B]">Antes</span>
+                <h3 className="font-serif text-2xl font-bold text-[#241510] mt-4">Dashboard descritivo</h3>
+                <ul className="mt-4 space-y-2 text-[14px] text-[#4F4440]">
+                  {['Responde "o que já aconteceu"', 'Indicadores históricos e acumulados', 'Navegação colaborador por colaborador'].map(t => (
+                    <li key={t} className="flex gap-2"><span className="mt-[8px] w-1.5 h-1.5 rounded-full bg-[#9B908A] shrink-0" />{t}</li>
+                  ))}
+                </ul>
+                <div className="mt-auto pt-8">
+                  <div className="flex items-end gap-2.5 h-24">
+                    {[45, 80, 58, 48, 88, 62].map((h, i) => <span key={i} className="flex-1 rounded-t-lg bg-[#D6CFC7]" style={{ height: `${h}%` }} />)}
                   </div>
-                  <p className="text-sm italic text-[#787265] mb-2 font-medium">
-                    Gráficos que olham para <strong className="font-bold text-[#4A5559]">trás</strong>
-                  </p>
-                  <div className="text-[#C07830] text-4xl font-bold">
-                    ←
-                  </div>
-                </div>
-
-                {/* Seta/Indicador Visual entre Colunas */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[20px] w-0 h-0 border-t-[26px] border-t-transparent border-b-[26px] border-b-transparent border-l-[26px] border-l-[#E2DDD5] z-20 hidden md:block"></div>
-              </div>
-
-              {/* Coluna 2: DEPOIS */}
-              <div className="w-full md:w-1/2 bg-[#F9F8F6] p-14 flex flex-col justify-between">
-                <div>
-                  <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-wider block mb-4">Depois</span>
-                  <h3 className="font-serif text-3xl font-bold text-[#2C3539] mb-6">Visão Operacional</h3>
-                  <ul className="space-y-3 text-sm text-[#4A5559] list-disc pl-5">
-                    <li>Responde "o que precisa de ação agora"</li>
-                    <li>Risco, previsibilidade e janelas de contratação</li>
-                    <li>Foco em quem está parado e por quê</li>
-                  </ul>
-                </div>
-
-                <div className="mt-12 flex flex-col items-center">
-                  {/* Timeline/Horizontal Lanes Mock */}
-                  <div className="w-full max-w-[240px] h-28 flex flex-col justify-center gap-2 mb-4">
-                    <div className="w-[75%] h-3.5 bg-[#C0BEB8] rounded-full"></div>
-                    <div className="w-[45%] h-3.5 bg-[#C0BEB8] rounded-full ml-[15%]"></div>
-                    <div className="w-[55%] h-3.5 bg-[#C0BEB8] rounded-full ml-[30%]"></div>
-                    <div className="w-[25%] h-3.5 bg-[#C0BEB8] rounded-full ml-[68%]"></div>
-                    <div className="w-[45%] h-3.5 bg-[#006266] rounded-full ml-[55%]"></div>
-                  </div>
-                  <p className="text-sm italic text-[#787265] mb-2 font-medium">
-                    Gráficos que olham para <strong className="font-bold text-[#006266]">Frente</strong>
-                  </p>
-                  <div className="text-[#006266] text-4xl font-bold">
-                    →
-                  </div>
+                  <p className="mt-4 flex items-center gap-2 text-[13px] font-semibold text-[#6F625B]"><ArrowLeft size={16} /> Gráficos que olham para trás</p>
                 </div>
               </div>
+
+              <div className="rounded-2xl bg-[#2E211B] p-8 flex flex-col text-white">
+                <span className="self-start rounded-full bg-[#9E4322] px-3 py-1 text-[12px] font-semibold">Depois</span>
+                <h3 className="font-serif text-2xl font-bold mt-4">Visão operacional</h3>
+                <ul className="mt-4 space-y-2 text-[14px] text-white/80">
+                  {['Responde "o que precisa de ação agora"', 'Risco, previsibilidade e janelas de contratação', 'Foco em quem está parado e por quê'].map(t => (
+                    <li key={t} className="flex gap-2"><span className="mt-[8px] w-1.5 h-1.5 rounded-full bg-[#E8A27C] shrink-0" />{t}</li>
+                  ))}
+                </ul>
+                <div className="mt-auto pt-8">
+                  <div className="flex flex-col justify-center gap-2.5 h-24">
+                    {[[0, 70], [12, 45], [28, 52], [62, 26], [50, 46]].map(([ml, w], i) => (
+                      <span key={i} className="h-3 rounded-full" style={{ marginLeft: `${ml}%`, width: `${w}%`, background: i === 4 ? '#E8A27C' : 'rgb(255 255 255 / .18)' }} />
+                    ))}
+                  </div>
+                  <p className="mt-4 flex items-center gap-2 text-[13px] font-semibold text-[#E8A27C]">Gráficos que olham para frente <ArrowRight size={16} /></p>
+                </div>
+              </div>
+
+              <span className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white border border-[#E2DCD4] items-center justify-center text-[#9E4322] shadow-sm">
+                <ArrowRight size={18} />
+              </span>
             </div>
           </div>
 
           {/* Seção 9: Mais Insights */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Mais insights</span>
-            <h2 id="insights" className="font-serif text-3xl font-bold text-[#2C3539] mb-8">Cinco aprendizados sobre a rotina do DP</h2>
+            <h2 id="insights" className="font-serif text-3xl font-bold text-[#241510] mb-8">Cinco aprendizados sobre a rotina do DP</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 not-prose">
-              <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 p-8 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                <span className="text-[#006266] font-mono text-xs uppercase font-bold tracking-widest mb-2 block">Insight 01</span>
-                <h4 className="font-sans font-bold text-[#2C3539] text-base mb-1">A operação acontece por janelas</h4>
-                <p className="text-xs text-[#787265] leading-relaxed">
-                  A unidade de trabalho é o lote de admissões, não cada colaborador individualmente.
-                </p>
-              </div>
-              <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 p-8 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                <span className="text-[#006266] font-mono text-xs uppercase font-bold tracking-widest mb-2 block">Insight 02</span>
-                <h4 className="font-sans font-bold text-[#2C3539] text-base mb-1">O problema não é o tempo médio</h4>
-                <p className="text-xs text-[#787265] leading-relaxed">
-                  Os usuários querem identificar rapidamente quem está parado, há quanto tempo e por qual motivo.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose">
-              <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 p-8 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                <span className="text-[#006266] font-mono text-xs uppercase font-bold tracking-widest mb-2 block">Insight 03</span>
-                <h4 className="font-sans font-bold text-[#2C3539] text-base mb-1">Operação fora do produto</h4>
-                <p className="text-xs text-[#787265] leading-relaxed">
-                  Planilhas paralelas eram utilizadas para controlar prazos e preparar reuniões de acompanhamento.
-                </p>
-              </div>
-              <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 p-8 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                <span className="text-[#006266] font-mono text-xs uppercase font-bold tracking-widest mb-2 block">Insight 04</span>
-                <h4 className="font-sans font-bold text-[#2C3539] text-base mb-1">Gargalos estruturais</h4>
-                <p className="text-xs text-[#787265] leading-relaxed">
-                  A etapa do ASO (Atestado de Saúde Ocupacional) concentrava a maior parte dos atrasos do processo.
-                </p>
-              </div>
-              <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 p-8 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                <span className="text-[#006266] font-mono text-xs uppercase font-bold tracking-widest mb-2 block">Insight 05</span>
-                <h4 className="font-sans font-bold text-[#2C3539] text-base mb-1">Papel do dashboard</h4>
-                <p className="text-xs text-[#787265] leading-relaxed">
-                  O produto deveria evoluir de análises históricas retrospectivas para diagnósticos de ação e recomendações.
-                </p>
-              </div>
+            <div className="not-prose border-y border-[#E2DCD4] divide-y divide-[#E2DCD4]">
+              {[
+                { title: 'A operação acontece por janelas', text: 'A unidade de trabalho é o lote de admissões, não cada colaborador.' },
+                { title: 'O problema não é o tempo médio', text: 'O DP quer ver rápido quem está parado, há quanto tempo e por quê.' },
+                { title: 'Operação fora do produto', text: 'Planilhas paralelas controlavam prazos e preparavam reuniões.' },
+                { title: 'Gargalos estruturais', text: 'A etapa do ASO concentrava a maior parte dos atrasos.' },
+                { title: 'Papel do dashboard', text: 'Evoluir de histórico para diagnóstico e recomendação de ação.' },
+              ].map(({ title, text }, i) => (
+                <div key={title} className="flex items-start gap-4 py-4">
+                  <span className="text-[13px] font-semibold text-[#9E4322] tabular-nums mt-0.5 shrink-0">0{i + 1}</span>
+                  <p className="text-[15px] leading-relaxed">
+                    <span className="font-semibold text-[#241510]">{title}.</span>{' '}
+                    <span className="text-[#6F625B]">{text}</span>
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Seção 10: Como isso mudou a solução */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Priorização</span>
-            <h2 id="priorizacao" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Dividindo a entrega em frentes de valor</h2>
+            <h2 id="priorizacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Dividindo a entrega em frentes de valor</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 not-prose mb-12">
-              {/* Quick Wins Column */}
-              <div>
-                <div className="flex items-center gap-2 mb-6">
-                  <CheckCircle size={22} className="text-[#006266] stroke-[2.5] shrink-0" />
-                  <h4 className="font-serif font-bold text-[#006266] text-xl">Quick wins</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose mb-10">
+              {[
+                { title: 'Quick wins', Icon: CheckCircle, color: '#9E4322', bg: '#FAF9F6', items: ['Filtro por janelas de admissão', 'Visão centralizada de gargalos', 'Exportações completas', 'Configuração de SLA', 'Explicações contextuais das métricas'] },
+                { title: 'Evoluções estruturais', Icon: AlertCircle, color: '#BF6A02', bg: '#FAF6F0', items: ['Ações em lote', 'Identificação do responsável', 'Alertas preventivos', 'Monitoramento automático de SLA', 'Integrações com ASO'] },
+              ].map(col => (
+                <div key={col.title} className="rounded-2xl p-5" style={{ background: col.bg }}>
+                  <h4 className="flex items-center gap-2 font-serif font-bold text-[16px] mb-3" style={{ color: col.color }}>
+                    <col.Icon size={16} /> {col.title}
+                  </h4>
+                  <ul className="space-y-2">
+                    {col.items.map(item => (
+                      <li key={item} className="flex gap-2 text-[14px] leading-snug text-[#4F4440]">
+                        <span className="mt-[7px] w-1.5 h-1.5 rounded-full shrink-0" style={{ background: col.color }} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-
-                <div className="space-y-3">
-                  <div className="border-l-3 border-[#006266] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Filtro por janelas de admissão</p>
-                  </div>
-                  <div className="border-l-3 border-[#006266] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Visão centralizada de gargalos</p>
-                  </div>
-                  <div className="border-l-3 border-[#006266] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Exportações completas</p>
-                  </div>
-                  <div className="border-l-3 border-[#006266] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Configuração de SLA</p>
-                  </div>
-                  <div className="border-l-3 border-[#006266] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Explicações contextuais das métricas</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Evoluções Estruturais Column */}
-              <div>
-                <div className="flex items-center gap-2 mb-6">
-                  <AlertCircle size={22} className="text-[#BF6A02] stroke-[2.5] shrink-0" />
-                  <h4 className="font-serif font-bold text-[#BF6A02] text-xl">Evoluções estruturais</h4>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="border-l-3 border-[#BF6A02] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Ações em lote</p>
-                  </div>
-                  <div className="border-l-3 border-[#BF6A02] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Identificação do responsável</p>
-                  </div>
-                  <div className="border-l-3 border-[#BF6A02] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Alertas preventivos</p>
-                  </div>
-                  <div className="border-l-3 border-[#BF6A02] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Monitoramento automático de SLA</p>
-                  </div>
-                  <div className="border-l-3 border-[#BF6A02] bg-[#FAF9F6] p-5 rounded-r-lg hover:bg-[#FAF9F6]/80 transition-all duration-300">
-                    <p className="text-sm font-sans font-semibold text-[#2C3539]">Integrações com ASO</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
 
             <img
@@ -679,21 +541,20 @@ export const DashboardAdmissaoContent = () => {
               alt="Material One Page estratégico"
             />
             {/* Legenda */}
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">
               One Page apresentando os aprendizados do discovery
             </p>
           </div>
 
           {/* Seção 11: Preparando o Handoff */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Handoff</span>
-            <h2 id="handoff" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Telas funcionais e cenários de estresse</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-6">
+            <h2 id="handoff" className="font-serif text-3xl font-bold text-[#241510] mb-4">Telas funcionais e cenários de estresse</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-6">
               Após validar o direcionamento estratégico, utilizei o Cursor integrado ao MCP do Figma e ao Storybook para construir telas próximas do produto real. Desenhei comportamentos em cenários extremos, como grandes volumes de dados, indisponibilidade e estados de erro.
             </p>
 
             {/* Bloco de Imagens do Handoff (Full Screen 100% / Fundo Preto) */}
-            <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#151516] py-16 px-4 md:px-12 my-16 not-prose overflow-hidden">
+            <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#151516] py-16 px-4 md:px-12 my-16 not-prose overflow-hidden rounded-2xl">
               <div className="max-w-8xl mx-auto space-y-6">
                 {/* Card Superior Cursor */}
                 <div className="max-w-5xl mx-auto overflow-hidden mb-8 transition-transform duration-500 hover:scale-[1.01]">
@@ -730,7 +591,7 @@ export const DashboardAdmissaoContent = () => {
                 {/* Grid de 2 Cards: Cenários (Estresse) e Animações/Transições (Vídeo) */}
                 <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-6 pt-6">
                   {/* Card 1: Cenários */}
-                  <div className="bg-[#232427] p-6 md:p-8 flex flex-col justify-between border border-white/5 rounded-md">
+                  <div className="bg-[#232427] p-6 md:p-8 flex flex-col justify-between border border-white/5 rounded-2xl">
                     <div className="mb-6 overflow-hidden p-4 flex items-center justify-center min-h-[220px]">
                       <img
                         src={Estresse}
@@ -747,7 +608,7 @@ export const DashboardAdmissaoContent = () => {
                   </div>
 
                   {/* Card 2: Animações e Transições */}
-                  <div className="bg-[#232427] p-6 md:p-8 flex flex-col justify-between border border-white/5 rounded-md">
+                  <div className="bg-[#232427] p-6 md:p-8 flex flex-col justify-between border border-white/5 rounded-2xl">
                     <div className="mb-6 overflow-hidden rounded-md bg-[#18191B] flex items-center justify-center min-h-[220px]">
                       <video
                         src={dash22}
@@ -772,100 +633,55 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 12: O Papel da IA */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">O papel da IA</span>
-            <h2 id="papel-da-ia" className="font-serif text-3xl font-bold text-[#2C3539] mb-8">Três momentos cruciais onde a IA apoiou.</h2>
+            <h2 id="papel-da-ia" className="font-serif text-3xl font-bold text-[#241510] mb-8">Três momentos cruciais onde a IA apoiou</h2>
 
-            <div className="bg-[#1D5E65] p-8 md:p-12 text-white not-prose shadow-sm">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-                {/* Coluna 1: Discovery */}
-                <div className="border-l border-[#8BB1B6]/60 pl-6 flex flex-col justify-between min-h-[200px]">
-                  <div>
-                    <span className="text-[#B5D3D7] font-sans font-semibold text-xs uppercase tracking-wider block mb-3">DISCOVERY</span>
-                    <h3 className="font-sans font-normal text-white text-lg md:text-xl leading-snug">
-                      Consolidação de documentos e identificação de padrões.
-                    </h3>
-                  </div>
-                  <div className="mt-auto flex items-center">
-                    <img src={LogoLM} className="h-4" />
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose">
+              {[
+                { step: 'Discovery', text: 'Consolidação de documentos e identificação de padrões.', logo: LogoLM },
+                { step: 'Concepção', text: 'Prototipação rápida e exploração de alternativas.', logo: LogoGoogleIA },
+                { step: 'Handoff', text: 'Interfaces construídas com componentes reais do Design System.', logo: logocursor },
+              ].map(m => (
+                <div key={m.step} className="rounded-2xl bg-[#2E211B] p-6 flex flex-col min-h-[200px] text-white">
+                  <span className="text-[13px] font-semibold text-[#E8A27C]">{m.step}</span>
+                  <p className="text-[17px] leading-snug mt-2">{m.text}</p>
+                  <img src={m.logo} alt="" className="h-4 self-start mt-auto pt-6 box-content" />
                 </div>
-
-                {/* Coluna 2: Concepção */}
-                <div className="border-l border-[#8BB1B6]/60 pl-6 flex flex-col justify-between min-h-[200px]">
-                  <div>
-                    <span className="text-[#B5D3D7] font-sans font-semibold text-xs uppercase tracking-wider block mb-3">CONCEPÇÃO</span>
-                    <h3 className="font-sans font-normal text-white text-lg md:text-xl leading-snug">
-                      Prototipação rápida e exploração de alternativas.
-                    </h3>
-                  </div>
-                  <div className="mt-auto flex items-center">
-                    <img src={LogoGoogleIA} className="h-4" />
-                  </div>
-                </div>
-
-                {/* Coluna 3: Handoff */}
-                <div className="border-l border-[#8BB1B6]/60 pl-6 flex flex-col justify-between min-h-[200px]">
-                  <div>
-                    <span className="text-[#B5D3D7] font-sans font-semibold text-xs uppercase tracking-wider block mb-3">HANDOFF</span>
-                    <h3 className="font-sans font-normal text-white text-lg md:text-xl leading-snug">
-                      Construção de interfaces com componentes reais do Design System.
-                    </h3>
-                  </div>
-                  <div className="mt-auto flex items-center">
-                    <img src={logocursor} className="h-4" />
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* Seção 13: Resultados */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Resultado</span>
-            <h2 id="resultados" className="font-serif text-3xl font-bold text-[#2C3539] mb-8">Direcionamento estratégico validado</h2>
+            <h2 id="resultados" className="font-serif text-3xl font-bold text-[#241510] mb-4">Direcionamento estratégico validado</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              As melhorias seguiram para rollout antes de eu sair do projeto, e a evolução é acompanhada pelo time.
+            </p>
 
-            <div className="space-y-8 mb-12">
-              <div className="border-l-3 border-[#C0BEB8] p-10">
-                <p className="text-lg text-[#4A5559] leading-relaxed font-sans">
-                  O produto passou a ter uma <strong className="font-bold text-[#2C3539]">nova direção estratégica</strong>: sair de indicadores históricos e assumir uma visão operacional validada com clientes.
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose">
+              <div className="rounded-2xl border border-[#E2DCD4] p-6">
+                <p className="text-[15px] leading-relaxed text-[#4F4440]">
+                  <strong className="font-semibold text-[#241510]">Nova direção estratégica:</strong> sair de indicadores históricos para uma visão operacional validada com clientes.
                 </p>
               </div>
-
-              <div className="border-l-3 border-[#C0BEB8] p-10">
-                <p className="text-lg text-[#4A5559] leading-relaxed font-sans">
-                  Todos novos gráficos e <strong className="font-bold text-[#2C3539]">novas funcionalidades</strong> implementadas foram <strong className="font-bold text-[#2C3539]">validadas</strong> pelos usuários e irão seguir com confiança para o rollout.
+              <div className="rounded-2xl border border-[#E2DCD4] p-6">
+                <p className="text-[15px] leading-relaxed text-[#4F4440]">
+                  <strong className="font-semibold text-[#241510]">Funcionalidades validadas:</strong> todos os novos gráficos e recursos foram aprovados pelos usuários antes do rollout.
                 </p>
               </div>
             </div>
-
-            <p className="text-sm text-[#787265] leading-relaxed">
-              As melhorias do dahsboard seguiram para rollout antes de eu sair do projeto e a evolução será acompanhada pelo time.
-            </p>
           </div>
 
           {/* Minha Atuação */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">MINHA ATUAÇÃO</span>
-            <h2 id="minha-atuacao-simplificado" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Discovery, prototipação e handoff, ponta a ponta</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
-              A funcionalidade foi lançada como prova de conceito para uso interno antes de uma disponibilização mais ampla.
+            <h2 id="minha-atuacao-simplificado" className="font-serif text-3xl font-bold text-[#241510] mb-4">Discovery, prototipação e handoff, ponta a ponta</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              Atuei como Product Designer do time de Analytics, conduzindo o projeto do Discovery ao handoff.
             </p>
 
-            <div className="flex flex-wrap gap-3 not-prose">
-              {[
-                'Liderança do Discovery',
-                'Síntese de solicitações históricas',
-                'Definição de hipóteses',
-                'Protótipos rápidos (Google AI Studio)',
-                'Testes de usabilidade',
-                'Consolidação de insights (NotebookLM)',
-                'Handoff (Cursor + Figma + Storybook)'
-              ].map((item, index) => (
-                <span key={`${item}-${index}`} className="px-5 py-2.5 bg-white border border-[#DCD7CA] rounded-full text-sm font-semibold text-[#2C3539]">
-                  {item}
-                </span>
-              ))}
-            </div>
+            <AtuacaoInfo
+              projectId="dashboard-admissao"
+              methods={['Liderança do Discovery', 'Síntese de solicitações históricas', 'Definição de hipóteses', 'Protótipos rápidos (Google AI Studio)', 'Testes de usabilidade', 'Consolidação de insights (NotebookLM)', 'Handoff (Cursor + Figma + Storybook)']}
+            />
           </div>
         </>
       ) : (
@@ -921,7 +737,7 @@ export const DashboardAdmissaoContent = () => {
 
           <div className="my-12">
             <Gallery items={discoveryGalleryItems} />
-            <p className="text-center text-sm text-[#787265] mt-6 font-medium">Consolidação de solicitações históricas de clientes, cruzamento de dados de uso e mapeamento de dores operacionais.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-6 font-medium">Consolidação de solicitações históricas de clientes, cruzamento de dados de uso e mapeamento de dores operacionais.</p>
           </div>
 
           <h3 className="text-xl font-bold mb-4">Resultado da análise</h3>
@@ -933,10 +749,10 @@ export const DashboardAdmissaoContent = () => {
             <div className="bg-white p-6 rounded-2xl border border-[#E9E4DB] shadow-sm">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg font-bold">✅</span>
-                <h4 className="font-serif text-lg font-bold text-[#2C3539]">Já atendidos (via soluções pontuais em Superset/Metabase)</h4>
+                <h4 className="font-serif text-lg font-bold text-[#241510]">Já atendidos (via soluções pontuais em Superset/Metabase)</h4>
               </div>
-              <p className="text-[#787265] text-sm mb-3">A maioria dos pedidos históricos foi resolvida caso a caso, sem uma solução escalável:</p>
-              <ul className="list-disc pl-5 text-sm space-y-1 text-[#2C3539]">
+              <p className="text-[#6F625B] text-sm mb-3">A maioria dos pedidos históricos foi resolvida caso a caso, sem uma solução escalável:</p>
+              <ul className="list-disc pl-5 text-sm space-y-1 text-[#241510]">
                 <li>Dados de admissão e etapas (entrada/saída, SLA por etapa) — Panvel, Piracanjuba, Sabesp, Ecolabs, Ero Brasil, Usina Santa Adélia.</li>
                 <li>Volume de documentos (enviados, validados, reenviados, recusa) — validado via consulta paralela no Superset.</li>
                 <li>Relatórios customizados — Ailos (planilha manual), Panvel (2x).</li>
@@ -944,7 +760,7 @@ export const DashboardAdmissaoContent = () => {
                 <li>Créditos consumidos e quantidade de admissões concluídas — via queries específicas.</li>
                 <li>PPCs com documentos pendentes — automatizado via Airflow.</li>
               </ul>
-              <p className="text-[#787265] text-xs mt-3 italic">
+              <p className="text-[#6F625B] text-xs mt-3 italic">
                 <strong>Padrão importante:</strong> quase todos esses "atendidos" foram soluções manuais/pontuais no Superset, não algo nativo da plataforma — por isso a maioria aparece com a observação "poderíamos atender com gráficos e tabelas no Analisar Dados 2.0 + Self Service", ou seja, hoje são gambiarras que o produto deveria resolver nativamente.
               </p>
             </div>
@@ -952,9 +768,9 @@ export const DashboardAdmissaoContent = () => {
             <div className="bg-white p-6 rounded-2xl border border-[#E9E4DB] shadow-sm">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg font-bold">⚠️</span>
-                <h4 className="font-serif text-lg font-bold text-[#2C3539]">Alguns ainda não atendidos ou pendentes</h4>
+                <h4 className="font-serif text-lg font-bold text-[#241510]">Alguns ainda não atendidos ou pendentes</h4>
               </div>
-              <ul className="list-disc pl-5 text-sm space-y-1 text-[#2C3539]">
+              <ul className="list-disc pl-5 text-sm space-y-1 text-[#241510]">
                 <li>Funil de candidatura + admissão (RTE Rodonaves) — não localizado nos registros.</li>
                 <li>SLA de admissão no Dashboard Customizado — sem detalhes de empresa ou status.</li>
                 <li>Nome da mãe do dependente no relatório — pedido parado sem retorno.</li>
@@ -966,10 +782,10 @@ export const DashboardAdmissaoContent = () => {
             <div className="bg-white p-6 rounded-2xl border border-[#E9E4DB] shadow-sm">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg font-bold">🔴</span>
-                <h4 className="font-serif text-lg font-bold text-[#2C3539]">Pedidos recentes de clientes-chave (prioritários)</h4>
+                <h4 className="font-serif text-lg font-bold text-[#241510]">Pedidos recentes de clientes-chave (prioritários)</h4>
               </div>
-              <p className="text-[#787265] text-sm mb-3">Esse é o bloco mais relevante — pedidos de clientes grandes que ainda não têm solução, mas foram mapeados como prioritários para o "novo Analisar Dados":</p>
-              <ul className="list-disc pl-5 text-sm space-y-1 text-[#2C3539]">
+              <p className="text-[#6F625B] text-sm mb-3">Esse é o bloco mais relevante — pedidos de clientes grandes que ainda não têm solução, mas foram mapeados como prioritários para o "novo Analisar Dados":</p>
+              <ul className="list-disc pl-5 text-sm space-y-1 text-[#241510]">
                 <li>Dashboard consolidado com status em tempo real dos candidatos, filtros por etapa (Imediato Nexway, WEG, Axia Energia).</li>
                 <li>Funil completo cruzando R&S + Admissão digital (RTE Rodonaves, Central Ailos).</li>
                 <li>Visibilidade de admissões não iniciadas (Fortbras).</li>
@@ -995,7 +811,7 @@ export const DashboardAdmissaoContent = () => {
 
           <div className="my-12">
             <Gallery items={prototipacaoGalleryItems} />
-            <p className="text-center text-sm text-[#787265] mt-6 font-medium">Utilizamos o Google AI Studio para idear, criar diferentes versões do produto e gerar um protótipo funcional para os testes de usabilidade.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-6 font-medium">Utilizamos o Google AI Studio para idear, criar diferentes versões do produto e gerar um protótipo funcional para os testes de usabilidade.</p>
           </div>
 
           <h2 id="validacao-com-clientes" className="text-2xl font-bold mb-4">Validação com clientes</h2>
@@ -1014,7 +830,7 @@ export const DashboardAdmissaoContent = () => {
 
           <div className="my-12">
             <Gallery items={validacaoGalleryItems} />
-            <p className="text-center text-sm text-[#787265] mt-6 font-medium">Registros qualitativos de testes de usabilidade e síntese sistemática de insights colhidos com clientes reais.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-6 font-medium">Registros qualitativos de testes de usabilidade e síntese sistemática de insights colhidos com clientes reais.</p>
           </div>
 
           <h2 id="principal-descoberta" className="text-2xl font-bold mb-4">Principal descoberta</h2>
@@ -1035,47 +851,47 @@ export const DashboardAdmissaoContent = () => {
 
           <div className="my-12">
             <Gallery items={altaFidelidadeGalleryItems} />
-            <p className="text-center text-sm text-[#787265] mt-6 font-medium">Interface redesenhada de alta fidelidade: visão operacional focada no acompanhamento por janelas de contratação e detecção de riscos.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-6 font-medium">Interface redesenhada de alta fidelidade: visão operacional focada no acompanhamento por janelas de contratação e detecção de riscos.</p>
           </div>
 
           <h2 id="principais-insights" className="text-2xl font-bold mb-4">Mais insights</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-2xl border border-[#006266] shadow-sm hover:bg-[#006266]/5 transition-all duration-300 flex flex-col">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 01</span>
-              <h4 className="font-sans text-lg font-bold text-[#2C3539] mb-2">1. A operação acontece por janelas</h4>
-              <p className="text-[#4A5559] text-sm leading-relaxed">
+            <div className="bg-white p-6 rounded-2xl border border-[#9E4322] shadow-sm hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 01</span>
+              <h4 className="font-sans text-lg font-bold text-[#241510] mb-2">1. A operação acontece por janelas</h4>
+              <p className="text-[#4F4440] text-sm leading-relaxed">
                 A unidade de trabalho é o lote de admissões, não cada colaborador individualmente.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-[#006266] shadow-sm hover:bg-[#006266]/5 transition-all duration-300 flex flex-col">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 02</span>
-              <h4 className="font-sans text-lg font-bold text-[#2C3539] mb-2">2. O problema não é o tempo médio</h4>
-              <p className="text-[#4A5559] text-sm leading-relaxed">
+            <div className="bg-white p-6 rounded-2xl border border-[#9E4322] shadow-sm hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 02</span>
+              <h4 className="font-sans text-lg font-bold text-[#241510] mb-2">2. O problema não é o tempo médio</h4>
+              <p className="text-[#4F4440] text-sm leading-relaxed">
                 Os usuários querem identificar rapidamente quem está parado, há quanto tempo e por qual motivo.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-[#006266] shadow-sm hover:bg-[#006266]/5 transition-all duration-300 flex flex-col">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 03</span>
-              <h4 className="font-sans text-lg font-bold text-[#2C3539] mb-2">3. A operação acontece fora da plataforma</h4>
-              <p className="text-[#4A5559] text-sm leading-relaxed">
+            <div className="bg-white p-6 rounded-2xl border border-[#9E4322] shadow-sm hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 03</span>
+              <h4 className="font-sans text-lg font-bold text-[#241510] mb-2">3. A operação acontece fora da plataforma</h4>
+              <p className="text-[#4F4440] text-sm leading-relaxed">
                 Planilhas paralelas eram utilizadas para controlar prazos, acompanhar candidatos e preparar reuniões.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-[#006266] shadow-sm hover:bg-[#006266]/5 transition-all duration-300 flex flex-col">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 04</span>
-              <h4 className="font-sans text-lg font-bold text-[#2C3539] mb-2">4. Gargalos estruturais</h4>
-              <p className="text-[#4A5559] text-sm leading-relaxed">
+            <div className="bg-white p-6 rounded-2xl border border-[#9E4322] shadow-sm hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 04</span>
+              <h4 className="font-sans text-lg font-bold text-[#241510] mb-2">4. Gargalos estruturais</h4>
+              <p className="text-[#4F4440] text-sm leading-relaxed">
                 A etapa do ASO concentrava atrasos devido à ausência de integrações.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-[#006266] shadow-sm hover:bg-[#006266]/5 transition-all duration-300 flex flex-col md:col-span-2">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 05</span>
-              <h4 className="font-sans text-lg font-bold text-[#2C3539] mb-2">5. Evolução do papel do dashboard</h4>
-              <p className="text-[#4A5559] text-sm leading-relaxed">
+            <div className="bg-white p-6 rounded-2xl border border-[#9E4322] shadow-sm hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col md:col-span-2">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 05</span>
+              <h4 className="font-sans text-lg font-bold text-[#241510] mb-2">5. Evolução do papel do dashboard</h4>
+              <p className="text-[#4F4440] text-sm leading-relaxed">
                 O produto deveria evoluir de análises históricas para diagnósticos e recomendações de ação.
               </p>
             </div>
@@ -1088,8 +904,8 @@ export const DashboardAdmissaoContent = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="bg-white p-0">
-              <h4 className="font-serif text-lg font-bold text-[#006266] mb-3">⚡ Quick Wins</h4>
-              <ul className="list-disc pl-5 text-sm space-y-2 text-[#2C3539]">
+              <h4 className="font-serif text-lg font-bold text-[#9E4322] mb-3">⚡ Quick Wins</h4>
+              <ul className="list-disc pl-5 text-sm space-y-2 text-[#241510]">
                 <li>filtro por janelas de admissão;</li>
                 <li>visão centralizada de gargalos;</li>
                 <li>exportações completas;</li>
@@ -1100,8 +916,8 @@ export const DashboardAdmissaoContent = () => {
             </div>
 
             <div className="bg-white p-0">
-              <h4 className="font-serif text-lg font-bold text-[#006266] mb-3">🚀 Evoluções estruturais</h4>
-              <ul className="list-disc pl-5 text-sm space-y-2 text-[#2C3539]">
+              <h4 className="font-serif text-lg font-bold text-[#9E4322] mb-3">🚀 Evoluções estruturais</h4>
+              <ul className="list-disc pl-5 text-sm space-y-2 text-[#241510]">
                 <li>ações em lote;</li>
                 <li>identificação do responsável;</li>
                 <li>alertas preventivos;</li>
@@ -1113,7 +929,7 @@ export const DashboardAdmissaoContent = () => {
 
           <div className="my-12">
             <Gallery items={onePageGalleryItems} />
-            <p className="text-center text-sm text-[#787265] mt-6 font-medium">One page criada no google ia studios, consolidando os feedbacks e o direcionamento estratégico do novo Dashboard.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-6 font-medium">One page criada no google ia studios, consolidando os feedbacks e o direcionamento estratégico do novo Dashboard.</p>
           </div>
 
           <h2 id="preparando-o-handoff" className="text-2xl font-bold mb-4">Preparando o handoff</h2>
@@ -1133,11 +949,11 @@ export const DashboardAdmissaoContent = () => {
 
           <div className="my-12">
             <Gallery items={handoffGalleryItems} />
-            <p className="text-center text-sm text-[#787265] mt-6 font-medium">Imagens geradas no Cursor, onde construímos as telas alinhadas ao Design System, incluindo testes de cenários de estresse para garantir a resiliência da interface no handoff.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-6 font-medium">Imagens geradas no Cursor, onde construímos as telas alinhadas ao Design System, incluindo testes de cenários de estresse para garantir a resiliência da interface no handoff.</p>
           </div>
 
           <div className="my-12">
-            <div className="w-full overflow-hidden rounded-[2rem] border border-[#DCD7CA] bg-black">
+            <div className="w-full overflow-hidden rounded-[2rem] border border-[#E2DCD4] bg-black">
               <video
                 src={dash22}
                 controls
@@ -1148,7 +964,7 @@ export const DashboardAdmissaoContent = () => {
                 Seu navegador não suporta a reprodução de vídeos.
               </video>
             </div>
-            <p className="text-center text-sm text-[#787265] mt-6 font-medium">Com o Cursor, conseguimos desenhar animações e interações nas páginas de forma mais simples e tangível.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-6 font-medium">Com o Cursor, conseguimos desenhar animações e interações nas páginas de forma mais simples e tangível.</p>
           </div>
 
           <h2 id="o-papel-da-ia" className="text-2xl font-bold mb-4">O papel da IA</h2>
@@ -1178,7 +994,7 @@ export const DashboardAdmissaoContent = () => {
 
           <h2 id="reflexao" className="text-2xl font-bold mb-4">Reflexão</h2>
           <p className="mb-6 leading-relaxed">O maior aprendizado não foi apenas redesenhar um dashboard.</p>
-          <blockquote className="border-l-4 border-[#006266] pl-4 italic text-[#787265] mb-6 text-xl">
+          <blockquote className="border-l-4 border-[#9E4322] pl-4 italic text-[#6F625B] mb-6 text-xl">
             Foi perceber que dashboards tradicionais continuam sendo importantes para análises históricas, enquanto informações operacionais fazem mais sentido quando integradas ao fluxo diário do produto.
           </blockquote>
           <p className="mb-8 leading-relaxed">

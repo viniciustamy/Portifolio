@@ -81,14 +81,14 @@ export function Carousel({ images }: CarouselProps) {
       {/* Navigation Buttons */}
       <button 
         onClick={goToPrevious}
-        className="absolute top-1/2 -translate-y-1/2 left-4 bg-white/80 hover:bg-white text-[#2C3539] p-2 rounded-full shadow-md transition-colors z-10"
+        className="absolute top-1/2 -translate-y-1/2 left-4 bg-white/80 hover:bg-white text-[#241510] p-2 rounded-full shadow-md transition-colors z-10"
         aria-label="Previous image"
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
       <button 
         onClick={goToNext}
-        className="absolute top-1/2 -translate-y-1/2 right-4 bg-white/80 hover:bg-white text-[#2C3539] p-2 rounded-full shadow-md transition-colors z-10"
+        className="absolute top-1/2 -translate-y-1/2 right-4 bg-white/80 hover:bg-white text-[#241510] p-2 rounded-full shadow-md transition-colors z-10"
         aria-label="Next image"
       >
         <ChevronRight className="w-6 h-6" />
@@ -101,7 +101,7 @@ export function Carousel({ images }: CarouselProps) {
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-2.5 h-2.5 rounded-full transition-colors ${
-              currentIndex === index ? 'bg-[#2C3539]' : 'bg-[#2C3539]/30 hover:bg-[#2C3539]/50'
+              currentIndex === index ? 'bg-[#241510]' : 'bg-[#241510]/30 hover:bg-[#241510]/50'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

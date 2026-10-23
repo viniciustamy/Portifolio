@@ -7,8 +7,18 @@ import { motion } from 'motion/react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { FloatingPostHeader } from '../components/FloatingPostHeader';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useAssistedPageScroll } from '../hooks/useAssistedPageScroll';
 import { Button } from '../components/ui/Button';
 import { Typography } from '../components/ui/Typography';
+import { AtuacaoInfo, HAS_OWN_ATUACAO } from '../components/AtuacaoInfo';
+import { DevolutivaLaptopMotion } from '../components/DevolutivaLaptopMotion';
+import { DashboardLaptopMotion } from '../components/DashboardLaptopMotion';
+
+// Cases cujo hero é o notebook animado no lugar da imagem de capa
+const LAPTOP_HEROES: Record<string, () => any> = {
+  devolutiva: DevolutivaLaptopMotion,
+  'dashboard-admissao': DashboardLaptopMotion,
+};
 
 export default function Project() {
   const { id } = useParams();
@@ -22,6 +32,8 @@ export default function Project() {
 
   const [sections, setSections] = useState<{ id: string; text: string }[]>([]);
   const [isPresentationOpen, setIsPresentationOpen] = useState(false);
+  // Scroll assistido entre as seções do case (desligado com a apresentação aberta)
+  useAssistedPageScroll(!!project && !isPresentationOpen);
   const [isSimplified, setIsSimplified] = useState(false);
 
   // Use the new Scroll Spy hook
@@ -203,34 +215,14 @@ export default function Project() {
 
   }, [id, project?.content, project?.contentHtml]);
 
-  const rolesList = Array.isArray(project.roles)
-    ? project.roles
-    : project.roles
-      ? [project.roles]
-      : project.role
-        ? [project.role]
-        : ['Product Design'];
-
-  const toolsList = Array.isArray(project.tools)
-    ? project.tools
-    : project.tools
-      ? [project.tools]
-      : ['Figma', 'Claude', 'Cursor'];
-
-  const teamList = Array.isArray(project.team)
-    ? project.team
-    : project.team
-      ? [project.team]
-      : ['Time de Produto'];
-
   return (
     <div className="animate-in fade-in duration-500 bg-white min-h-screen">
       <FloatingPostHeader title={project.title} />
 
       {/* Project Content Grid */}
-      <div className="p-6 md:p-10 max-w-[1100px] xl:max-w-[1380px] mx-auto flex flex-col xl:flex-row xl:justify-center gap-12 xl:gap-12 2xl:gap-16 relative pt-8 md:pt-12">
+      <div className="p-6 md:p-10 max-w-[950px] xl:max-w-[1230px] mx-auto flex flex-col xl:flex-row xl:justify-center gap-12 xl:gap-12 2xl:gap-16 relative pt-8 md:pt-12">
         {/* Main Content Area */}
-        <div className="flex-1 min-w-0 w-full max-w-[1100px] order-2 xl:order-1">
+        <div className="flex-1 min-w-0 w-full max-w-[950px] order-2 xl:order-1">
           {/* Breadcrumb back navigation link */}
           <div className="mb-8">
             <Button variant="ghost" size="sm" className="group text-muted-foreground hover:text-primary hover:bg-transparent -ml-3" asChild>
@@ -266,20 +258,16 @@ export default function Project() {
           </div>
 
           {/* Hero Image / Animation (Main Image) */}
-          {project.id === 'devolutiva' ? (
+          {LAPTOP_HEROES[project.id] ? (
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mb-12 not-prose flex justify-center overflow-visible"
+              className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mb-24 not-prose flex justify-center overflow-visible"
             >
-              <iframe
-                src={`/animacao-notebook.html?v=${Date.now()}`}
-                title="Mockup da Solução Final"
-                className="w-full max-w-[1600px] border-0 px-4"
-                style={{ height: '70vh', minHeight: '620px', maxHeight: '850px' }}
-                scrolling="no"
-              />
+              <div className="w-full max-w-[1020px] px-4">
+                {(() => { const Hero = LAPTOP_HEROES[project.id]; return <Hero />; })()}
+              </div>
             </motion.div>
           ) : (project.coverImage || project.thumbnail) && (
             <motion.div
@@ -297,71 +285,6 @@ export default function Project() {
             </motion.div>
           )}
 
-          {/* Metadata Columns: Roles, Ferramentas, Time */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 py-8 mb-12">
-            <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-muted-foreground uppercase mb-3">
-                ROLES
-              </h4>
-              <div className="text-[14px] font-medium text-[#2C3539] space-y-1.5">
-                {rolesList.map((r, i) => (
-                  <p key={i}>{r}</p>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-muted-foreground uppercase mb-3">
-                FERRAMENTAS
-              </h4>
-              <div className="text-[14px] font-medium text-primary space-y-1.5">
-                {toolsList.map((t, i) => (
-                  <p key={i}>{t}</p>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-[11px] font-bold tracking-widest text-muted-foreground uppercase mb-3">
-                TIME
-              </h4>
-              <div className="text-[14px] font-medium text-primary space-y-1.5">
-                {teamList.map((tm, i) => (
-                  <p key={i}>{tm}</p>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* TLDR Block */}
-          {project.tldr && (
-            <div className="mb-16">
-              <p className="text-[12px] font-bold tracking-widest text-brand uppercase mb-4">
-                TL;DR
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose">
-                <div className="bg-card border border-border p-10 flex flex-col justify-between hover:border-brand/20 transition-all duration-300">
-                  <div>
-                    <span className="text-muted-foreground font-sans font-bold text-[11px] uppercase tracking-wider block mb-3">PROBLEMA</span>
-                    <p className="text-sm font-sans text-muted-foreground leading-relaxed">{project.tldr.problem}</p>
-                  </div>
-                </div>
-                <div className="bg-card border border-border p-10 flex flex-col justify-between hover:border-brand/20 transition-all duration-300">
-                  <div>
-                    <span className="text-muted-foreground font-sans font-bold text-[11px] uppercase tracking-wider block mb-3">O QUE EU FIZ</span>
-                    <p className="text-sm font-sans text-muted-foreground leading-relaxed">{project.tldr.action}</p>
-                  </div>
-                </div>
-                <div className="bg-brand p-10 flex flex-col justify-between transition-all duration-300 text-brand-foreground">
-                  <div>
-                    <span className="text-white/80 font-sans font-bold text-[11px] uppercase tracking-wider block mb-3">RESULTADO</span>
-                    <p className="text-sm font-sans text-white leading-relaxed font-semibold">{project.tldr.result}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
           <div
             onClick={handleImageClick}
             className="project-content-container prose prose-lg prose-p:text-muted-foreground prose-headings:font-serif prose-headings:text-primary prose-h2:mt-24 first:prose-h2:mt-0 prose-h3:mt-16 max-w-none"
@@ -377,8 +300,8 @@ export default function Project() {
                   Aqui você poderá detalhar todo o processo de discovery, definição do problema e arquitetura da solução. O espaço está pronto para receber os textos e documentar o raciocínio por trás de cada decisão.
                 </p>
 
-                <div className="w-full aspect-[16/9] bg-[#EBE7DD] rounded-[2rem] flex items-center justify-center my-12 border border-[#DCD7CA]">
-                  <span className="text-[#787265] font-medium tracking-widest uppercase text-sm">Espaço para Imagem</span>
+                <div className="w-full aspect-[16/9] bg-[#E2DCD4] rounded-[2rem] flex items-center justify-center my-12 border border-[#E2DCD4]">
+                  <span className="text-[#6F625B] font-medium tracking-widest uppercase text-sm">Espaço para Imagem</span>
                 </div>
 
                 <h2 className="text-2xl font-bold mb-4">O Problema</h2>
@@ -386,10 +309,10 @@ export default function Project() {
                   Descreva o cenário atual, as dores dos usuários e as métricas que justificaram a necessidade desta iniciativa.
                 </p>
 
-                <div className="my-16 bg-[#EBE7DD] p-10 lg:p-16 rounded-[2rem] flex items-center justify-center">
+                <div className="my-16 bg-[#E2DCD4] p-10 lg:p-16 rounded-[2rem] flex items-center justify-center">
                   <div className="w-full max-w-[500px] bg-white rounded-xl shadow-lg p-6 border border-black/5">
                     <div className="flex gap-3 mb-6 items-center">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#006266] to-[#6DB2B3]"></div>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#9E4322] to-[#6DB2B3]"></div>
                       <div>
                         <div className="w-32 h-3 bg-[#E2DFD6] rounded-full mb-2"></div>
                         <div className="w-24 h-2 bg-[#F4F3EE] rounded-full"></div>
@@ -408,7 +331,7 @@ export default function Project() {
                   Apresente a proposta de valor, como ela endereça o problema e quais foram os principais aprendizados e resultados alcançados com o lançamento.
                 </p>
 
-                <ul className="list-disc pl-5 mb-8 space-y-2 text-[#4A5559]">
+                <ul className="list-disc pl-5 mb-8 space-y-2 text-[#4F4440]">
                   <li><strong>Design System:</strong> Atualização dos tokens e adaptação dos componentes.</li>
                   <li><strong>Acessibilidade:</strong> Contraste aprimorado e suporte a navegação.</li>
                   <li><strong>Métricas:</strong> Impacto direto nas taxas de sucesso ou retenção da feature.</li>
@@ -416,6 +339,14 @@ export default function Project() {
               </>
             )}
           </div>
+
+          {/* Minha atuação: papel, time, ferramentas e métodos (para quem não tem a seção no conteúdo) */}
+          {!HAS_OWN_ATUACAO.includes(project.id) && (
+            <div className="mt-24">
+              <h2 id="minha-atuacao" className="font-serif text-3xl font-bold text-[#241510] mb-8">Minha atuação</h2>
+              <AtuacaoInfo projectId={project.id} />
+            </div>
+          )}
 
           {/* Next Project Footer */}
           <div className="mt-24 pt-12 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">

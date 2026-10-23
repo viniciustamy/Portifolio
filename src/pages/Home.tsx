@@ -1,434 +1,342 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { skills } from '../data';
-import { ChevronRight } from 'lucide-react';
-import { useProjects } from '../context/ProjectsContext';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { Bot, BrainCircuit, ChartColumn, ChevronRight, Download, Instagram, Linkedin, MessageCircle, Shapes } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { useProjects, ProjectData } from '../context/ProjectsContext';
 import { motion } from 'motion/react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useCardFocus } from '../hooks/useCardFocus';
+import { DevolutivaThumbMotion } from '../components/DevolutivaThumbMotion';
+import { DashboardThumbMotion } from '../components/DashboardThumbMotion';
+import { AdminThumbMotion } from '../components/AdminThumbMotion';
+import { KbaThumbMotion } from '../components/KbaThumbMotion';
+
+const socials = [
+  { href: 'https://www.linkedin.com/in/viniciustamy', label: 'LinkedIn', icon: Linkedin },
+  { href: 'https://www.instagram.com/viniciustamy', label: 'Instagram', icon: Instagram },
+  { href: 'https://wa.me/5524974020554', label: 'WhatsApp', icon: MessageCircle },
+];
+
+// Coloque o arquivo do currículo em public/curriculo.pdf
+const RESUME_URL = '/curriculo.pdf';
+
+// Posição do scroll da coluna direita, para voltar no mesmo ponto ao sair de um projeto
+const SCROLL_KEY = 'home-content-scroll';
+
+// Cor de fundo escura pede texto claro
+function isDark(hex: string) {
+  const n = parseInt(hex.slice(1), 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return 0.299 * r + 0.587 * g + 0.114 * b < 150;
+}
+
+// Ícone de cada card de "Outros trabalhos"
+const workIcons: Record<string, LucideIcon> = {
+  'ia-dia-dia': BrainCircuit,
+  'framework-dynamics': Shapes,
+  'orquestracao-agentes': Bot,
+  'analise-metricas': ChartColumn,
+};
+
+// Thumbs animadas dos cases: tocam só enquanto o card está em foco (ver useCardFocus)
+const caseMotions: Record<string, typeof DevolutivaThumbMotion> = {
+  devolutiva: DevolutivaThumbMotion,
+  'dashboard-admissao': DashboardThumbMotion,
+  'admin-global-docs': AdminThumbMotion,
+  'kba-senha': KbaThumbMotion,
+};
+
+// Anel branco + sombra suave; no hover só a capa interna (.card-cover) cresce — ver index.css
+const cardFrame = 'card-interactive';
+
+function ProjectMeta({ project, tagColor }: { project: ProjectData; tagColor: string }) {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <p className={`text-[13px] font-medium line-clamp-1 ${tagColor}`}>
+        {project.tag}
+      </p>
+      {project.readingTime && (
+        <span className="flex items-center gap-2">
+          <span className="w-1 h-1 rounded-full bg-current opacity-40" />
+          <span className="text-[13px] opacity-80 whitespace-nowrap">
+            {project.readingTime}
+          </span>
+        </span>
+      )}
+    </div>
+  );
+}
+
+// Case: card largo, fundo pintado com a cor predominante da thumbnail, título à esquerda e imagem à direita
+// (`key` declarado nos cards porque o projeto não tem @types/react instalado)
+function CaseCard({ project }: { project: ProjectData; key?: string }) {
+  const thumbBg = project.thumbnail ? project.thumbBg : undefined;
+  const lightText = thumbBg ? isDark(thumbBg) : false;
+  const textColor = thumbBg ? (lightText ? 'text-white' : 'text-[#241510]') : project.textColor;
+  const tagColor = thumbBg ? (lightText ? 'text-white/75' : 'text-[#6F625B]') : project.tagColor;
+  const ThumbMotion = caseMotions[project.id];
+  const [cardRef, focused] = useCardFocus<HTMLAnchorElement>();
+
+  return (
+    <Link
+      ref={cardRef}
+      data-snap="center"
+      to={`/project/${project.id}`}
+      className={`block w-full shrink-0 ${thumbBg ? 'h-[105vw]' : 'h-[60vw]'} md:h-[500px] min-h-[260px] lg:snap-center lg:snap-always ${thumbBg ? '' : project.bg} rounded-2xl relative overflow-hidden group ${cardFrame} ${thumbBg ? 'grid grid-rows-[1fr_auto] md:grid-rows-1 md:grid-cols-[2fr_3fr]' : 'flex flex-col justify-end p-6 lg:p-8'}`}
+      style={thumbBg ? { backgroundColor: thumbBg } : undefined}
+    >
+      {thumbBg && (
+        <div className="row-start-1 md:col-start-2 relative min-w-0 min-h-0">
+          {/* Respiro em cima e à esquerda; a tela continua saindo pelas bordas da direita e de baixo */}
+          <div className="absolute inset-0 md:top-16 md:left-6">
+            {ThumbMotion ? (
+              <ThumbMotion active={focused} />
+            ) : (
+              <img
+                src={project.thumbnail}
+                alt=""
+                className="card-cover absolute inset-0 w-full h-full object-contain object-right-bottom origin-bottom-right"
+              />
+            )}
+          </div>
+        </div>
+      )}
+      <div className={`relative z-10 ${thumbBg ? 'row-start-2 md:col-start-1 md:row-start-1 md:self-end p-6 lg:p-8 md:pr-2' : ''} ${textColor}`}>
+        <p className={`text-[13px] font-medium mb-2 ${tagColor}`}>{project.tag}</p>
+        <h3 className="font-sans text-[28px] xl:text-[34px] font-semibold tracking-tight leading-[1.1] mb-2">
+          {project.title}
+        </h3>
+        {project.readingTime && <p className="text-[13px] opacity-80">{project.readingTime}</p>}
+      </div>
+    </Link>
+  );
+}
+
+// Outros trabalhos: card neutro e compacto, dois por linha, ícone acima do título
+function WorkCard({ project }: { project: ProjectData; key?: string }) {
+  const Icon = workIcons[project.id] ?? BrainCircuit;
+  return (
+    <Link
+      to={`/project/${project.id}`}
+      className={`group block w-full h-[180px] md:h-[190px] bg-[#FAF9F7] text-[#241510] rounded-2xl p-5 flex flex-col justify-end relative overflow-hidden ${cardFrame}`}
+    >
+      <Icon size={24} strokeWidth={1.5} className="card-cover mb-3 text-[#6F625B] origin-bottom-left" />
+      <h3 className="font-sans text-base xl:text-lg font-semibold tracking-tight leading-tight mb-1.5">
+        {project.title}
+      </h3>
+      <ProjectMeta project={project} tagColor="text-[#6F625B]" />
+    </Link>
+  );
+}
+
+// Artigo: linha compacta
+function ArticleCard({ project }: { project: ProjectData; key?: string }) {
+  return (
+    <Link
+      to={`/project/${project.id}`}
+      className={`group flex items-center justify-between gap-6 w-full px-6 py-5 bg-[#FAF9F7] rounded-2xl text-[#241510] ${cardFrame}`}
+    >
+      <div className="min-w-0">
+        <h3 className="font-sans text-base md:text-lg font-semibold tracking-tight leading-tight mb-1.5">
+          {project.title}
+        </h3>
+        <ProjectMeta project={project} tagColor="text-[#6F625B]" />
+      </div>
+      <ChevronRight size={20} className="card-cover shrink-0 text-[#9E4322]" />
+    </Link>
+  );
+}
+
+function SectionTitle({ title, description }: { title: string; description?: string }) {
+  return (
+    <h2 className="text-[15px] leading-snug text-[#6F625B] mb-4">
+      <span className="font-bold text-[#241510]">{title}</span>
+      {description && <span>. {description}</span>}
+    </h2>
+  );
+}
 
 export default function Home() {
   useDocumentTitle('Início');
   const { projects } = useProjects();
-  const [activeSkill, setActiveSkill] = useState<string | null>(null);
-  const selectedSkill = skills.find(s => s.id === activeSkill);
+  const cases = projects.slice(0, 4);
+  const works = projects.slice(4, 8);
+  const articles = projects.slice(8);
 
-  const blurSlideVariants = {
-    hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }
-    }
-  };
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const gridContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15
-      }
-    }
-  };
+  // Scroll assistido (desktop): cada gesto da roda/trackpad avança ou volta exatamente uma parada —
+  // topo, o centro de cada case (marcados com data-snap), o início de "Outros trabalhos" e o fim da página
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !window.matchMedia('(min-width: 1024px)').matches) return;
+
+    let lastWheel = 0;
+    let lastDir = 0;
+    let target: number | null = null; // parada para onde a rolagem está indo
+    let settleTimer: number | undefined;
+
+    const stops = () => {
+      const base = el.getBoundingClientRect().top - el.scrollTop;
+      const max = el.scrollHeight - el.clientHeight;
+      const points = [0, max];
+      el.querySelectorAll<HTMLElement>('[data-snap]').forEach(node => {
+        const r = node.getBoundingClientRect();
+        const top = r.top - base;
+        points.push(node.dataset.snap === 'center' ? top + r.height / 2 - el.clientHeight / 2 : top - 48);
+      });
+      return [...new Set(points.map(p => Math.round(Math.min(max, Math.max(0, p)))))].sort((a, b) => a - b);
+    };
+
+    // Cada gesto conta uma vez: um clique da roda é um gesto; a sequência contínua de eventos do
+    // trackpad (com inércia) também é um gesto só. Um gesto novo vale mesmo com a rolagem ainda andando,
+    // e parte da parada para onde ela já estava indo — por isso nunca é preciso rolar duas vezes.
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+      e.preventDefault();
+      const now = performance.now();
+      const dir = Math.sign(e.deltaY);
+      const newGesture = now - lastWheel > 120 || dir !== lastDir;
+      lastWheel = now;
+      lastDir = dir;
+      if (!newGesture) return;
+
+      const from = target ?? el.scrollTop;
+      const list = stops();
+      const next = dir > 0 ? list.find(p => p > from + 4) : [...list].reverse().find(p => p < from - 4);
+      if (next === undefined) return;
+      target = next;
+      el.scrollTo({ top: next, behavior: 'smooth' });
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(() => { target = null; }, 900);
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => {
+      el.removeEventListener('wheel', onWheel);
+      window.clearTimeout(settleTimer);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    try {
+      el.scrollTop = Number(sessionStorage.getItem(SCROLL_KEY)) || 0;
+    } catch {}
+    const save = () => {
+      try { sessionStorage.setItem(SCROLL_KEY, String(el.scrollTop)); } catch {}
+    };
+    el.addEventListener('scroll', save, { passive: true });
+    return () => el.removeEventListener('scroll', save);
+  }, []);
 
   return (
-    <div className="w-full">
-      {/* Sobre Mim / Hero Section — full-bleed com imagem colada na borda direita */}
-      <div
-        className="hero-grid relative mb-24 overflow-hidden"
-        style={{
-          marginLeft: 'calc(50% - 50vw)',
-          marginRight: 'calc(50% - 50vw)',
-          marginTop: 'calc(-1 * var(--page-py, 2.5rem))',
-          width: '100vw',
-        }}
+    <div className="w-full h-full grid grid-cols-1 lg:grid-cols-[400px_1fr] lg:grid-rows-[minmax(0,1fr)]">
+      {/* Coluna esquerda: sobre mim — fundo café, colada na borda esquerda, fixa */}
+      <aside className="flex min-h-0 bg-[#F0EDE8] text-[#241510] lg:border-r lg:border-[#241510]/10">
+      <motion.div
+        initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        className="flex-1 flex flex-col min-h-0 px-6 py-8 lg:px-11 lg:pt-[min(3.5rem,6vh)] lg:pb-11"
       >
-        {/* Left Column: Hero Content — 42% via grid */}
-        <div
-          className="hero-text-col flex flex-col justify-center py-8 md:py-12"
-          style={{
-            paddingLeft: 'max(var(--page-px, 3rem), calc((100vw - 1240px) / 2 + var(--page-px, 3rem)))',
-            paddingRight: '1.5rem',
-          }}
-        >
-          {/* Headline + tagline com animação de entrada e desfoque ao ser visto */}
-          <div className="flex flex-col">
-            <motion.h1
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0, y: 45, filter: "blur(12px)" },
-                visible: { opacity: 1, y: 0, filter: "blur(0px)" }
-              }}
-              transition={{ duration: 1.4, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif font-semibold text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-primary mb-8 tracking-tight leading-[0.95]"
-            >
-              Vinicius<br />Tamy
-            </motion.h1>
-            <motion.p
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0, y: 35, filter: "blur(10px)" },
-                visible: { opacity: 1, y: 0, filter: "blur(0px)" }
-              }}
-              transition={{ duration: 1.4, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="text-brand text-[24px] font-normal leading-[1.5] ml-4 mb-8"
-            >
-              Designer de problemas,<br />produtos e IA.
-            </motion.p>
-            <motion.span
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0, y: 25, filter: "blur(6px)" },
-                visible: { opacity: 1, y: 0, filter: "blur(0px)" }
-              }}
-              transition={{ duration: 1.4, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="text-muted-foreground font-sans font-semibold text-[13px] tracking-wide block ml-4"
-            >
-              Volta Redonda - RJ
-            </motion.span>
-          </div>
+        {/* Foto já recortada no rosto, em círculo */}
+        <div className="w-40 h-40 lg:w-[min(240px,26vh)] lg:h-[min(240px,26vh)] rounded-full overflow-hidden mx-auto shrink-0">
+          <img
+            src="/profile-face.webp"
+            alt="Vinicius Tamy"
+            className="w-full h-full object-cover object-[45%_35%] scale-[1.1] origin-[45%_40%]"
+          />
         </div>
 
-        {/* Right Column: Portrait — Animação de entrada suave com blur ao ser visto */}
-        <motion.div
-          className="hero-img-col min-h-[320px] overflow-hidden group cursor-pointer rounded-xl"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0, scale: 0.9, y: 45, filter: "blur(14px)" },
-            visible: { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }
-          }}
-          whileHover={{
-            scale: 1.03,
-            y: -10,
-            rotate: 1,
-            boxShadow: "0 25px 35px -10px rgba(0, 0, 0, 0.25)"
-          }}
-          transition={{
-            duration: 1.5,
-            delay: 0.25,
-            ease: [0.16, 1, 0.3, 1]
-          }}
-        >
-          <img
-            src="/profile.jpg"
-            alt="Vinicius Tamy"
-            className="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-108"
-            style={{
-              display: 'block',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center top',
-            }}
-          />
-        </motion.div>
-      </div>
+        <div className="mt-6 lg:mt-[3vh] text-center lg:text-left">
+          <h1 className="font-serif font-extrabold text-4xl lg:text-[2rem] xl:text-[2.25rem] tracking-tight leading-[1.05] text-[#241510]">
+            Olá, eu sou o Tamy
+          </h1>
+          <p className="text-[#241510] text-lg lg:text-[17px] font-normal leading-snug mt-3">
+            Designer de problemas, produtos e IA.
+          </p>
+        </div>
 
-      {/* Bio Section - texto descritivo abaixo da hero */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
-        variants={{
-          hidden: { opacity: 0, y: 35, filter: "blur(8px)" },
-          visible: { opacity: 1, y: 0, filter: "blur(0px)" }
-        }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        className="my-48 w-full"
-      >
-        <p className="text-muted-foreground text-[20px] font-normal leading-[1.8] mb-6">
-          Atuo como designer há 12 anos, sendo os últimos seis dedicados a produtos digitais. Sou apaixonado por pessoas, esportes, viagens, arte e tecnologia. Tenho um perfil end-to-end, onde gosto de tranformar problemas complexos em soluções simples, estratégicas e centradas no usuário. Tenho me tornado cada dia mais AI-first, utilizando IA para acelerar pesquisas, explorar ideias e criar protótipos, sempre mantendo o olhar humano como principal guia.
-        </p>
-        <Link
-          to="/sobre-mim"
-          className="inline-flex items-center gap-2 text-[14px] font-semibold text-brand hover:opacity-80 transition-opacity group"
-        >
-          Conheça mais sobre mim <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-        </Link>
-      </motion.div>
+        <div className="mt-6 lg:mt-[3vh] lg:flex-1">
+          <p className="text-[#6F625B] text-[15px] leading-[1.55]">
+            Designer há 12 anos, os últimos seis dedicados a produtos digitais. Tenho um perfil end-to-end: gosto de transformar problemas complexos em soluções simples e centradas no usuário.
+          </p>
+          <p className="text-[#6F625B] text-[15px] leading-[1.55] mt-3">
+            Cada dia mais AI-first, uso IA para acelerar pesquisas, explorar ideias e prototipar, sem perder o olhar humano.
+          </p>
+          <Link
+            to="/sobre-mim"
+            className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#9E4322] hover:opacity-80 transition-opacity group mt-4"
+          >
+            Mais sobre mim <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
 
-      {/* Rest of the Page contents */}
-      <div className="w-full">
-
-        {/* Skills Section */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={blurSlideVariants}
-          className="mb-14"
-        >
-          <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8">
-            <h2 className="font-sans text-[13px] text-muted-foreground font-semibold tracking-wide whitespace-nowrap">
-              Navegue por habilidades
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {skills.map(skill => (
-                <button
-                  key={skill.id}
-                  onClick={() => setActiveSkill(skill.id === activeSkill ? null : skill.id)}
-                  className={`px-4 py-2 rounded-full text-[12px] font-semibold transition-all ${activeSkill === skill.id
-                    ? 'bg-brand text-brand-foreground shadow-md'
-                    : 'bg-background text-muted-foreground border border-border hover:border-brand hover:text-brand'
-                    }`}
-                >
-                  {skill.name}
-                </button>
-              ))}
-            </div>
+        <div className="mt-8 lg:mt-6 flex flex-wrap items-center justify-center lg:justify-between gap-2">
+          <div className="flex items-center gap-2">
+            {socials.map(({ href, label, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={label}
+                aria-label={label}
+                className="w-10 h-10 rounded-full border border-[#241510]/15 text-[#241510] flex items-center justify-center hover:border-[#9E4322] hover:text-[#9E4322] transition-colors"
+              >
+                <Icon size={17} />
+              </a>
+            ))}
           </div>
+          <a
+            href={RESUME_URL}
+            download
+            className="inline-flex items-center gap-2 h-10 px-4 rounded-full whitespace-nowrap bg-[#241510] text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition-opacity"
+          >
+            <Download size={16} /> Baixar currículo
+          </a>
+        </div>
+      </motion.div>
+      </aside>
 
-          {/* Active Skill Content */}
-          {selectedSkill && (
-            <motion.div
-              initial={{ opacity: 0, height: 0, filter: "blur(6px)" }}
-              animate={{ opacity: 1, height: 'auto', filter: "blur(0px)" }}
-              exit={{ opacity: 0, height: 0, filter: "blur(6px)" }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-muted-background border border-border rounded-2xl overflow-hidden"
-            >
-              <div className="p-5 sm:p-8 lg:p-10">
-                <h3 className="text-xl font-bold text-primary mb-4">{selectedSkill.name}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-6 max-w-3xl">
-                  {selectedSkill.description}
-                </p>
-                <div>
-                  <p className="text-[11px] font-semibold tracking-widest text-muted-foreground uppercase mb-4">
-                    Onde apliquei
-                  </p>
-                  <ul className="space-y-3">
-                    {selectedSkill.links.map((link, index) => (
-                      <li key={index}>
-                        <Link
-                          to={link.url}
-                          className="inline-flex items-center gap-2 text-brand hover:underline font-medium"
-                        >
-                          {link.label}
-                          <ChevronRight size={14} />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+      {/* Coluna direita: seções de trabalhos — fundo levemente mais escuro, conteúdo centralizado.
+          Sem padding embaixo: a área de scroll vai até a borda da tela para não cortar os cards */}
+      <section className="relative flex flex-col min-h-0 bg-[#F0EDE8]">
+        {/* Scroll assistido: no desktop, cada rolagem para centralizada no próximo case */}
+        <div ref={scrollRef} className="flex-1 min-h-0 lg:overflow-y-auto no-scrollbar">
+          <motion.div
+            initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1.2, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full max-w-[920px] mx-auto px-6 md:px-10 pt-8 lg:pt-12 pb-10 flex flex-col gap-14"
+          >
+            <div className="lg:snap-start lg:scroll-mt-12">
+              <SectionTitle title="Cases" description="Trabalhos que desenvolvi nos últimos anos" />
+              <div className="flex flex-col gap-10">
+                {cases.map(project => <CaseCard key={project.id} project={project} />)}
+              </div>
+            </div>
+
+            <div data-snap="start" className="lg:snap-start lg:scroll-mt-12">
+              <SectionTitle title="Outros trabalhos" description="Dinâmicas e frameworks que apliquei" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {works.map(project => <WorkCard key={project.id} project={project} />)}
+              </div>
+            </div>
+
+            {articles.length > 0 && (
+              <div className="lg:snap-end lg:scroll-mb-10">
+                <SectionTitle title="Artigos" />
+                <div className="flex flex-col gap-3">
+                  {articles.map(project => <ArticleCard key={project.id} project={project} />)}
                 </div>
               </div>
-            </motion.div>
-          )}
-        </motion.div>
-
-        {/* Seção 1: Cases Estruturados */}
-        <div className="mt-14 mb-40">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={blurSlideVariants}
-            className="mb-8"
-          >
-            <h2 className="font-serif text-[48px] leading-[1.1] font-semibold tracking-tight text-primary mb-2">
-              Cases
-            </h2>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-2"
-            variants={gridContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {projects.slice(0, 4).map((project) => (
-              <motion.div key={project.id} variants={blurSlideVariants}>
-                <Link
-                  to={`/project/${project.id}`}
-                  className={`block w-full aspect-[4/3] ${project.bg} rounded-xl p-6 sm:p-8 lg:p-10 flex flex-col justify-end relative overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all duration-300`}
-                >
-                  {project.thumbnail && (
-                    <div
-                      className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${project.thumbnail})` }}
-                    />
-                  )}
-                  <div className={`relative z-10 mt-auto ${project.thumbnail ? 'opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300' : project.textColor}`}>
-                    <div className={`flex flex-wrap items-center gap-2 mb-3`}>
-                      <p className={`text-[10px] md:text-[11px] font-semibold tracking-widest ${project.thumbnail ? 'text-white' : project.tagColor} uppercase line-clamp-1`}>
-                        {project.tag}
-                      </p>
-                      {project.readingTime && (
-                        <div className="flex items-center gap-2">
-                          <span className={`w-1 h-1 rounded-full ${project.thumbnail ? 'bg-white' : 'bg-current'} opacity-40`}></span>
-                          <p className={`text-[10px] md:text-[11px] font-medium tracking-wide uppercase opacity-80 ${project.thumbnail ? 'text-white' : ''}`}>
-                            {project.readingTime}
-                          </p>
-                        </div>
-                      )}
-                      {project.status && (
-                        <div className="flex items-center gap-2">
-                          <span className={`w-1 h-1 rounded-full ${project.thumbnail ? 'bg-white' : 'bg-current'} opacity-40`}></span>
-                          <span className={`px-2 py-0.5 text-[9px] md:text-[10px] font-bold tracking-wider uppercase rounded-sm border ${project.thumbnail
-                            ? 'border-white/30 bg-white/10 text-white'
-                            : project.status.progress === 100
-                              ? 'border-brand/20 bg-brand/5 text-brand'
-                              : project.status.progress === 0
-                                ? 'border-gray-500/20 bg-gray-50 text-gray-600'
-                                : 'border-amber-600/20 bg-amber-50 text-amber-700'
-                            }`}>
-                            {project.status.label}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <h3 className={`font-sans text-[1.5rem] md:text-[1.85rem] font-semibold tracking-wide leading-tight ${project.thumbnail ? 'text-white' : ''}`}>
-                      {project.title}
-                    </h3>
-                  </div>
-                  {project.thumbnail && (
-                    <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300" />
-                  )}
-                </Link>
-              </motion.div>
-            ))}
+            )}
           </motion.div>
         </div>
-
-        {/* Seção 2: Trabalhos Pontuais & Recursos */}
-        <div className="mb-40">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={blurSlideVariants}
-            className="mb-8"
-          >
-            <h2 className="font-serif text-[48px] leading-[1.1] font-semibold tracking-tight text-primary mb-2">
-              Trabalhos Pontuais & Ferramentas
-            </h2>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-2"
-            variants={gridContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {projects.slice(4, 8).map((project) => (
-              <motion.div key={project.id} variants={blurSlideVariants}>
-                <Link
-                  to={`/project/${project.id}`}
-                  className={`block w-full aspect-[2/1] ${project.bg} rounded-xl p-6 lg:p-8 flex flex-col justify-end relative overflow-hidden group hover:-translate-y-1 hover:shadow-lg transition-all duration-300`}
-                >
-                  <div className={`relative z-10 mt-auto ${project.textColor}`}>
-                    <div className={`flex flex-wrap items-center gap-2 mb-2`}>
-                      <p className={`text-[10px] md:text-[11px] font-semibold tracking-widest ${project.tagColor} uppercase line-clamp-1`}>
-                        {project.tag}
-                      </p>
-                      {project.readingTime && (
-                        <div className="flex items-center gap-2">
-                          <span className="w-1 h-1 rounded-full bg-current opacity-40"></span>
-                          <p className={`text-[10px] md:text-[11px] font-medium tracking-wide uppercase opacity-80`}>
-                            {project.readingTime}
-                          </p>
-                        </div>
-                      )}
-                      {project.status && (
-                        <div className="flex items-center gap-2">
-                          <span className={`w-1 h-1 rounded-full bg-current opacity-40`}></span>
-                          <span className={`px-2 py-0.5 text-[9px] md:text-[10px] font-bold tracking-wider uppercase rounded-sm border ${project.status.progress === 100
-                            ? 'border-brand/20 bg-brand/5 text-brand'
-                            : project.status.progress === 0
-                              ? 'border-gray-500/20 bg-gray-50 text-gray-600'
-                              : 'border-amber-600/20 bg-amber-50 text-amber-700'
-                            } ${project.bg.includes('bg-[#7D888B]') || project.bg.includes('from-[#8C9A9E]') ? 'border-white/30 bg-white/10 text-white' : ''}`}>
-                            {project.status.label}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <h3 className="font-sans text-xl md:text-2xl font-semibold tracking-tight leading-tight">
-                      {project.title}
-                    </h3>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Seção 3: Pensamentos & Aprendizados */}
-        <div className="mb-24">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={blurSlideVariants}
-            className="mb-8"
-          >
-            <h2 className="font-serif text-[48px] leading-[1.1] font-semibold tracking-tight text-primary mb-2">
-              Artigos
-            </h2>
-          </motion.div>
-
-          <motion.div
-            className="space-y-6"
-            variants={gridContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {projects.slice(8).map((project) => (
-              <motion.div key={project.id} variants={blurSlideVariants}>
-                <Link
-                  to={`/project/${project.id}`}
-                  className="block w-full p-8 bg-muted-background border border-border hover:border-brand rounded-[1.5rem] group transition-all duration-300 hover:shadow-md"
-                >
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                    <div className="max-w-3xl">
-                      <div className="flex flex-wrap items-center gap-3 mb-3">
-                        <span className="px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-brand bg-brand/10 rounded-full uppercase">
-                          {project.tag}
-                        </span>
-                        {project.readingTime && (
-                          <span className="text-xs text-muted-foreground font-mono">
-                            {project.readingTime}
-                          </span>
-                        )}
-                        {project.status && (
-                          <span className={`px-2 py-0.5 text-[9px] md:text-[10px] font-bold tracking-wider uppercase rounded-sm border ${project.status.progress === 100
-                            ? 'border-brand/20 bg-brand/5 text-brand'
-                            : project.status.progress === 0
-                              ? 'border-gray-500/20 bg-gray-50 text-gray-600'
-                              : 'border-amber-600/20 bg-amber-50 text-amber-700'
-                            }`}>
-                            {project.status.label}
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="text-xl md:text-2xl font-serif font-bold text-primary mb-3 group-hover:text-brand transition-colors leading-tight">
-                        {project.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm md:text-[14px] leading-relaxed line-clamp-2">
-                        {project.description}
-                      </p>
-                    </div>
-                    <div className="self-end md:self-start flex items-center gap-1.5 text-sm font-semibold text-brand group-hover:translate-x-1 transition-transform">
-                      Ler artigo <ChevronRight size={16} />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

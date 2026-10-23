@@ -64,10 +64,10 @@ export const IaDiaDiaContent = () => (
 
         <div className="my-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <img src={dash07} alt="Dashboard 7" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
-            <img src={dash12} alt="Dashboard 12" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
+            <img src={dash07} alt="Dashboard 7" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
+            <img src={dash12} alt="Dashboard 12" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
           </div>
-          <p className="text-sm text-center mt-3 text-gray-500">Protótipo criado no google ia studio e usado em teste de usabilidade.</p>
+          <p className="text-sm text-center mt-3 text-[#6F625B]">Protótipo criado no google ia studio e usado em teste de usabilidade.</p>
         </div>
 
         <h3 className="text-xl font-bold mb-3">Exploração de soluções</h3>
@@ -83,10 +83,10 @@ export const IaDiaDiaContent = () => (
 
         <div className="my-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <img src={baseImg} alt="Interface Base" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
-            <img src={flutuante2Img} alt="Interface Flutuante" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
+            <img src={baseImg} alt="Interface Base" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
+            <img src={flutuante2Img} alt="Interface Flutuante" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
           </div>
-          <p className="text-sm text-center mt-3 text-gray-500">Alternativas e evoluções do fluxo de admin criadas dentro do mesmo protótipo</p>
+          <p className="text-sm text-center mt-3 text-[#6F625B]">Alternativas e evoluções do fluxo de admin criadas dentro do mesmo protótipo</p>
         </div>
 
         <h3 id="handoff-completo" className="text-xl font-bold mb-3">Handoff mais completo para Engenharia</h3>
@@ -109,8 +109,8 @@ export const IaDiaDiaContent = () => (
         </p>
 
         <div className="my-12">
-          <video src={videoCursor} autoPlay loop muted playsInline className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
-          <p className="text-sm text-center mt-3 text-gray-500">Video de handoff de funcionalidade realizada diretamente no cursor.</p>
+          <video src={videoCursor} autoPlay loop muted playsInline className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
+          <p className="text-sm text-center mt-3 text-[#6F625B]">Video de handoff de funcionalidade realizada diretamente no cursor.</p>
         </div>
 
         <h2 id="evolucao-incremental" className="text-2xl font-bold mb-4">Evolução incremental de funcionalidades</h2>
@@ -135,8 +135,8 @@ export const IaDiaDiaContent = () => (
         </p>
 
         <div className="my-12">
-          <img src={evolucaoImg} alt="Linha do Tempo e Evolução Incremental das Interfaces" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
-          <p className="text-sm text-center mt-3 text-gray-500">Linha do Tempo e Evolução Incremental das Interfaces</p>
+          <img src={evolucaoImg} alt="Linha do Tempo e Evolução Incremental das Interfaces" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
+          <p className="text-sm text-center mt-3 text-[#6F625B]">Linha do Tempo e Evolução Incremental das Interfaces</p>
         </div>
 
         <h2 id="pesquisa-sintese" className="text-2xl font-bold mb-4">Pesquisa qualitativa e síntese de dados</h2>
@@ -167,8 +167,8 @@ export const IaDiaDiaContent = () => (
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-12">
-          <img src={cardSorting1} alt="Card Sorting 1" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
-          <img src={cardSorting2} alt="Card Sorting 2" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
+          <img src={cardSorting1} alt="Card Sorting 1" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
+          <img src={cardSorting2} alt="Card Sorting 2" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
         </div>
 
         <h3 className="text-xl font-bold mb-3">Simulação de conversas no WhatsApp</h3>
@@ -183,10 +183,10 @@ export const IaDiaDiaContent = () => (
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-12">
-          <img src={wpp1} alt="WhatsApp 1" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm hover:scale-[1.02] transition-transform" />
-          <img src={wpp2} alt="WhatsApp 2" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm hover:scale-[1.02] transition-transform" />
-          <img src={wpp3} alt="WhatsApp 3" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm hover:scale-[1.02] transition-transform" />
-          <img src={wpp4} alt="WhatsApp 4" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm hover:scale-[1.02] transition-transform" />
+          <img src={wpp1} alt="WhatsApp 1" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm hover:scale-[1.02] transition-transform" />
+          <img src={wpp2} alt="WhatsApp 2" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm hover:scale-[1.02] transition-transform" />
+          <img src={wpp3} alt="WhatsApp 3" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm hover:scale-[1.02] transition-transform" />
+          <img src={wpp4} alt="WhatsApp 4" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm hover:scale-[1.02] transition-transform" />
         </div>
 
         <h3 className="text-xl font-bold mb-3">Gerenciador de tarefas para Design</h3>
@@ -210,8 +210,8 @@ export const IaDiaDiaContent = () => (
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-12">
-          <img src={gerenciador1} alt="Gerenciador de tarefas 1" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
-          <img src={gerenciador2} alt="Gerenciador de tarefas 2" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm" />
+          <img src={gerenciador1} alt="Gerenciador de tarefas 1" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
+          <img src={gerenciador2} alt="Gerenciador de tarefas 2" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm" />
         </div>
 
         <h3 className="text-xl font-bold mb-3">Prototipando onboarding sem barreiras</h3>
@@ -233,9 +233,9 @@ export const IaDiaDiaContent = () => (
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-12">
-          <img src={onboarding1} alt="Onboarding 1" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm hover:scale-[1.02] transition-transform" />
-          <img src={onboarding2} alt="Onboarding 2" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm hover:scale-[1.02] transition-transform" />
-          <img src={onboarding3} alt="Onboarding 3" className="w-full rounded-2xl border border-[#DCD7CA] shadow-sm hover:scale-[1.02] transition-transform" />
+          <img src={onboarding1} alt="Onboarding 1" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm hover:scale-[1.02] transition-transform" />
+          <img src={onboarding2} alt="Onboarding 2" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm hover:scale-[1.02] transition-transform" />
+          <img src={onboarding3} alt="Onboarding 3" className="w-full rounded-2xl border border-[#E2DCD4] shadow-sm hover:scale-[1.02] transition-transform" />
         </div>
 
         <h2 className="text-2xl font-bold mb-6">Ferramentas que utilizo</h2>
@@ -243,15 +243,15 @@ export const IaDiaDiaContent = () => (
           Cada ferramenta desempenha um papel diferente dentro do meu processo de Design.
         </p>
         
-        <div className="mb-12 overflow-hidden rounded-2xl border border-[#DCD7CA]">
+        <div className="mb-12 overflow-hidden rounded-2xl border border-[#E2DCD4]">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#EBE7DD] border-b border-[#DCD7CA]">
-                <th className="py-3 px-4 font-bold text-gray-900 w-1/3">Ferramenta</th>
-                <th className="py-3 px-4 font-bold text-gray-900">Como utilizo</th>
+              <tr className="bg-[#E2DCD4] border-b border-[#E2DCD4]">
+                <th className="py-3 px-4 font-bold text-[#241510] w-1/3">Ferramenta</th>
+                <th className="py-3 px-4 font-bold text-[#241510]">Como utilizo</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#DCD7CA]">
+            <tbody className="divide-y divide-[#E2DCD4]">
               <tr>
                 <td className="py-3 px-4 font-medium">Google AI Studio</td>
                 <td className="py-3 px-4">Exploração de soluções, construção de protótipos, testes de conceitos e apoio na resolução de problemas.</td>

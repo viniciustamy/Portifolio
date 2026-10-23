@@ -3,8 +3,8 @@ import React from 'react';
 
 const ImagePlaceholder = ({ label = 'Espaço para Imagem' }: { label?: string }) => (
 
-  <div className="w-full aspect-[16/9] bg-[#EBE7DD] rounded-[2rem] flex items-center justify-center my-12 border border-[#DCD7CA]">
-    <span className="text-[#787265] font-medium tracking-widest uppercase text-sm">{label}</span>
+  <div className="w-full aspect-[16/9] bg-[#E2DCD4] rounded-[2rem] flex items-center justify-center my-12 border border-[#E2DCD4]">
+    <span className="text-[#6F625B] font-medium tracking-widest uppercase text-sm">{label}</span>
   </div>
 );
 

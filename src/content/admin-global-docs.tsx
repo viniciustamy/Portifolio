@@ -109,28 +109,28 @@ const AdminGlobalDocsRelatorio = () => (
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-[#F9F8F6] border border-[#EBE7DD] rounded-none p-5 shadow-none">
-          <div className="bg-[#EBE7DD] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD7CA]">
+        <div className="bg-[#F0EDE8] border border-[#E2DCD4] rounded-2xl p-5 shadow-none">
+          <div className="bg-[#E2DCD4] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#E2DCD4]">
             <span className="text-2xl leading-none block">📄</span>
           </div>
           <h3 className="text-xl font-semibold mb-2 text-[#1A1A1A]">Cadastros duplicados</h3>
-          <p className="text-gray-600 text-sm">As mesmas informações precisavam ser cadastradas em diferentes produtos.</p>
+          <p className="text-[#6F625B] text-sm">As mesmas informações precisavam ser cadastradas em diferentes produtos.</p>
         </div>
 
-        <div className="bg-[#F9F8F6] border border-[#EBE7DD] rounded-none p-5 shadow-none">
-          <div className="bg-[#EBE7DD] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD7CA]">
+        <div className="bg-[#F0EDE8] border border-[#E2DCD4] rounded-2xl p-5 shadow-none">
+          <div className="bg-[#E2DCD4] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#E2DCD4]">
             <span className="text-2xl leading-none block">↔️</span>
           </div>
           <h3 className="text-xl font-semibold mb-2 text-[#1A1A1A]">Fluxos desconectados</h3>
-          <p className="text-gray-600 text-sm">Cada solução possuía processos, regras e modelos próprios de administração.</p>
+          <p className="text-[#6F625B] text-sm">Cada solução possuía processos, regras e modelos próprios de administração.</p>
         </div>
 
-        <div className="bg-[#F9F8F6] border border-[#EBE7DD] rounded-none p-5 shadow-none">
-          <div className="bg-[#EBE7DD] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD7CA]">
+        <div className="bg-[#F0EDE8] border border-[#E2DCD4] rounded-2xl p-5 shadow-none">
+          <div className="bg-[#E2DCD4] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#E2DCD4]">
             <span className="text-2xl leading-none block">📈</span>
           </div>
           <h3 className="text-xl font-semibold mb-2 text-[#1A1A1A]">Barreiras para expansão</h3>
-          <p className="text-gray-600 text-sm">Quanto mais produtos o cliente contratava, maior era o esforço de implantação, dificultando iniciativas de cross-sell, upsell e adoção do ecossistema.</p>
+          <p className="text-[#6F625B] text-sm">Quanto mais produtos o cliente contratava, maior era o esforço de implantação, dificultando iniciativas de cross-sell, upsell e adoção do ecossistema.</p>
         </div>
       </div>
 
@@ -234,86 +234,86 @@ const AdminGlobalDocsRelatorio = () => (
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-none p-6 shadow-none">
-          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD0CF]">
+        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-2xl p-6 shadow-none">
+          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#DCD0CF]">
             <Puzzle className="w-6 h-6 text-[#9E2A2B]" />
           </div>
           <h3 className="text-xl font-semibold mb-3 text-[#1A1A1A]">Complexidade do cadastro</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-3">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-3">
             O processo era dividido entre diferentes módulos — Gestão de Atributos, Perfis de Acesso, Cadastro de Colaboradores e Permissões.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             Essa divisão aumentava significativamente o esforço operacional. Quando atualizar informações se tornava difícil, muitos clientes simplesmente deixavam de manter a base atualizada.
           </p>
         </div>
 
-        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-none p-6 shadow-none">
-          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD0CF]">
+        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-2xl p-6 shadow-none">
+          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#DCD0CF]">
             <FileSpreadsheet className="w-6 h-6 text-[#9E2A2B]" />
           </div>
           <h3 className="text-xl font-semibold mb-3 text-[#1A1A1A]">A dor das planilhas</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-3">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-3">
             Mesmo grandes empresas dependiam de planilhas que chegavam a mais de cinquenta colunas. As principais dificuldades eram:
           </p>
-          <ul className="list-disc pl-4 mb-3 text-gray-700 text-sm space-y-1">
+          <ul className="list-disc pl-4 mb-3 text-[#4F4440] text-sm space-y-1">
             <li>necessidade de reorganizar manualmente colunas antes da importação;</li>
             <li>dependência de uma sequência rígida de cadastro;</li>
             <li>mensagens de erro pouco claras;</li>
             <li>processo trabalhoso de exportar, editar e reenviar arquivos.</li>
           </ul>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             Na prática, importar informações era uma tarefa operacional complexa e pouco confiável.
           </p>
         </div>
 
-        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-none p-6 shadow-none">
-          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD0CF]">
+        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-2xl p-6 shadow-none">
+          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#DCD0CF]">
             <Headphones className="w-6 h-6 text-[#9E2A2B]" />
           </div>
           <h3 className="text-xl font-semibold mb-3 text-[#1A1A1A]">Dependência do suporte</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-3">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-3">
             Alterações relativamente simples — como reorganizar estruturas hierárquicas ou corrigir dados — frequentemente exigiam abertura de chamados ou o envio de novas planilhas.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             A falta de ferramentas de edição direta reduzia significativamente a autonomia dos clientes.
           </p>
         </div>
 
-        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-none p-6 shadow-none">
-          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD0CF]">
+        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-2xl p-6 shadow-none">
+          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#DCD0CF]">
             <AlertTriangle className="w-6 h-6 text-[#9E2A2B]" />
           </div>
           <h3 className="text-xl font-semibold mb-3 text-[#1A1A1A]">Bases desatualizadas</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-3">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-3">
             Como consequência da dificuldade de manutenção, era comum encontrar colaboradores desligados ainda cadastrados na plataforma.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             Esse problema impactava diretamente outros produtos do ecossistema, gerando distorções em pesquisas de clima, indicadores e processos automatizados.
           </p>
         </div>
 
-        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-none p-6 shadow-none">
-          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD0CF]">
+        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-2xl p-6 shadow-none">
+          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#DCD0CF]">
             <Plug className="w-6 h-6 text-[#9E2A2B]" />
           </div>
           <h3 className="text-xl font-semibold mb-3 text-[#1A1A1A]">Integrações complexas</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-3">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-3">
             Clientes maiores frequentemente precisavam desenvolver integrações próprias ou contratar consultorias para conectar a plataforma aos sistemas de folha de pagamento e outras ferramentas corporativas.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             Além disso, alguns produtos, como o EduCorp, sofriam limitações importantes por não possuírem uma estrutura organizacional centralizada.
           </p>
         </div>
 
-        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-none p-6 shadow-none">
-          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-none mb-4 border border-[#DCD0CF]">
+        <div className="bg-[#FAF0EF] border border-[#EBE0DF] rounded-2xl p-6 shadow-none">
+          <div className="bg-[#EBE0DF] w-12 h-12 flex items-center justify-center rounded-xl mb-4 border border-[#DCD0CF]">
             <Brain className="w-6 h-6 text-[#9E2A2B]" />
           </div>
           <h3 className="text-xl font-semibold mb-3 text-[#1A1A1A]">Modelo mental inconsistente</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-3">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-3">
             As pesquisas também revelaram um problema de linguagem.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             Conceitos como Grupos, Atributos e Filiais eram frequentemente confundidos pelos usuários, evidenciando que a arquitetura da informação não refletia o modelo mental esperado pelos clientes.
           </p>
         </div>
@@ -347,16 +347,16 @@ const AdminGlobalDocsRelatorio = () => (
       </p>
 
       <h3 className="text-xl font-bold mb-4">Dois modelos, necessidades diferentes</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8 bg-[#F9F8F6] p-8 rounded-none border border-[#EBE7DD]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8 bg-[#F0EDE8] p-8 rounded-2xl border border-[#E2DCD4]">
         <div className="flex flex-col items-center text-center">
           <img src={cadeira} alt="Cadeira" className="w-48 h-48 object-contain mb-4" />
           <strong className="text-[#00CBC6] font-mono text-sm uppercase tracking-wider mb-2">🪑 Position Manager</strong>
-          <p className="text-sm text-[#4A5559]">Representa uma posição permanente dentro da estrutura organizacional.<br />Quando uma pessoa deixa a empresa, a posição continua existindo e pode ser ocupada por outro colaborador.<br />É um modelo adequado para empresas que possuem organogramas estruturados e processos formais de gestão.</p>
+          <p className="text-sm text-[#4F4440]">Representa uma posição permanente dentro da estrutura organizacional.<br />Quando uma pessoa deixa a empresa, a posição continua existindo e pode ser ocupada por outro colaborador.<br />É um modelo adequado para empresas que possuem organogramas estruturados e processos formais de gestão.</p>
         </div>
         <div className="flex flex-col items-center text-center">
           <img src={banco} alt="Banco" className="w-48 h-48 object-contain mb-4" />
           <strong className="text-[#FF18DB] font-mono text-sm uppercase tracking-wider mb-2">🪑 Job Manager</strong>
-          <p className="text-sm text-[#4A5559]">Representa apenas a função exercida pelo colaborador.<br />Quando a pessoa deixa a organização, aquele vínculo desaparece naturalmente, sem a necessidade de manter uma posição permanente na estrutura.<br />É um modelo muito mais simples, próximo da realidade de empresas menores ou menos maduras em gestão organizacional.</p>
+          <p className="text-sm text-[#4F4440]">Representa apenas a função exercida pelo colaborador.<br />Quando a pessoa deixa a organização, aquele vínculo desaparece naturalmente, sem a necessidade de manter uma posição permanente na estrutura.<br />É um modelo muito mais simples, próximo da realidade de empresas menores ou menos maduras em gestão organizacional.</p>
         </div>
       </div>
 
@@ -495,33 +495,33 @@ const AdminGlobalDocsRelatorio = () => (
       </p>
 
       <div className="flex flex-col md:flex-row items-stretch justify-between gap-4 mb-8">
-        <div className="bg-[#F9F8F6] border border-[#EBE7DD] rounded-none p-5 shadow-none flex-1">
+        <div className="bg-[#F0EDE8] border border-[#E2DCD4] rounded-2xl p-5 shadow-none flex-1">
           <h4 className="font-semibold mb-2 text-[#1A1A1A]">Fase 1</h4>
-          <p className="text-gray-700 text-sm">Criar um único ponto de entrada para os dados. Uma única planilha alimentaria todas as bases existentes.</p>
+          <p className="text-[#4F4440] text-sm">Criar um único ponto de entrada para os dados. Uma única planilha alimentaria todas as bases existentes.</p>
         </div>
 
         <div className="hidden md:flex items-center justify-center">
-          <span className="text-2xl text-[#DCD7CA]">→</span>
+          <span className="text-2xl text-[#E2DCD4]">→</span>
         </div>
         <div className="flex md:hidden items-center justify-center">
-          <span className="text-2xl text-[#DCD7CA]">↓</span>
+          <span className="text-2xl text-[#E2DCD4]">↓</span>
         </div>
 
-        <div className="bg-[#F9F8F6] border border-[#EBE7DD] rounded-none p-5 shadow-none flex-1">
+        <div className="bg-[#F0EDE8] border border-[#E2DCD4] rounded-2xl p-5 shadow-none flex-1">
           <h4 className="font-semibold mb-2 text-[#1A1A1A]">Fase 2</h4>
-          <p className="text-gray-700 text-sm">Transformar a nova base central na origem oficial das informações, distribuindo automaticamente os dados para cada produto.</p>
+          <p className="text-[#4F4440] text-sm">Transformar a nova base central na origem oficial das informações, distribuindo automaticamente os dados para cada produto.</p>
         </div>
 
         <div className="hidden md:flex items-center justify-center">
-          <span className="text-2xl text-[#DCD7CA]">→</span>
+          <span className="text-2xl text-[#E2DCD4]">→</span>
         </div>
         <div className="flex md:hidden items-center justify-center">
-          <span className="text-2xl text-[#DCD7CA]">↓</span>
+          <span className="text-2xl text-[#E2DCD4]">↓</span>
         </div>
 
-        <div className="bg-[#F9F8F6] border border-[#EBE7DD] rounded-none p-5 shadow-none flex-1">
+        <div className="bg-[#F0EDE8] border border-[#E2DCD4] rounded-2xl p-5 shadow-none flex-1">
           <h4 className="font-semibold mb-2 text-[#1A1A1A]">Fase 3</h4>
-          <p className="text-gray-700 text-sm">Eliminar gradualmente os cadastros locais. Toda criação e manutenção passaria a acontecer exclusivamente na camada administrativa centralizada, estabelecendo uma única fonte de verdade para todo o ecossistema.</p>
+          <p className="text-[#4F4440] text-sm">Eliminar gradualmente os cadastros locais. Toda criação e manutenção passaria a acontecer exclusivamente na camada administrativa centralizada, estabelecendo uma única fonte de verdade para todo o ecossistema.</p>
         </div>
       </div>
 
@@ -554,7 +554,7 @@ const AdminGlobalDocsRelatorio = () => (
       </p>
 
       <div className="my-12 flex justify-center">
-        <img src={lm1} alt="NotebookLM" className="w-3/4 rounded-2xl border border-[#DCD7CA] shadow-sm object-cover" />
+        <img src={lm1} alt="NotebookLM" className="w-3/4 rounded-2xl border border-[#E2DCD4] shadow-sm object-cover" />
       </div>
 
       <h3 className="text-xl font-bold mb-2">Explorando caminhos rapidamente</h3>
@@ -636,12 +636,12 @@ const AdminGlobalDocsRelatorio = () => (
             logos: [cursorLogo]
           }
         ].map((item, i) => (
-          <div key={i} className="flex gap-4 items-center bg-[#F9F8F6] border border-[#EBE7DD] p-4 rounded-none hover:border-[#DCD7CA] hover:bg-[#F3F1ED] transition-all duration-300 shadow-none">
+          <div key={i} className="flex gap-4 items-center bg-[#F0EDE8] border border-[#E2DCD4] p-4 rounded-2xl hover:border-[#E2DCD4] hover:bg-[#F3F1ED] transition-all duration-300 shadow-none">
             <div className="flex items-center shrink-0">
               {item.logos.map((logoPath, logoIdx) => (
                 <div
                   key={logoIdx}
-                  className={`w-14 h-14 rounded-lg border border-[#DCD7CA] flex items-center justify-center p-1.5 shadow-sm shrink-0 relative ${logoIdx > 0 ? "ml-[-12px] z-20" : "z-10"
+                  className={`w-14 h-14 rounded-lg border border-[#E2DCD4] flex items-center justify-center p-1.5 shadow-sm shrink-0 relative ${logoIdx > 0 ? "ml-[-12px] z-20" : "z-10"
                     }`}
                   style={{ backgroundColor: item.logoBg || 'white' }}
                 >
@@ -651,7 +651,7 @@ const AdminGlobalDocsRelatorio = () => (
             </div>
             <div>
               <span className="font-bold block text-[#1a1a1a] mb-1">{item.tool}</span>
-              <span className="text-sm text-[#4A5559] leading-relaxed block">{item.desc}</span>
+              <span className="text-sm text-[#7D7169] leading-relaxed block">{item.desc}</span>
             </div>
           </div>
         ))}
@@ -705,38 +705,38 @@ const AdminGlobalDocsRelatorio = () => (
       </p>
 
       <div className="grid grid-cols-1 gap-6 mb-8">
-        <div className="bg-[#F4F8F5] border border-[#DCE8DF] rounded-none p-8 flex-1">
+        <div className="bg-[#F6F1EC] border border-[#E8DDD3] rounded-2xl p-8 flex-1">
           <h3 className="text-2xl font-serif font-medium text-[#2C4F3B] mb-3">Uma única entrada de dados</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-2">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-2">
             Em vez de múltiplas configurações independentes, clientes poderiam realizar um único cadastro para abastecer todo o ecossistema.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             Isso reduzia significativamente o esforço operacional durante a implantação.
           </p>
         </div>
 
-        <div className="bg-[#F4F8F5] border border-[#DCE8DF] rounded-none p-8 flex-1">
+        <div className="bg-[#F6F1EC] border border-[#E8DDD3] rounded-2xl p-8 flex-1">
           <h3 className="text-2xl font-serif font-medium text-[#2C4F3B] mb-3">Expansão dentro da base</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-2">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-2">
             A Gupy possuía milhares de clientes utilizando apenas parte do ecossistema.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed mb-2">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-2">
             Um dos principais obstáculos para ampliar essa adoção era justamente o custo operacional percebido na contratação de novos produtos.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             Ao reduzir esse atrito, a administração unificada fortalecia diretamente iniciativas de cross-sell e upsell.
           </p>
         </div>
 
-        <div className="bg-[#F4F8F5] border border-[#DCE8DF] rounded-none p-8 flex-1">
+        <div className="bg-[#F6F1EC] border border-[#E8DDD3] rounded-2xl p-8 flex-1">
           <h3 className="text-2xl font-serif font-medium text-[#2C4F3B] mb-3">Diferencial competitivo</h3>
-          <p className="text-gray-700 text-sm leading-relaxed mb-2">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-2">
             O maior diferencial da Gupy sempre foi a amplitude do seu ecossistema.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed mb-2">
+          <p className="text-[#4F4440] text-sm leading-relaxed mb-2">
             No entanto, esse benefício era parcialmente comprometido pelo esforço necessário para configurar cada novo produto.
           </p>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p className="text-[#4F4440] text-sm leading-relaxed">
             Ao transformar a implantação em uma experiência única e integrada, a plataforma passava a entregar esse diferencial de forma muito mais consistente.
           </p>
         </div>
@@ -797,9 +797,8 @@ const AdminGlobalDocsSimplificado = () => (
   <>
     {/* O Desafio */}
     <div className="mb-32">
-      <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">O DESAFIO</span>
-      <h2 id="desafio" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">O problema não era falta de informação, era o excesso dela</h2>
-      <p className="text-[#4A5559] leading-relaxed mb-6">
+      <h2 id="desafio" className="font-serif text-3xl font-bold text-[#241510] mb-4">O problema não era falta de informação, era o excesso dela</h2>
+      <p className="text-[#7D7169] leading-relaxed mb-6">
         A decisão de criar uma camada administrativa centralizada já existia. O verdadeiro desafio era outro: anos de pesquisas, entrevistas, protótipos e decisões espalhados entre documentos, apresentações e pessoas. Cada material respondia só parte do problem, e cada retomada virava praticamente um recomeço.
       </p>
       <div className="my-10 not-prose min-h-[350px] flex items-center justify-center">
@@ -809,39 +808,38 @@ const AdminGlobalDocsSimplificado = () => (
 
     {/* A Decisão */}
     <div className="mb-32">
-      <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">A DECISÃO · JOB MANAGER VS POSITION MANAGER</span>
-      <h2 id="job-vs-position" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">O insight que direciona o projeto</h2>
-      <p className="text-[#4A5559] leading-relaxed mb-6">
+      <h2 id="job-vs-position" className="font-serif text-3xl font-bold text-[#241510] mb-4">O insight que direciona o projeto</h2>
+      <p className="text-[#7D7169] leading-relaxed mb-6">
         Caminhávamos para o modelo Position Manager como padrão que é estrutura robusta, capaz de representar organogramas complexos.
       </p>
-      <p className="text-[#4A5559] leading-relaxed mb-6">
+      <p className="text-[#7D7169] leading-relaxed mb-6">
         Mas a pesquisa mostrava outra realidade: grande parte dos clientes, sobretudo SMB, sequer trabalhava com posições formais. Começar por ali seria impor um modelo mental que não era o deles.
       </p>
 
       {/* Custom Stool and Chair comparison card grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10 not-prose">
         {/* Card 1: Job Manager */}
-        <div className="bg-[#F4F6F6] p-8 flex flex-row items-center gap-6 transition-all duration-300 relative overflow-hidden border-b-4 border-b-[#006266] shadow-none">
+        <div className="bg-[#F4F6F6] p-8 flex flex-row items-center gap-6 transition-all duration-300 relative overflow-hidden border-b-4 border-b-[#9E4322] shadow-none rounded-2xl">
           <div className="w-24 h-24 shrink-0 flex items-center justify-center">
             <img src={banco} alt="Banco - Job Manager" className="max-w-full max-h-full object-contain" />
           </div>
           <div className="flex-1 min-w-0">
-            <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#006266] block mb-1">BANCO</span>
-            <h4 className="font-serif font-bold text-lg text-[#2C3539] mb-1.5">Job Manager</h4>
-            <p className="text-xs text-[#5C6669] leading-relaxed">
+            <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#9E4322] block mb-1">BANCO</span>
+            <h4 className="font-serif font-bold text-lg text-[#241510] mb-1.5">Job Manager</h4>
+            <p className="text-xs text-[#6F625B] leading-relaxed">
               Representa só a função exercida. Quando a pessoa sai, o vínculo desaparece. Mais simples, próximo da realidade de empresas menores.
             </p>
           </div>
         </div>
 
         {/* Card 2: Position Manager */}
-        <div className="bg-[#F6F5F4] p-8 flex flex-row items-center gap-6 transition-all duration-300 relative overflow-hidden border-b-4 border-b-[#8c8273] shadow-none">
+        <div className="bg-[#F6F5F4] p-8 flex flex-row items-center gap-6 transition-all duration-300 relative overflow-hidden border-b-4 border-b-[#8c8273] shadow-none rounded-2xl">
           <div className="w-24 h-24 shrink-0 flex items-center justify-center">
             <img src={cadeira} alt="Cadeira - Position Manager" className="max-w-full max-h-full object-contain" />
           </div>
           <div className="flex-1 min-w-0">
             <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#8c8273] block mb-1">CADEIRA</span>
-            <h4 className="font-serif font-bold text-lg text-[#2C3539] mb-1.5">Position Manager</h4>
+            <h4 className="font-serif font-bold text-lg text-[#241510] mb-1.5">Position Manager</h4>
             <p className="text-xs text-[#696662] leading-relaxed">
               Representa uma posição permanente. Quando a pessoa sai, a posição permanece e pode ser reocupada. Adequado a organogramas estruturados.
             </p>
@@ -849,16 +847,15 @@ const AdminGlobalDocsSimplificado = () => (
         </div>
       </div>
 
-      <p className="text-[15px] text-[#2C3539] leading-relaxed mt-6">
+      <p className="text-[15px] text-[#241510] leading-relaxed mt-6">
         <strong>Minha hipótese:</strong> começar pelo Job Manager para reduzir a barreira de entrada, validar e evoluir para Position Manager.
       </p>
     </div>
 
     {/* Discovery */}
     <div className="mb-32">
-      <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">DISCOVERY</span>
-      <h2 id="discovery" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Consolidando e organizando o conhecimento disperso</h2>
-      <p className="text-[#4A5559] leading-relaxed mb-6">
+      <h2 id="discovery" className="font-serif text-3xl font-bold text-[#241510] mb-4">Consolidando e organizando o conhecimento disperso</h2>
+      <p className="text-[#7D7169] leading-relaxed mb-6">
         Reuni e consolidei o que já existia: anos de entrevistas, testes, documentos e descobertas de diferentes equipes. Usei o NotebookLM para acelerar a síntese.
       </p>
 
@@ -868,16 +865,16 @@ const AdminGlobalDocsSimplificado = () => (
       </div>
 
       {/* Stats block */}
-      <div className="border border-[#EBE7DD] rounded-none p-6 md:p-8 bg-[#FAF9F6] my-10 not-prose flex flex-col md:flex-row gap-8 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-[#EBE7DD] shadow-none">
+      <div className="border border-[#E2DCD4] rounded-2xl p-6 md:p-8 bg-[#FAF9F6] my-10 not-prose flex flex-col md:flex-row gap-8 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-[#E2DCD4] shadow-none">
         <div className="flex-1 pb-6 md:pb-0 md:pr-8 flex flex-col justify-center">
-          <span className="font-serif text-5xl font-bold text-[#006266] mb-3">19</span>
-          <p className="text-sm text-[#4A5559] leading-relaxed font-sans">
+          <span className="font-serif text-5xl font-bold text-[#9E4322] mb-3">19</span>
+          <p className="text-sm text-[#7D7169] leading-relaxed font-sans">
             participantes entre especialistas internos (IS e CS) e clientes de diferentes portes
           </p>
         </div>
         <div className="flex-1 pt-6 md:pt-0 md:pl-8 flex flex-col justify-center">
-          <span className="font-serif text-5xl font-bold text-[#006266] mb-3">200</span>
-          <p className="text-sm text-[#4A5559] leading-relaxed font-sans">
+          <span className="font-serif text-5xl font-bold text-[#9E4322] mb-3">200</span>
+          <p className="text-sm text-[#7D7169] leading-relaxed font-sans">
             respostas assíncronas de clientes de Recrutamento & Seleção
           </p>
         </div>
@@ -917,7 +914,7 @@ const AdminGlobalDocsSimplificado = () => (
             desc: "Grupos, Atributos e Filiais eram confundidos. A arquitetura não refletia o modelo mental do cliente."
           }
         ].map((dor) => (
-          <div key={dor.num} className="bg-[#FAF0EF] border-l-2 border-l-[#D3524A] p-8 hover:bg-[#FCEAE8] transition-all duration-300 flex flex-col justify-between">
+          <div key={dor.num} className="bg-[#FAF0EF] border-l-2 border-l-[#D3524A] p-8 hover:bg-[#FCEAE8] transition-all duration-300 flex flex-col justify-between rounded-2xl">
             <div>
               <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#D3524A] block mb-2">DOR #{dor.num}</span>
               <h4 className="font-sans font-bold text-[#1A1A1A] text-[15px] mb-2 leading-snug">{dor.title}</h4>
@@ -930,44 +927,43 @@ const AdminGlobalDocsSimplificado = () => (
 
     {/* Tornando a estratégia visível */}
     <div className="mb-32">
-      <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">TORNANDO A ESTRATÉGIA VISÍVEL</span>
-      <h2 id="estrategia-visivel" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Quando todos enxergam a mesma visão, as decisões ficam mais rápidas</h2>
-      <p className="text-[#4A5559] leading-relaxed mb-6">
+      <h2 id="estrategia-visivel" className="font-serif text-3xl font-bold text-[#241510] mb-4">Quando todos enxergam a mesma visão, as decisões ficam mais rápidas</h2>
+      <p className="text-[#7D7169] leading-relaxed mb-6">
         Com o Figma Make, transformei a estratégia em uma representação visual da evolução da plataforma.
       </p>
-      <p className="text-[#4A5559] leading-relaxed mb-6">
+      <p className="text-[#7D7169] leading-relaxed mb-6">
         O objetivo não era desenhar interfaces, era criar um artefato que respondia: onde queremos chegar, o que é da primeira versão, quais dependências existem e como cada módulo evolui. Esse material passou a orientar as discussões.
       </p>
 
       {/* Initiatives & Laptop container */}
       <div className="p-8 flex flex-col md:flex-row items-center justify-between gap-0">
         <div className="w-full md:w-[35%] shrink-0">
-          <span className="text-xs font-sans font-bold text-[#787265] tracking-wider block mb-4">Iniciativas do roadmap</span>
+          <span className="text-xs font-sans font-bold text-[#6F625B] tracking-wider block mb-4">Iniciativas do roadmap</span>
           <div className="flex flex-col gap-2">
             <div className="flex justify-start">
-              <div className="bg-white border border-[#DCD7CA] px-5 py-2.5 rounded-full text-xs font-medium text-[#2C3539]">Usuário</div>
+              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs font-medium text-[#241510]">Usuário</div>
             </div>
             <div className="flex justify-start">
-              <div className="bg-white border border-[#DCD7CA] px-5 py-2.5 rounded-full text-xs font-medium text-[#2C3539]">Estrutura organizacional</div>
+              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs font-medium text-[#241510]">Estrutura organizacional</div>
             </div>
             <div className="flex justify-start">
-              <div className="bg-white border border-[#DCD7CA] px-5 py-2.5 rounded-full text-xs font-medium text-[#2C3539]">Perfil de acesso</div>
+              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs font-medium text-[#241510]">Perfil de acesso</div>
             </div>
             <div className="flex justify-start gap-2">
-              <div className="bg-white border border-[#DCD7CA] px-5 py-2.5 rounded-full text-xs font-medium text-[#2C3539]">Segurança</div>
-              <div className="bg-white border border-[#DCD7CA] px-5 py-2.5 rounded-full text-xs font-medium text-[#2C3539]">APIs</div>
+              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs font-medium text-[#241510]">Segurança</div>
+              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs font-medium text-[#241510]">APIs</div>
             </div>
             <div className="flex justify-start gap-2">
-              <div className="bg-white border border-[#DCD7CA] px-5 py-2.5 rounded-full text-xs font-medium text-[#2C3539]">Grupos/Tags</div>
-              <div className="bg-white border border-[#DCD7CA] px-5 py-2.5 rounded-full text-xs font-medium text-[#2C3539]">Atributos</div>
+              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs font-medium text-[#241510]">Grupos/Tags</div>
+              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs font-medium text-[#241510]">Atributos</div>
             </div>
             <div className="flex justify-start">
-              <div className="bg-white border border-[#DCD7CA] px-5 py-2.5 rounded-full text-xs font-medium text-[#2C3539]">Auditoria</div>
+              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs font-medium text-[#241510]">Auditoria</div>
             </div>
           </div>
         </div>
 
-        <div className="hidden md:flex items-center justify-center text-[#DCD7CA]">
+        <div className="hidden md:flex items-center justify-center text-[#E2DCD4]">
           <span className="text-5xl">→</span>
         </div>
 
@@ -979,49 +975,48 @@ const AdminGlobalDocsSimplificado = () => (
 
     {/* A estratégia de evolução */}
     <div className="mb-32">
-      <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">A ESTRATÉGIA DE EVOLUÇÃO</span>
-      <h2 id="estrategia-evolucao" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Uma evolução incremental</h2>
+      <h2 id="estrategia-evolucao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Uma evolução incremental</h2>
 
       {/* Steps layout */}
       <div className="flex flex-col md:flex-row items-stretch justify-between gap-4 my-8 not-prose">
         {/* Fase 1 */}
-        <div className="bg-white border border-[#EBE7DD] rounded-none p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#006266]/30 transition-all duration-300">
+        <div className="bg-white border border-[#E2DCD4] rounded-2xl p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#9E4322]/30 transition-all duration-300">
           <div>
-            <span className="text-[10px] font-sans font-bold tracking-widest text-[#787265] uppercase block mb-1">FASE 1</span>
-            <h4 className="font-serif font-bold text-base text-[#2C3539] mb-3">Ponto de entrada único</h4>
-            <p className="text-xs text-[#5C6669] leading-relaxed">Uma única planilha alimenta todas as bases existentes.</p>
+            <span className="text-[10px] font-sans font-bold tracking-widest text-[#6F625B] uppercase block mb-1">FASE 1</span>
+            <h4 className="font-serif font-bold text-base text-[#241510] mb-3">Ponto de entrada único</h4>
+            <p className="text-xs text-[#6F625B] leading-relaxed">Uma única planilha alimenta todas as bases existentes.</p>
           </div>
         </div>
 
-        <div className="hidden md:flex items-center justify-center text-[#DCD7CA] shrink-0">
+        <div className="hidden md:flex items-center justify-center text-[#E2DCD4] shrink-0">
           <span className="text-3xl">→</span>
         </div>
-        <div className="flex md:hidden items-center justify-center text-[#DCD7CA] shrink-0 my-1">
+        <div className="flex md:hidden items-center justify-center text-[#E2DCD4] shrink-0 my-1">
           <span className="text-3xl">↓</span>
         </div>
 
         {/* Fase 2 */}
-        <div className="bg-white border border-[#EBE7DD] rounded-none p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#006266]/30 transition-all duration-300">
+        <div className="bg-white border border-[#E2DCD4] rounded-2xl p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#9E4322]/30 transition-all duration-300">
           <div>
-            <span className="text-[10px] font-sans font-bold tracking-widest text-[#787265] uppercase block mb-1">FASE 2</span>
-            <h4 className="font-serif font-bold text-base text-[#2C3539] mb-3">Base central como origem</h4>
-            <p className="text-xs text-[#5C6669] leading-relaxed">A nova base vira fonte oficial e distribui os dados automaticamente.</p>
+            <span className="text-[10px] font-sans font-bold tracking-widest text-[#6F625B] uppercase block mb-1">FASE 2</span>
+            <h4 className="font-serif font-bold text-base text-[#241510] mb-3">Base central como origem</h4>
+            <p className="text-xs text-[#6F625B] leading-relaxed">A nova base vira fonte oficial e distribui os dados automaticamente.</p>
           </div>
         </div>
 
-        <div className="hidden md:flex items-center justify-center text-[#DCD7CA] shrink-0">
+        <div className="hidden md:flex items-center justify-center text-[#E2DCD4] shrink-0">
           <span className="text-3xl">→</span>
         </div>
-        <div className="flex md:hidden items-center justify-center text-[#DCD7CA] shrink-0 my-1">
+        <div className="flex md:hidden items-center justify-center text-[#E2DCD4] shrink-0 my-1">
           <span className="text-3xl">↓</span>
         </div>
 
         {/* Fase 3 */}
-        <div className="bg-white border border-[#EBE7DD] rounded-none p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#006266]/30 transition-all duration-300">
+        <div className="bg-white border border-[#E2DCD4] rounded-2xl p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#9E4322]/30 transition-all duration-300">
           <div>
-            <span className="text-[10px] font-sans font-bold tracking-widest text-[#787265] uppercase block mb-1">FASE 3</span>
-            <h4 className="font-serif font-bold text-base text-[#2C3539] mb-3">Fonte única de verdade</h4>
-            <p className="text-xs text-[#5C6669] leading-relaxed">Cadastros locais são eliminados. Tudo passa pela camada central.</p>
+            <span className="text-[10px] font-sans font-bold tracking-widest text-[#6F625B] uppercase block mb-1">FASE 3</span>
+            <h4 className="font-serif font-bold text-base text-[#241510] mb-3">Fonte única de verdade</h4>
+            <p className="text-xs text-[#6F625B] leading-relaxed">Cadastros locais são eliminados. Tudo passa pela camada central.</p>
           </div>
         </div>
       </div>
@@ -1033,7 +1028,7 @@ const AdminGlobalDocsSimplificado = () => (
     </div>
 
     {/* Handoff */}
-    <div className="w-screen relative left-1/2 -translate-x-1/2 bg-[#141515] text-white py-16 md:py-24 mb-32 not-prose">
+    <div className="w-screen relative left-1/2 -translate-x-1/2 bg-[#141515] text-white py-16 md:py-24 mb-32 not-prose rounded-2xl">
       <div className="max-w-[1000px] mx-auto">
         <span className="text-white/60 font-sans font-bold text-xs uppercase tracking-widest block mb-3">HANDOFF</span>
         <h2 id="handoff" className="font-serif text-3xl font-bold text-white mb-4 leading-tight">Uma administração única para todo o ecossistema</h2>
@@ -1073,10 +1068,9 @@ const AdminGlobalDocsSimplificado = () => (
 
     {/* IA como aceleradora do processo */}
     <div className="mb-32">
-      <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">IA COMO ACELERADORA DO PROCESSO</span>
-      <h2 id="ia-aceleradora" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Uma ferramenta para cada etapa, sem substituir decisão</h2>
+      <h2 id="ia-aceleradora" className="font-serif text-3xl font-bold text-[#241510] mb-4">Uma ferramenta para cada etapa, sem substituir decisão</h2>
 
-      <div className="my-10 divide-y divide-[#EBE7DD] border-y border-[#EBE7DD] not-prose">
+      <div className="my-10 divide-y divide-[#E2DCD4] border-y border-[#E2DCD4] not-prose">
         {[
           {
             stage: "Descoberta",
@@ -1108,34 +1102,33 @@ const AdminGlobalDocsSimplificado = () => (
           }
         ].map((row, idx) => (
           <div key={idx} className="py-6 flex flex-col md:flex-row gap-4 md:gap-8 items-start">
-            <div className="w-full md:w-[20%] shrink-0 text-sm font-sans text-[#787265] uppercase tracking-wider font-semibold pt-1">
+            <div className="w-full md:w-[20%] shrink-0 text-sm font-sans text-[#6F625B] uppercase tracking-wider font-semibold pt-1">
               {row.stage}
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-1.5">
                 <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center p-1.5 shrink-0 border border-[#EBE7DD]"
+                  className="w-8 h-8 rounded-lg flex items-center justify-center p-1.5 shrink-0 border border-[#E2DCD4]"
                   style={{ backgroundColor: row.logoBg }}
                 >
                   <img src={row.logo} alt={row.tool} className="max-w-full max-h-full object-contain" />
                 </div>
-                <h4 className="font-sans font-bold text-base text-[#2C3539]">{row.tool}</h4>
+                <h4 className="font-sans font-bold text-base text-[#241510]">{row.tool}</h4>
               </div>
-              <p className="text-sm text-[#4A5559] leading-relaxed">{row.desc}</p>
+              <p className="text-sm text-[#7D7169] leading-relaxed">{row.desc}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <p className="text-[#4A5559] leading-relaxed">
+      <p className="text-[#7D7169] leading-relaxed">
         Em nenhum momento a IA substituiu decisões de Design. O ganho foi de tempo operacional, convertido em mais profundidade estratégica.
       </p>
     </div>
 
     {/* Potencial de Negócio */}
     <div className="mb-32">
-      <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">POTENCIAL DE NEGÓCIO</span>
-      <h2 id="potencial" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Mudando o produto de patamar</h2>
+      <h2 id="potencial" className="font-serif text-3xl font-bold text-[#241510] mb-4">Mudando o produto de patamar</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10 not-prose">
         {[
@@ -1152,7 +1145,7 @@ const AdminGlobalDocsSimplificado = () => (
             desc: "A amplitude do ecossistema era comprometida pelo esforço de configurar cada produto. A implantação unificada entrega esse diferencial de forma consistente."
           }
         ].map((card, idx) => (
-          <div key={idx} className="bg-[#24555C] text-[#ECE8DD] p-8 flex flex-col justify-between min-h-[220px]">
+          <div key={idx} className="bg-[#2E211B] text-[#ECE8DD] p-8 flex flex-col justify-between min-h-[220px] rounded-2xl">
             <div>
               <h4 className="font-serif font-bold text-xl text-[#F4EFEB] mb-4 leading-snug">{card.title}</h4>
               <p className="text-sm text-[#C5D2C9] leading-relaxed">{card.desc}</p>
@@ -1164,8 +1157,7 @@ const AdminGlobalDocsSimplificado = () => (
 
     {/* Minha Atuação e Aprendizado */}
     <div className="mb-32">
-      <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">MINHA ATUAÇÃO E APRENDIZADO</span>
-      <h2 id="atuacao" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">
+      <h2 id="atuacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">
         Liderar Design, em projetos dessa complexidade, significa também liderar conhecimento. Ao longo do tempo a iniciativa teve ritmos diferentes, ciclos de pausa e retomada, e minha contribuição mais relevante foi preservar  e ser o pilar do contexto.
       </h2>
 
@@ -1180,12 +1172,12 @@ export const AdminGlobalDocsContent = () => {
     <div className={viewMode === 'simplificado' ? 'mode-simplificado' : 'mode-relatorio'}>
       {/* Switcher - hidden */}
       <div className="hidden justify-center mb-12 not-prose">
-        <div className="bg-[#EBE7DD]/60 p-1.5 rounded-full flex gap-1 border border-[#DCD7CA]">
+        <div className="bg-[#E2DCD4]/60 p-1.5 rounded-full flex gap-1 border border-[#E2DCD4]">
           <button
             onClick={() => setViewMode('simplificado')}
             className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-300 flex items-center gap-2 cursor-pointer ${viewMode === 'simplificado'
-              ? 'bg-[#006266] text-white '
-              : 'text-[#787265] hover:text-[#2C3539]'
+              ? 'bg-[#9E4322] text-white '
+              : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
             <Sparkles size={16} />
@@ -1194,8 +1186,8 @@ export const AdminGlobalDocsContent = () => {
           <button
             onClick={() => setViewMode('relatorio')}
             className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-300 flex items-center gap-2 cursor-pointer ${viewMode === 'relatorio'
-              ? 'bg-[#006266] text-white '
-              : 'text-[#787265] hover:text-[#2C3539]'
+              ? 'bg-[#9E4322] text-white '
+              : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
             <BookOpen size={16} />

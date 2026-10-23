@@ -20,6 +20,7 @@ export default function Layout() {
   const location = useLocation();
   const navType = useNavigationType();
   const isProjectPage = location.pathname.startsWith('/project');
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +52,39 @@ export default function Layout() {
       window.scrollTo(0, 0);
     }
   }, [location.pathname, location.hash, navType, location.state]);
+
+  // Home: tela única sem scroll no desktop, sem footer (contatos ficam na coluna "sobre mim")
+  if (isHome) {
+    return (
+      <motion.div
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="min-h-screen lg:h-screen flex flex-col bg-[var(--color-muted-background)] text-foreground font-sans selection:bg-brand selection:text-white relative overflow-hidden"
+      >
+        <motion.div
+          className="fixed top-0 left-0 w-[51vw] h-full bg-brand z-[9999] pointer-events-none"
+          variants={leftDoorVariants}
+          transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+        />
+        <motion.div
+          className="fixed top-0 right-0 w-[51vw] h-full bg-brand z-[9999] pointer-events-none"
+          variants={rightDoorVariants}
+          transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+        />
+
+        <motion.main
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35, delay: 0.15 }}
+          className="flex-1 min-h-0 w-full relative z-10"
+        >
+          <Outlet />
+        </motion.main>
+      </motion.div>
+    );
+  }
 
   if (isProjectPage) {
     return (
@@ -93,10 +127,10 @@ export default function Layout() {
                 Say hello!
               </a>
             </Button>
-            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#DCD7CA] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
+            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#E2DCD4] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
               <a href="#">in</a>
             </Button>
-            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#DCD7CA] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
+            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#E2DCD4] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
               <a href="#">ig</a>
             </Button>
           </div>
@@ -110,7 +144,7 @@ export default function Layout() {
       initial="initial"
       animate="animate"
       exit="exit"
-      className="min-h-screen flex flex-col bg-[var(--color-muted-background)] text-foreground font-sans selection:bg-brand selection:text-white relative overflow-hidden"
+      className="min-h-screen flex flex-col bg-[var(--color-muted-background)] text-foreground font-sans selection:bg-brand selection:text-white relative overflow-clip"
     >
 
       {/* Left Curtain Door */}
@@ -146,10 +180,10 @@ export default function Layout() {
               Say hello!
             </a>
           </Button>
-          <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#DCD7CA] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
+          <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#E2DCD4] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
             <a href="#">in</a>
           </Button>
-          <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#DCD7CA] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
+          <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#E2DCD4] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
             <a href="#">ig</a>
           </Button>
         </div>

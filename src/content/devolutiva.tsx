@@ -14,6 +14,9 @@ import {
   CheckCircle,
   AlertCircle
 } from 'lucide-react';
+import { DevolutivaIaMotion } from '../components/DevolutivaIaMotion';
+import { DevolutivaSolucaoMotion } from '../components/DevolutivaSolucaoMotion';
+import { CicloAvaliativoMotion } from '../components/CicloAvaliativoMotion';
 import contexto1 from '../assets/images/Devolutiva/Contexto-1.jpg';
 import contexto2 from '../assets/images/Devolutiva/Contexto-2.jpg';
 import contexto3 from '../assets/images/Devolutiva/Contexto-3.jpg';
@@ -35,10 +38,8 @@ import gestor1Img from '../assets/images/Devolutiva/Gestor-1.png';
 import colab1Img from '../assets/images/Devolutiva/Colab-1.png';
 import testes1Img from '../assets/images/Devolutiva/Testes-1.png';
 import testes2Img from '../assets/images/Devolutiva/Testes-2.png';
-import devolutivaSolucao1 from '../assets/images/Devolutiva soluçao 1.png';
-import devolutivaSolucao2 from '../assets/images/Devolutiva soluçao 2.png';
-import devolutivaSolucao3 from '../assets/images/Devolutiva soluçao 3.png';
 import { Carousel } from '../components/Carousel';
+import { AtuacaoInfo } from '../components/AtuacaoInfo';
 
 
 
@@ -60,12 +61,12 @@ export const DevolutivaContent = () => {
     <div className={viewMode === 'simplificado' ? 'mode-simplificado' : 'mode-relatorio'}>
       {/* Switcher - hidden */}
       <div className="hidden justify-center mb-12 not-prose">
-        <div className="bg-[#EBE7DD]/60 p-1.5 rounded-full flex gap-1 border border-[#DCD7CA]">
+        <div className="bg-[#E2DCD4]/60 p-1.5 rounded-full flex gap-1 border border-[#E2DCD4]">
           <button
             onClick={() => setViewMode('simplificado')}
             className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-300 flex items-center gap-2 cursor-pointer ${viewMode === 'simplificado'
-              ? 'bg-[#006266] text-white '
-              : 'text-[#787265] hover:text-[#2C3539]'
+              ? 'bg-[#9E4322] text-white '
+              : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
             <Sparkles size={16} />
@@ -74,8 +75,8 @@ export const DevolutivaContent = () => {
           <button
             onClick={() => setViewMode('relatorio')}
             className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-300 flex items-center gap-2 cursor-pointer ${viewMode === 'relatorio'
-              ? 'bg-[#006266] text-white '
-              : 'text-[#787265] hover:text-[#2C3539]'
+              ? 'bg-[#9E4322] text-white '
+              : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
             <BookOpen size={16} />
@@ -89,41 +90,37 @@ export const DevolutivaContent = () => {
 
           {/* O Desafio */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">O desafio</span>
-            <h2 id="o-desafio" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">A única etapa que acontecia fora do produto</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
+            <h2 id="o-desafio" className="font-serif text-3xl font-bold text-[#241510] mb-4">A única etapa que acontecia fora do produto</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
               O produto de Performance já cobria a configuração de ciclos, as avaliações e os comitês de calibração. A jornada era interrompida bem antes da etapa mais importante: a conversa entre gestor e colaborador sobre os resultados.
             </p>
 
-            <img
-              src="/fluxo.png"
-              alt="fluxo"
-              className="w-[70%] mx-auto block"
-            />
+            <div className="w-full md:w-[80%] mx-auto not-prose">
+              <CicloAvaliativoMotion />
+            </div>
           </div>
 
           {/* Alinhando o problema */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Alinhando o problema</span>
-            <h2 id="alinhando-o-problema" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Uma base compartilhada antes do Discovery</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-10">
+            <h2 id="alinhando-o-problema" className="font-serif text-3xl font-bold text-[#241510] mb-4">Uma base compartilhada antes do Discovery</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-10">
               Antes de investigar qualquer solução, precisávamos garantir que Produto, Design e Negócio partissem do mesmo entendimento do problema.
             </p>
 
             <div className="relative not-prose mb-10">
-              <div className="absolute top-8 h-[1px] bg-[#EBE7DD] z-0 hidden md:block" style={{ left: '2rem', right: 'calc(25% - 2rem)' }}></div>
+              <div className="absolute top-8 h-[1px] bg-[#E2DCD4] z-0 hidden md:block" style={{ left: '2rem', right: 'calc(25% - 2rem)' }}></div>
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
                 {/* Kickoff */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full border border-[#DCD7CA] bg-white flex items-center justify-center text-[#006266] mb-6 ">
+                  <div className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6 ">
                     <Flag size={20} />
                   </div>
-                  <h4 className="font-sans font-bold text-base text-[#2C3539] mb-2">Kickoff</h4>
-                  <p className="text-xs text-[#787265] leading-relaxed mb-6 min-h-[60px]">
+                  <h4 className="font-sans font-bold text-base text-[#241510] mb-2">Kickoff</h4>
+                  <p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]">
                     Contexto, objetivos, riscos e métricas de sucesso alinhados com os stakeholders.
                   </p>
-                  <div className="w-full border border-[#EBE7DD] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#006266]/30 transition-all duration-300">
+                  <div className="w-full border border-[#E2DCD4] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#9E4322]/30 transition-all duration-300">
                     <img
                       src="/thumb-kickoff.png"
                       alt="Kickoff"
@@ -134,15 +131,15 @@ export const DevolutivaContent = () => {
 
                 {/* CSD */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full border border-[#DCD7CA] bg-white flex items-center justify-center text-[#006266] mb-6 ">
+                  <div className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6 ">
                     <Pencil size={20} />
                   </div>
-                  <h4 className="font-sans font-bold text-base text-[#2C3539] mb-2">CSD</h4>
-                  <p className="text-xs text-[#787265] leading-relaxed mb-6 min-h-[60px]">
+                  <h4 className="font-sans font-bold text-base text-[#241510] mb-2">CSD</h4>
+                  <p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]">
                     5 stakeholders. Certezas e dúvidas viraram perguntas de pesquisa.
                   </p>
 
-                  <div className="w-full border border-[#EBE7DD] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#006266]/30 transition-all duration-300">
+                  <div className="w-full border border-[#E2DCD4] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#9E4322]/30 transition-all duration-300">
                     <img
                       src="/thumb-csd.png"
                       alt="CSD"
@@ -153,15 +150,15 @@ export const DevolutivaContent = () => {
 
                 {/* Benchmark */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full border border-[#DCD7CA] bg-white flex items-center justify-center text-[#006266] mb-6 ">
+                  <div className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6 ">
                     <LayoutGrid size={20} />
                   </div>
-                  <h4 className="font-sans font-bold text-base text-[#2C3539] mb-2">Benchmark</h4>
-                  <p className="text-xs text-[#787265] leading-relaxed mb-6 min-h-[60px]">
+                  <h4 className="font-sans font-bold text-base text-[#241510] mb-2">Benchmark</h4>
+                  <p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]">
                     10 plataformas de mercado comparadas em funcionalidades de devolutiva.
                   </p>
 
-                  <div className="w-full border border-[#EBE7DD] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#006266]/30 transition-all duration-300">
+                  <div className="w-full border border-[#E2DCD4] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#9E4322]/30 transition-all duration-300">
                     <img
                       src="/thumb-bench.png"
                       alt="Benchmark"
@@ -172,15 +169,15 @@ export const DevolutivaContent = () => {
 
                 {/* Faz / não faz */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full border border-[#DCD7CA] bg-white flex items-center justify-center text-[#006266] mb-6 ">
+                  <div className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6 ">
                     <GitFork size={20} />
                   </div>
-                  <h4 className="font-sans font-bold text-base text-[#2C3539] mb-2">Faz / não faz</h4>
-                  <p className="text-xs text-[#787265] leading-relaxed mb-6 min-h-[60px]">
+                  <h4 className="font-sans font-bold text-base text-[#241510] mb-2">Faz / não faz</h4>
+                  <p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]">
                     Limites de escopo definidos antes de aprofundar a pesquisa.
                   </p>
 
-                  <div className="w-full border border-[#EBE7DD] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#006266]/30 transition-all duration-300">
+                  <div className="w-full border border-[#E2DCD4] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#9E4322]/30 transition-all duration-300">
                     <img
                       src="/thumb-faz-naofaz.png"
                       alt="Faz / Não Faz"
@@ -194,12 +191,11 @@ export const DevolutivaContent = () => {
 
           {/* Discovery */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Discovery</span>
-            <h2 id="discovery" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Consolidando o que a empresa já sabia</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-4">
+            <h2 id="discovery" className="font-serif text-3xl font-bold text-[#241510] mb-4">Consolidando o que a empresa já sabia</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-4">
               Reuni pesquisas anteriores de UX Research, estudos de Service Design e entrevistas de outras iniciativas do produto de Performance, em vez de repetir descobertas já validadas. Essa base reduziu o tempo de investigação e concentrou esforço nas lacunas reais.
             </p>
-            <p className="text-[#4A5559] leading-relaxed mb-6">
+            <p className="text-[#7D7169] leading-relaxed mb-6">
               A partir dela, mapeei a jornada completa de devolutiva conectando RH, gestores e colaboradores, e ficou evidente que essa etapa não era isolada: era o principal elo entre avaliação, calibração e Plano de Desenvolvimento Individual.
             </p>
 
@@ -212,148 +208,52 @@ export const DevolutivaContent = () => {
             </div>
 
             {/* Legenda */}
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">
               Mapa mental criado para analisar os fluxos de devolutiva entre RH, gestores e colaboradores.
             </p>
           </div>
 
           {/* Principais Insights */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Principais insights</span>
-            <h2 id="principais-insights" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Cinco padrões estruturais</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
-              O produto de Performance já cobria a configuração de ciclos, as avaliações e os comitês de calibração. A jornada era interrompida bem antes da etapa mais importante: a conversa entre gestor e colaborador sobre os resultados.
+            <h2 id="principais-insights" className="font-serif text-3xl font-bold text-[#241510] mb-4">Os 5 problemas estruturais</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              O produto de Performance cobria ciclos, avaliações e calibração, mas a jornada parava antes da etapa mais importante: a conversa entre gestor e colaborador.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 not-prose">
-              <div className="bg-[#FFF8F8] border-l-2 border-[#A21C26] border-y-0 border-r-0 rounded-r-lg p-8 text-left flex flex-col hover:bg-[#FFF5F5] transition-all duration-300">
-                <FileSpreadsheet size={20} className="text-[#A21C26] mb-4" />
-                <h4 className="font-serif font-bold text-[#2C3539] text-xl mb-2">Gestores com ferramentas externas</h4>
-                <p className="text-sm text-[#787265] leading-relaxed">
-                  Gestores dependiam de documentos e planilhas para preparar a conversa.
-                </p>
-              </div>
-              <div className="bg-[#FFF8F8] border-l-2 border-[#A21C26] border-y-0 border-r-0 rounded-r-lg p-8 text-left flex flex-col hover:bg-[#FFF5F5] transition-all duration-300">
-                <History size={20} className="text-[#A21C26] mb-4" />
-                <h4 className="font-serif font-bold text-[#2C3539] text-xl mb-2">Colaboradores sem histórico</h4>
-                <p className="text-sm text-[#787265] leading-relaxed">
-                  Não acumulavam um histórico consolidado do próprio desenvolvimento.
-                </p>
-              </div>
-              <div className="bg-[#FFF8F8] border-l-2 border-[#A21C26] border-y-0 border-r-0 rounded-r-lg p-8 text-left flex flex-col hover:bg-[#FFF5F5] transition-all duration-300">
-                <EyeOff size={20} className="text-[#A21C26] mb-4" />
-                <h4 className="font-serif font-bold text-[#2C3539] text-xl mb-2">RH sem visibilidade</h4>
-                <p className="text-sm text-[#787265] leading-relaxed">
-                  Nenhuma forma de saber o que estava feito, pendente ou parado.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 not-prose">
-              <div className="bg-[#FFF8F8] border-l-2 border-[#A21C26] border-y-0 border-r-0 rounded-r-lg p-8 text-left flex flex-col hover:bg-[#FFF5F5] transition-all duration-300">
-                <Link2 size={20} className="text-[#A21C26] mb-4" />
-                <h4 className="font-serif font-bold text-[#2C3539] text-xl mb-2">O elo da jornada</h4>
-                <p className="text-sm text-[#787265] leading-relaxed">
-                  Era na devolutiva que avaliações e feedbacks viravam ação concreta.
-                </p>
-              </div>
-              <div className="bg-[#FFF8F8] border-l-2 border-[#A21C26] border-y-0 border-r-0 rounded-r-lg p-8 text-left flex flex-col hover:bg-[#FFF5F5] transition-all duration-300">
-                <RefreshCw size={20} className="text-[#A21C26] mb-4" />
-                <h4 className="font-serif font-bold text-[#2C3539] text-xl mb-2">Cada empresa reinventava o processo</h4>
-                <p className="text-sm text-[#787265] leading-relaxed">
-                  Sem um modelo estruturado, o produto não conseguia padronizar nem evoluir essa etapa.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Arquitetando a solução */}
-          <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Arquitetando a solução</span>
-            <h2 id="arquitetando-a-solucao" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Três jornadas, uma experiência conectada</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
-              Antes de desenhar telas, validei os fluxos completos das três personas, garantindo que cada etapa da devolutiva se conectasse ao restante do produto.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose mb-8">
-              {/* RH */}
-              <div className="bg-[#FAF9F6] border border-[#EBE7DD] rounded-sm overflow-hidden flex flex-col hover:border-[#006266]/20 transition-all duration-300 ">
-                <div className="p-6 flex-1">
-                  <span className="text-sm font-bold text-[#006266] uppercase tracking-wider block mb-2">RH</span>
-                  <p className="text-sm text-[#787265] leading-relaxed">
-                    Configura períodos, acompanha lideranças e monitora indicadores de execução.
+            <div className="not-prose border-y border-[#E2DCD4] divide-y divide-[#E2DCD4]">
+              {[
+                { Icon: FileSpreadsheet, title: 'Gestores com ferramentas externas', text: 'Dependiam de documentos e planilhas para preparar a conversa.' },
+                { Icon: History, title: 'Colaboradores sem histórico', text: 'Não acumulavam um registro consolidado do próprio desenvolvimento.' },
+                { Icon: EyeOff, title: 'RH sem visibilidade', text: 'Não sabia o que estava feito, pendente ou parado.' },
+                { Icon: Link2, title: 'O elo da jornada', text: 'Era na devolutiva que avaliações e feedbacks viravam ação.' },
+                { Icon: RefreshCw, title: 'Cada empresa reinventava o processo', text: 'Sem um modelo, o produto não padronizava nem evoluía essa etapa.' },
+              ].map(({ Icon, title, text }) => (
+                <div key={title} className="flex items-start gap-4 py-4">
+                  <Icon size={18} className="text-[#A21C26] mt-0.5 shrink-0" />
+                  <p className="text-[15px] leading-relaxed">
+                    <span className="font-semibold text-[#241510]">{title}.</span>{' '}
+                    <span className="text-[#6F625B]">{text}</span>
                   </p>
                 </div>
-
-                <div className="bg-white p-4 border-t border-[#EBE7DD]">
-                  <div className="w-full">
-                    <img
-                      src="/thumb-fluxo-rh.png"
-                      alt="Fluxo RH"
-                      className="w-full h-auto block"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* GESTOR */}
-              <div className="bg-[#FAF9F6] border border-[#EBE7DD] rounded-sm overflow-hidden flex flex-col hover:border-[#006266]/20 transition-all duration-300 ">
-                <div className="p-6 flex-1">
-                  <span className="text-sm font-bold text-[#006266] uppercase tracking-wider block mb-2">Gestor</span>
-                  <p className="text-sm text-[#787265] leading-relaxed">
-                    Reúne todas as informações em um lugar só e registra a conversa na plataforma.
-                  </p>
-                </div>
-
-                <div className="bg-white p-4 border-t border-[#EBE7DD]">
-                  <div className="w-full">
-                    <img
-                      src="/thumb-fluxo-gestor.png"
-                      alt="Fluxo Gestor"
-                      className="w-full h-auto block"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* COLABORADOR */}
-              <div className="bg-[#FAF9F6] border border-[#EBE7DD] rounded-sm overflow-hidden flex flex-col hover:border-[#006266]/20 transition-all duration-300 ">
-                <div className="p-6 flex-1">
-                  <span className="text-sm font-bold text-[#006266] uppercase tracking-wider block mb-2">Colaborador</span>
-                  <p className="text-sm text-[#787265] leading-relaxed">
-                    Recebe a devolutiva formalmente e ganha um histórico contínuo de desenvolvimento.
-                  </p>
-                </div>
-
-                <div className="bg-white p-4 border-t border-[#EBE7DD]">
-                  <div className="w-full">
-                    <img
-                      src="/thumb-fluxo-colab.png"
-                      alt="Fluxo Colaborador"
-                      className="w-full h-auto block"
-                    />
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* Explorando soluções */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Explorando soluções</span>
-            <h2 id="explorando-solucoes" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Testando estrutura antes de fechar layout</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
+            <h2 id="explorando-solucoes" className="font-serif text-3xl font-bold text-[#241510] mb-4">Testando estrutura antes de fechar layout</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
               Com a arquitetura validada, explorei wireframes para testar alternativas de navegação e reduzir a complexidade percebida, antes de qualquer decisão visual.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 mb-8 not-prose">
               {['Integração entre etapas do ciclo', 'Configuração do RH', 'Preparo do gestor', 'Consulta do colaborador'].map((item, index, arr) => (
                 <React.Fragment key={item}>
-                  <span className="px-5 py-2.5 bg-[#FAF9F6] border border-[#DCD7CA] rounded-full text-xs font-semibold text-[#787265] ">
+                  <span className="px-5 py-2.5 bg-[#FAF9F6] border border-[#E2DCD4] rounded-full text-xs font-semibold text-[#6F625B] ">
                     {item}
                   </span>
                   {index < arr.length - 1 && (
-                    <span className="text-[#787265]/50 text-xl font-light">→</span>
+                    <span className="text-[#6F625B]/50 text-xl font-light">→</span>
                   )}
                 </React.Fragment>
               ))}
@@ -368,79 +268,37 @@ export const DevolutivaContent = () => {
             </div>
 
             {/* Legenda */}
-            <p className="text-center text-sm text-[#787265] font-medium">
+            <p className="text-center text-sm text-[#6F625B] font-medium">
               Wireframe dos fluxos de cada persona.
             </p>
           </div>
 
           {/* Validação */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Validação</span>
-            <h2 id="validacao" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Testando com quem vive o processo</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
-              Com o protótipo navegável pronto, testei a experiência completa com 12 participantes entre RH, gestores e lideranças, buscando responder a uma pergunta central: a solução tornava a devolutiva mais simples do que os processos paralelos que já existiam?
+            <h2 id="validacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Teste de usabilidade com 12 participantes que vivem o processo</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              RH, gestores e lideranças testaram o protótipo navegável para responder uma pergunta: a devolutiva ficou mais simples do que os processos paralelos que já existiam?
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 not-prose">
-              {/* O que funcionou */}
-              <div className="flex flex-col">
-                <h3 className="text-[#006266] font-serif font-bold text-lg mb-6 flex items-center gap-2">
-                  <CheckCircle size={18} />
-                  O que funcionou
-                </h3>
-                <div className="space-y-3">
-                  <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 rounded-r-lg p-6 hover:bg-[#FAF9F6]/80 transition-all duration-300  min-h-[84px] flex items-center">
-                    <p className="text-base font-medium text-[#4A5559] leading-relaxed">
-                      Painel lateral de preparação centralizou as informações da conversa.
-                    </p>
-                  </div>
-                  <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 rounded-r-lg p-6 hover:bg-[#FAF9F6]/80 transition-all duration-300  min-h-[84px] flex items-center">
-                    <p className="text-base font-medium text-[#4A5559] leading-relaxed">
-                      Consolidação automática das avaliações reduziu retrabalho manual.
-                    </p>
-                  </div>
-                  <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 rounded-r-lg p-6 hover:bg-[#FAF9F6]/80 transition-all duration-300  min-h-[84px] flex items-center">
-                    <p className="text-base font-medium text-[#4A5559] leading-relaxed">
-                      Fluxo simples, navegado sem necessidade de treinamento.
-                    </p>
-                  </div>
-                  <div className="bg-[#FAF9F6] border-l-2 border-[#006266] border-y-0 border-r-0 rounded-r-lg p-6 hover:bg-[#FAF9F6]/80 transition-all duration-300  min-h-[84px] flex items-center">
-                    <p className="text-base font-medium text-[#4A5559] leading-relaxed">
-                      Exportação em PDF valorizada para registro e consulta.
-                    </p>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 not-prose">
+              {[
+                { title: 'O que funcionou', Icon: CheckCircle, color: '#9E4322', bg: '#FAF9F6', items: ['Painel lateral centralizou as informações da conversa', 'Consolidação automática reduziu retrabalho manual', 'Fluxo simples, sem precisar de treinamento', 'Exportação em PDF valorizada para registro'] },
+                { title: 'Oportunidades de melhoria', Icon: AlertCircle, color: '#A26D26', bg: '#FAF6F0', items: ['Confusão entre avaliação e devolutiva', 'Rótulos pouco claros na navegação', 'Faltavam filtros e indicadores para RH e gestores', 'Dúvidas sobre anotações privadas e colapsáveis'] },
+              ].map(col => (
+                <div key={col.title} className="rounded-xl p-5" style={{ background: col.bg }}>
+                  <h3 className="flex items-center gap-2 font-serif font-bold text-[16px] mb-3" style={{ color: col.color }}>
+                    <col.Icon size={16} /> {col.title}
+                  </h3>
+                  <ul className="space-y-2">
+                    {col.items.map(item => (
+                      <li key={item} className="flex gap-2 text-[14px] leading-snug text-[#4F4440]">
+                        <span className="mt-[7px] w-1.5 h-1.5 rounded-full shrink-0" style={{ background: col.color }} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-
-              {/* Oportunidades de melhoria */}
-              <div className="flex flex-col">
-                <h3 className="text-[#A26D26] font-serif font-bold text-lg mb-6 flex items-center gap-2">
-                  <AlertCircle size={18} />
-                  Oportunidades de melhoria
-                </h3>
-                <div className="space-y-3">
-                  <div className="bg-[#FAF6F0] border-l-2 border-[#A26D26] border-y-0 border-r-0 rounded-r-lg p-6 hover:bg-[#FAF6F0]/80 transition-all duration-300  min-h-[84px] flex items-center">
-                    <p className="text-base font-medium text-[#4A5559] leading-relaxed">
-                      Confusão entre avaliação e devolutiva em vários momentos.
-                    </p>
-                  </div>
-                  <div className="bg-[#FAF6F0] border-l-2 border-[#A26D26] border-y-0 border-r-0 rounded-r-lg p-6 hover:bg-[#FAF6F0]/80 transition-all duration-300  min-h-[84px] flex items-center">
-                    <p className="text-base font-medium text-[#4A5559] leading-relaxed">
-                      Dificuldade de navegação e rótulos pouco claros.
-                    </p>
-                  </div>
-                  <div className="bg-[#FAF6F0] border-l-2 border-[#A26D26] border-y-0 border-r-0 rounded-r-lg p-6 hover:bg-[#FAF6F0]/80 transition-all duration-300  min-h-[84px] flex items-center">
-                    <p className="text-base font-medium text-[#4A5559] leading-relaxed">
-                      Falta de filtros e indicadores para RH e gestores.
-                    </p>
-                  </div>
-                  <div className="bg-[#FAF6F0] border-l-2 border-[#A26D26] border-y-0 border-r-0 rounded-r-lg p-6 hover:bg-[#FAF6F0]/80 transition-all duration-300  min-h-[84px] flex items-center">
-                    <p className="text-base font-medium text-[#4A5559] leading-relaxed">
-                      Dúvidas sobre anotações privadas e componentes colapsáveis.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
 
             <img
@@ -450,107 +308,59 @@ export const DevolutivaContent = () => {
             />
 
             {/* Legenda */}
-            <p className="text-center text-sm text-[#787265] font-medium">
+            <p className="text-center text-sm text-[#6F625B] font-medium">
               Miro com as análises das entrevistas.
             </p>
           </div>
 
           {/* Da pesquisa à Inteligência Artificial */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Da pesquisa à Inteligência Artificial</span>
-            <h2 id="da-pesquisa-a-inteligencia-artificial" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">O problema não era só acessar dados, era interpretá-los</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
-              Gestores reconheciam o valor de ter tudo em um lugar só, mas ainda gastavam tempo demais interpretando o volume de avaliações antes da conversa.
+            <h2 id="da-pesquisa-a-inteligencia-artificial" className="font-serif text-3xl font-bold text-[#241510] mb-4">Agente de IA para ajudar o gestor</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              O problema não era só acessar os dados, era interpretá-los: gestores gastavam tempo demais lendo o volume de avaliações antes da conversa. Com a Gupy IA, o gestor gera a conclusão, revisa e aplica direto nos campos da devolutiva.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-7 gap-0 bg-gradient-to-br from-[#006266] to-[#054345] overflow-hidden border border-[#EBE7DD]  not-prose">
-              <div className="md:col-span-3 p-12 text-white flex flex-col justify-between min-h-[320px]">
-                <div>
-                  <h4 className="font-serif font-bold text-[#D7D0BF] text-3xl mb-4 leading-snug">Papel da IA na experiência</h4>
-                  <p className="text-sm text-white/90 leading-relaxed mb-6">
-                    Sintetizar dezenas de avaliações, destacar padrões e sugerir uma estrutura inicial para a conversa, sem substituir a decisão do gestor.
-                  </p>
-                </div>
-                <span className="text-sm font-normal text-white mt-auto block border-t border-white/10 pt-4">
-                  Resultado: menos tempo de preparo, especialmente em ciclos de avaliação 360°
-                </span>
-              </div>
-
-              <div className="md:col-span-4 flex items-center justify-center items-start relative h-[360px] overflow-hidden">
-                <img
-                  src="/ia-dev.png"
-                  alt="ia-dev"
-                  className="w-[70%] rounded-xl translate-y-10"
-                />
-              </div>
+            {/* Motion do fluxo com a Gupy IA */}
+            <div className="not-prose">
+              <DevolutivaIaMotion />
             </div>
           </div>
 
           {/* Solução Final */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Solução final</span>
-            <h2 id="solucao-final" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">O ciclo completo, dentro da plataforma</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
+            <h2 id="solucao-final" className="font-serif text-3xl font-bold text-[#241510] mb-4">O ciclo completo, dentro da plataforma</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
               Cada perfil passou a contar com funcionalidades específicas, mantendo todas as informações conectadas em uma única jornada.
             </p>
 
-            <div className="w-[80vw] relative left-1/2 right-1/2 -ml-[40vw] -mr-[40vw] my-10 not-prose">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                  <img
-                    src={devolutivaSolucao1}
-                    alt="Devolutiva Solução 1"
-                    className="w-full h-auto cursor-zoom-in object-contain"
-                  />
-                </div>
-
-                <div>
-                  <img
-                    src={devolutivaSolucao2}
-                    alt="Devolutiva Solução 2"
-                    className="w-full h-auto cursor-zoom-in object-contain"
-                  />
-                </div>
-
-                <div>
-                  <img
-                    src={devolutivaSolucao3}
-                    alt="Devolutiva Solução 3"
-                    className="w-full h-auto cursor-zoom-in object-contain"
-                  />
-                </div>
-              </div>
+            {/* Motion das três jornadas (RH, gestor e colaborador) num banner que passa da largura do texto */}
+            <div className="w-[80vw] max-w-[1280px] relative left-1/2 -translate-x-1/2 my-10 not-prose">
+              <DevolutivaSolucaoMotion />
             </div>
-
-            {/* Legenda */}
-            <p className="text-center text-sm text-[#787265] mt-6 font-medium">
-              Telas da solução final para Colaborador, RH e Gestor.
-            </p>
           </div>
 
-          {/* Resultados */}
-          <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Resultados</span>
-            <h2 id="resultados" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Da POC interna à adoção oficial</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
+          {/* Resultados — mais respiro em cima e embaixo para separar dos blocos vizinhos */}
+          <div className="mb-32 py-16">
+            <h2 id="resultados" className="font-serif text-3xl font-bold text-[#241510] mb-4">Da POC interna à adoção oficial</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
               A funcionalidade foi lançada como prova de conceito para uso interno antes de uma disponibilização mais ampla.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose">
-              <div className="bg-[#1E4E50] p-8 text-left flex flex-col justify-start min-h-[200px]  hover:bg-[#1E4E50]/95 transition-all duration-300">
-                <span className="text-4xl font-serif font-bold text-[#E8DCC4] mb-3">95%</span>
+              <div className="bg-[#2E211B] p-8 text-left flex flex-col justify-start min-h-[200px] hover:bg-[#2E211B]/95 transition-all duration-300 rounded-2xl">
+                <span className="text-6xl font-serif font-bold text-[#E8DCC4] mb-3 leading-none">95%</span>
                 <p className="text-sm text-white/90 leading-relaxed font-sans">
                   de adoção entre os gestores. E 100% do RH usando.
                 </p>
               </div>
-              <div className="bg-[#1E4E50] p-8 text-left flex flex-col justify-start min-h-[200px]  hover:bg-[#1E4E50]/95 transition-all duration-300">
-                <span className="text-2xl font-serif font-bold text-[#E8DCC4] mb-3">Dias para horas</span>
+              <div className="bg-[#2E211B] p-8 text-left flex flex-col justify-start min-h-[200px] hover:bg-[#2E211B]/95 transition-all duration-300 rounded-2xl">
+                <span className="text-4xl font-serif font-bold text-[#E8DCC4] mb-3 leading-tight">Dias para horas</span>
                 <p className="text-sm text-white/90 leading-relaxed font-sans">
                   Gestores relataram que demoravam dias para fazer a devolutiva agora fazem em horas.
                 </p>
               </div>
-              <div className="bg-[#1E4E50] p-8 text-left flex flex-col justify-start min-h-[200px]  hover:bg-[#1E4E50]/95 transition-all duration-300">
-                <span className="text-2xl font-serif font-bold text-[#E8DCC4] mb-3">Nota 4,5/5</span>
+              <div className="bg-[#2E211B] p-8 text-left flex flex-col justify-start min-h-[200px] hover:bg-[#2E211B]/95 transition-all duration-300 rounded-2xl">
+                <span className="text-4xl font-serif font-bold text-[#E8DCC4] mb-3 leading-tight">Nota 4,5/5</span>
                 <p className="text-sm text-white/90 leading-relaxed font-sans">
                   em satisfação pelos RH entre os 6 RHs entrevistados. “Tenho visibilidade”
                 </p>
@@ -560,65 +370,39 @@ export const DevolutivaContent = () => {
 
           {/* Minha Atuação */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Minha atuação</span>
-            <h2 id="minha-atuacao" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">Ponta a ponta, do Discovery à priorização pós-lançamento</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-6">
-              A funcionalidade foi lançada como prova de conceito para uso interno antes de uma disponibilização mais ampla.
+            <h2 id="minha-atuacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Ponta a ponta, do Discovery à priorização pós-lançamento</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-6">
+              Atuei como Product Designer do time de Performance e Desenvolvimento, conduzindo o projeto do Discovery à priorização depois do lançamento.
             </p>
 
-            <div className="flex flex-wrap gap-3 not-prose">
-              {[
-                'Discovery',
-                'Facilitação de CSD',
-                'Benchmark competitivo',
-                'Mapeamento de jornada',
-                'Priorização GUT',
-                'Arquitetura de experiência',
-                'Wireframes',
-                'Wireframes',
-                'Testes de usabilidade',
-                'Design de IA aplicada'
-              ].map((item, index) => (
-                <span key={`${item}-${index}`} className="px-5 py-2.5 bg-white border border-[#DCD7CA] rounded-full text-sm font-semibold text-[#2C3539] ">
-                  {item}
-                </span>
-              ))}
-            </div>
+            <AtuacaoInfo
+              projectId="devolutiva"
+              methods={['Discovery', 'Facilitação de CSD', 'Benchmark competitivo', 'Mapeamento de jornada', 'Priorização GUT', 'Arquitetura de experiência', 'Wireframes', 'Testes de usabilidade', 'Design de IA aplicada']}
+            />
           </div>
 
           {/* Principais Aprendizados */}
           <div className="mb-32">
-            <span className="text-[#006266] font-sans font-bold text-xs uppercase tracking-widest block mb-2">Principais aprendizados</span>
-            <h2 id="principais-aprendizados" className="font-serif text-3xl font-bold text-[#2C3539] mb-4">O que este projeto reforçou</h2>
-            <p className="text-[#4A5559] leading-relaxed mb-8">
-              A funcionalidade foi lançada como prova de conceito para uso interno antes de uma disponibilização mais ampla.
+            <h2 id="principais-aprendizados" className="font-serif text-3xl font-bold text-[#241510] mb-4">O que este projeto reforçou</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              Quatro aprendizados que levo para os próximos projetos.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 not-prose">
-              <div className="border-l-2 border-[#DCD7CA] p-[32px] text-left flex flex-col">
-                <h4 className="font-sans font-bold text-xl text-[#1E4E50] mb-2">Discovery não é começar do zero</h4>
-                <p className="text-sm text-[#787265] font-medium leading-relaxed">
-                  Consolidar pesquisas existentes acelerou o entendimento sem repetir o que já era validado.
-                </p>
-              </div>
-              <div className="border-l-2 border-[#DCD7CA] p-[32px] text-left flex flex-col">
-                <h4 className="font-sans font-bold text-xl text-[#1E4E50] mb-2">O desafio era comportamental</h4>
-                <p className="text-sm text-[#787265] font-medium leading-relaxed">
-                  Convencer gestores a abandonar processos que já funcionavam exigia ganhos claros desde o primeiro uso.
-                </p>
-              </div>
-              <div className="border-l-2 border-[#DCD7CA] p-[32px] text-left flex flex-col">
-                <h4 className="font-sans font-bold text-xl text-[#1E4E50] mb-2">IA deve potencializar, não decidir</h4>
-                <p className="text-sm text-[#787265] font-medium leading-relaxed">
-                  Reduzir esforço de análise, mantendo a conversa e a decisão nas mãos do gestor.
-                </p>
-              </div>
-              <div className="border-l-2 border-[#DCD7CA] p-[32px] text-left flex flex-col">
-                <h4 className="font-sans font-bold text-xl text-[#1E4E50] mb-2">Fechar o ciclo importa tanto quanto abrir</h4>
-                <p className="text-sm text-[#787265] font-medium leading-relaxed">
-                  O resultado não foi uma tela nova, foi conectar uma etapa que estava desconectada de tudo.
-                </p>
-              </div>
+            <div className="not-prose border-y border-[#E2DCD4] divide-y divide-[#E2DCD4]">
+              {[
+                { title: 'Discovery não é começar do zero', text: 'Consolidar pesquisas existentes acelerou o entendimento sem repetir o que já estava validado.' },
+                { title: 'O desafio era comportamental', text: 'Gestores só trocam processos que funcionam quando percebem ganho logo no primeiro uso.' },
+                { title: 'IA deve potencializar, não decidir', text: 'Ela reduz o esforço de análise; a conversa e a decisão continuam com o gestor.' },
+                { title: 'Fechar o ciclo importa tanto quanto abrir', text: 'O resultado não foi uma tela nova, foi conectar uma etapa que estava solta.' },
+              ].map(({ title, text }, i) => (
+                <div key={title} className="flex items-start gap-4 py-4">
+                  <span className="text-[13px] font-semibold text-[#9E4322] tabular-nums mt-0.5 shrink-0">0{i + 1}</span>
+                  <p className="text-[15px] leading-relaxed">
+                    <span className="font-semibold text-[#241510]">{title}.</span>{' '}
+                    <span className="text-[#6F625B]">{text}</span>
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </>
@@ -680,7 +464,7 @@ export const DevolutivaContent = () => {
 
           <div className="my-12">
             <Carousel images={[contexto1, contexto2, contexto3]} />
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">Framework utilizado durante o kickoff para alinhar objetivos, riscos, hipóteses e critérios de sucesso do projeto.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">Framework utilizado durante o kickoff para alinhar objetivos, riscos, hipóteses e critérios de sucesso do projeto.</p>
           </div>
 
           <h3 className="text-xl font-bold mb-3">CSD (Certezas, Suposições e Dúvidas)</h3>
@@ -698,8 +482,8 @@ export const DevolutivaContent = () => {
           </p>
 
           <div className="my-12">
-            <img src={csdImg} alt="Matriz CSD" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">Consolidação das principais certezas, hipóteses e dúvidas levantadas pelos stakeholders.</p>
+            <img src={csdImg} alt="Matriz CSD" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">Consolidação das principais certezas, hipóteses e dúvidas levantadas pelos stakeholders.</p>
           </div>
 
           <h3 className="text-xl font-bold mb-3">Benchmark de mercado</h3>
@@ -716,8 +500,8 @@ export const DevolutivaContent = () => {
             Mais do que buscar referências visuais, esse benchmark ajudou a fundamentar decisões estratégicas sobre o que deveria fazer parte da solução.
           </p>
           <div className="my-12">
-            <img src={benchImg} alt="Benchmark de mercado" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">Comparativo entre plataformas de mercado destacando padrões, oportunidades e diferenciais competitivos.</p>
+            <img src={benchImg} alt="Benchmark de mercado" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">Comparativo entre plataformas de mercado destacando padrões, oportunidades e diferenciais competitivos.</p>
           </div>
 
           <h2 id="definindo-o-escopo" className="text-2xl font-bold mb-4">Definindo o escopo</h2>
@@ -731,8 +515,8 @@ export const DevolutivaContent = () => {
             Esse alinhamento evitou expansão desnecessária de escopo e manteve o projeto concentrado no problem que realmente precisávamos resolver, reduzindo riscos e facilitando a tomada de decisão durante todo o desenvolvimento.
           </p>
           <div className="my-12">
-            <img src={fazNaoFazImg} alt="Matriz Faz / Não Faz" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">Matriz utilizada para alinhar responsabilidades da funcionalidade e estabelecer os limites da solução.</p>
+            <img src={fazNaoFazImg} alt="Matriz Faz / Não Faz" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">Matriz utilizada para alinhar responsabilidades da funcionalidade e estabelecer os limites da solução.</p>
           </div>
 
           <h2 id="consolidando-pesquisas" className="text-2xl font-bold mb-4">Consolidando pesquisas existentes</h2>
@@ -749,8 +533,8 @@ export const DevolutivaContent = () => {
             Essa consolidação reduziu o tempo de investigação, aumentou a confiança nas decisões e permitiu concentrar esforços nas lacunas que realmente precisavam ser exploradas.
           </p>
           <div className="my-12">
-            <img src={pesquisasImg} alt="Consolidação de pesquisas existentes" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">Organização e síntese das pesquisas existentes sobre devolutiva e feedback.</p>
+            <img src={pesquisasImg} alt="Consolidação de pesquisas existentes" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">Organização e síntese das pesquisas existentes sobre devolutiva e feedback.</p>
           </div>
 
           <p className="mb-8 leading-relaxed">
@@ -775,7 +559,7 @@ export const DevolutivaContent = () => {
           </p>
           <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] my-12 bg-white flex flex-col items-center">
             <img src={mapaImg} alt="Mapa de jornada de devolutiva" className="w-full h-auto max-h-[90vh] object-contain md:object-cover" />
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium max-w-3xl px-4">Jornada completa da devolutiva conectando RH, gestores, colaboradores e demais funcionalidades do produto.</p>
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium max-w-3xl px-4">Jornada completa da devolutiva conectando RH, gestores, colaboradores e demais funcionalidades do produto.</p>
           </div>
 
           <h2 id="principais-insights-relatorio" className="text-2xl font-bold mb-4">Principais insights</h2>
@@ -786,37 +570,37 @@ export const DevolutivaContent = () => {
             Mais do que problemas isolados de usabilidade, encontramos oportunidades estruturais que ajudaram a direcionar toda a estratégia do produto.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 not-prose">
-            <div className="bg-white p-6 rounded-2xl border-2 border-[#006266]  hover:bg-[#006266]/5 transition-all duration-300 flex flex-col">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 01</span>
-              <h4 className="font-serif text-lg font-bold text-[#2C3539] mb-2">A devolutiva era o principal ponto de conexão da jornada</h4>
+            <div className="bg-white p-6 rounded-2xl border-2 border-[#9E4322]  hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 01</span>
+              <h4 className="font-serif text-lg font-bold text-[#241510] mb-2">A devolutiva era o principal ponto de conexão da jornada</h4>
               <p className="text-sm font-sans text-[#736f6f] leading-[20px]">
                 Embora fosse tratada como uma etapa final, era durante a devolutiva que avaliações, feedbacks e planos de desenvolvimento se transformavam em ações concretas. Isso fazia dela um dos momentos de maior valor dentro de toda a experiência de Performance.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border-2 border-[#006266]  hover:bg-[#006266]/5 transition-all duration-300 flex flex-col">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 02</span>
-              <h4 className="font-serif text-lg font-bold text-[#2C3539] mb-2">O RH perdia completamente a visibilidade do processo</h4>
+            <div className="bg-white p-6 rounded-2xl border-2 border-[#9E4322]  hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 02</span>
+              <h4 className="font-serif text-lg font-bold text-[#241510] mb-2">O RH perdia completamente a visibilidade do processo</h4>
               <p className="text-sm font-sans text-[#736f6f] leading-[20px]">
                 Depois de configurar os ciclos avaliativos, o RH deixava de acompanhar o que acontecia entre gestores e colaboradores. Não existia uma forma simples de saber quem havia realizado a devolutiva, quais conversas ainda estavam pendentes ou quais áreas precisavam de apoio.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border-2 border-[#006266]  hover:bg-[#006266]/5 transition-all duration-300 flex flex-col">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 03</span>
-              <h4 className="font-serif text-lg font-bold text-[#2C3539] mb-2">Gestores dependiam de ferramentas externas</h4>
+            <div className="bg-white p-6 rounded-2xl border-2 border-[#9E4322]  hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 03</span>
+              <h4 className="font-serif text-lg font-bold text-[#241510] mb-2">Gestores dependiam de ferramentas externas</h4>
               <p className="text-sm font-sans text-[#736f6f] leading-[20px]">
                 Para preparar as conversas, os gestores recorriam a apresentações, documentos ou planilhas. Além do retrabalho, esse cenário aumentava a chance de perda de informações e tornava impossível padronizar a experiência entre diferentes empresas.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border-2 border-[#006266]  hover:bg-[#006266]/5 transition-all duration-300 flex flex-col">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 04</span>
-              <h4 className="font-serif text-lg font-bold text-[#2C3539] mb-2">O colaborador não possuía um histórico de desenvolvimento</h4>
+            <div className="bg-white p-6 rounded-2xl border-2 border-[#9E4322]  hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 04</span>
+              <h4 className="font-serif text-lg font-bold text-[#241510] mb-2">O colaborador não possuía um histórico de desenvolvimento</h4>
               <p className="text-sm font-sans text-[#736f6f] leading-[20px]">
                 Depois da conversa, todo o conhecimento produzido era perdido ou permanecia disperso em arquivos particulares. Não existia uma linha do tempo que permitisse acompanhar a evolução do colaborador ao longo dos ciclos avaliativos.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border-2 border-[#006266]  hover:bg-[#006266]/5 transition-all duration-300 flex flex-col md:col-span-2">
-              <span className="text-[#006266] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 05</span>
-              <h4 className="font-serif text-lg font-bold text-[#2C3539] mb-2">Cada empresa reinventava esse processo</h4>
+            <div className="bg-white p-6 rounded-2xl border-2 border-[#9E4322]  hover:bg-[#9E4322]/5 transition-all duration-300 flex flex-col md:col-span-2">
+              <span className="text-[#9E4322] font-mono text-xs tracking-wider uppercase block mb-2 font-bold">Insight 05</span>
+              <h4 className="font-serif text-lg font-bold text-[#241510] mb-2">Cada empresa reinventava esse processo</h4>
               <p className="text-sm font-sans text-[#736f6f] leading-[20px]">
                 Como o produto não oferecia uma solução estruturada, cada cliente desenvolvia seu próprio modelo de devolutiva. Essa falta de padronização dificultava tanto a adoção do produto quanto a evolução da funcionalidade.
               </p>
@@ -856,8 +640,8 @@ export const DevolutivaContent = () => {
             Para o RH, a prioridade era transformar um processo invisível em algo gerenciável. A experiência foi estruturada para permitir a configuração dos períodos de devolutiva, o acompanhamento da execução pelas lideranças e a visualização de indicadores que ajudassem a identificar atrasos, pendências e oportunidades de atuação.
           </p>
           <div className="my-10">
-            <img src={fluxoRhImg} alt="Fluxo RH" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-3 font-medium">Fluxo completo da jornada do RH.</p>
+            <img src={fluxoRhImg} alt="Fluxo RH" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-3 font-medium">Fluxo completo da jornada do RH.</p>
           </div>
 
           <h3 className="text-xl font-bold mb-3">Jornada do Gestor</h3>
@@ -865,8 +649,8 @@ export const DevolutivaContent = () => {
             O gestor precisava de um fluxo que reduzisse o esforço de preparação da conversa sem comprometer a qualidade da devolutiva. A experiência foi desenhada para reunir todas as informações relevantes em um único lugar, apoiar a preparação da reunião e permitir que todo o processo fosse registrado dentro da plataforma.
           </p>
           <div className="my-10">
-            <img src={fluxoGestorImg} alt="Fluxo Gestor" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-3 font-medium">Fluxo completo da jornada do gestor.</p>
+            <img src={fluxoGestorImg} alt="Fluxo Gestor" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-3 font-medium">Fluxo completo da jornada do gestor.</p>
           </div>
 
           <h3 className="text-xl font-bold mb-3">Jornada do Colaborador</h3>
@@ -874,8 +658,8 @@ export const DevolutivaContent = () => {
             Para o colaborador, o foco era garantir transparência e continuidade. Além de receber formalmente a devolutiva, ele passaria a contar com um histórico permanente de desenvolvimento, conectado às avaliações anteriores e ao Plano de Desenvolvimento Individual.
           </p>
           <div className="my-10">
-            <img src={fluxoColabImg} alt="Fluxo Colaborador" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-3 font-medium">Fluxo completo da jornada do colaborador.</p>
+            <img src={fluxoColabImg} alt="Fluxo Colaborador" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-3 font-medium">Fluxo completo da jornada do colaborador.</p>
           </div>
 
           <p className="mb-8 leading-relaxed">
@@ -900,12 +684,12 @@ export const DevolutivaContent = () => {
           <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] my-12 bg-white flex flex-col items-center">
             <div className="max-w-[1240px] w-full grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
               <div className="flex flex-col items-center">
-                <img src={wire1Img} alt="Wireframe - Preparação" className="w-full h-auto rounded-2xl border border-[#DCD7CA] " />
-                <p className="text-center text-sm text-[#787265] mt-3 font-medium">Primeiras explorações da etapa de preparação da devolutiva.</p>
+                <img src={wire1Img} alt="Wireframe - Preparação" className="w-full h-auto rounded-2xl border border-[#E2DCD4] " />
+                <p className="text-center text-sm text-[#6F625B] mt-3 font-medium">Primeiras explorações da etapa de preparação da devolutiva.</p>
               </div>
               <div className="flex flex-col items-center">
-                <img src={wire2Img} alt="Wireframe - Fluxo Alternativo" className="w-full h-auto rounded-2xl border border-[#DCD7CA] " />
-                <p className="text-center text-sm text-[#787265] mt-3 font-medium">Exploração de diferentes formas de apresentar as informações ao colaborador.</p>
+                <img src={wire2Img} alt="Wireframe - Fluxo Alternativo" className="w-full h-auto rounded-2xl border border-[#E2DCD4] " />
+                <p className="text-center text-sm text-[#6F625B] mt-3 font-medium">Exploração de diferentes formas de apresentar as informações ao colaborador.</p>
               </div>
             </div>
           </div>
@@ -925,9 +709,9 @@ export const DevolutivaContent = () => {
           </p>
 
           <div className="my-10 flex flex-col gap-6">
-            <img src={testes1Img} alt="Testes 1" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <img src={testes2Img} alt="Testes 2" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">Legenda: Imagens do miro onde consolidei os resultados da pesquisa realizadas com as pessoas de RH, Gestores e Colaboradores.</p>
+            <img src={testes1Img} alt="Testes 1" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <img src={testes2Img} alt="Testes 2" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">Legenda: Imagens do miro onde consolidei os resultados da pesquisa realizadas com as pessoas de RH, Gestores e Colaboradores.</p>
           </div>
 
           <h3 className="text-xl font-bold mb-3">Priorizando os problemas encontrados</h3>
@@ -949,8 +733,8 @@ export const DevolutivaContent = () => {
           </p>
 
           <div className="my-12">
-            <img src={planilhaErrosImg} alt="Planilha de Priorização" className="w-full h-auto rounded-2xl border border-[#DCD7CA]  max-w-4xl mx-auto" />
-            <p className="text-center text-sm text-[#787265] mt-4 font-medium">Modelo utilizado para classificar e priorizar os problemas encontrados durante os testes.</p>
+            <img src={planilhaErrosImg} alt="Planilha de Priorização" className="w-full h-auto rounded-2xl border border-[#E2DCD4]  max-w-4xl mx-auto" />
+            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">Modelo utilizado para classificar e priorizar os problemas encontrados durante os testes.</p>
           </div>
 
           <h3 className="text-xl font-bold mb-6">Principais aprendizados dos testes</h3>
@@ -959,13 +743,13 @@ export const DevolutivaContent = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 not-prose">
-            <div className="bg-[#F9F8F6] p-6 rounded-2xl border border-[#EBE7DD]">
-              <h4 className="font-bold text-[#006266] mb-4 text-base flex items-center gap-2">
+            <div className="bg-[#F0EDE8] p-6 rounded-2xl border border-[#E2DCD4]">
+              <h4 className="font-bold text-[#9E4322] mb-4 text-base flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                 O que funcionou bem
               </h4>
-              <p className="text-sm text-[#4A5559] leading-relaxed mb-3">Alguns padrões apareceram de forma consistente entre os participantes.</p>
-              <ul className="list-disc pl-5 space-y-2.5 text-sm text-[#4A5559] leading-relaxed">
+              <p className="text-sm text-[#7D7169] leading-relaxed mb-3">Alguns padrões apareceram de forma consistente entre os participantes.</p>
+              <ul className="list-disc pl-5 space-y-2.5 text-sm text-[#7D7169] leading-relaxed">
                 <li>O painel lateral de preparação foi percebido como um dos principais diferenciais da solução por organizar todas as informações necessárias para a conversa em um único lugar.</li>
                 <li>A consolidação automática das avaliações também foi bastante valorizada. Reunir autoavaliação, avaliação da liderança, feedbacks e demais informações reduzia significativamente o trabalho manual realizado pelos gestores antes das reuniões.</li>
                 <li>Outro ponto positivo foi a simplicidade do fluxo. A maioria dos participantes conseguiu navegar pelas etapas sem necessidade de treinamento, indicando que a estrutura geral da experiência estava adequada.</li>
@@ -973,19 +757,19 @@ export const DevolutivaContent = () => {
               </ul>
             </div>
 
-            <div className="bg-[#F9F8F6] p-6 rounded-2xl border border-[#EBE7DD]">
+            <div className="bg-[#F0EDE8] p-6 rounded-2xl border border-[#E2DCD4]">
               <h4 className="font-bold text-red-700 mb-4 text-base flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500"></span>
                 Principais oportunidades de melhoria
               </h4>
-              <p className="text-sm text-[#4A5559] leading-relaxed mb-3">Embora a estrutura da solução tenha sido bem recebida, os testes revelaram alguns desafios importantes.</p>
-              <ul className="list-disc pl-5 space-y-2.5 text-sm text-[#4A5559] leading-relaxed">
+              <p className="text-sm text-[#7D7169] leading-relaxed mb-3">Embora a estrutura da solução tenha sido bem recebida, os testes revelaram alguns desafios importantes.</p>
+              <ul className="list-disc pl-5 space-y-2.5 text-sm text-[#7D7169] leading-relaxed">
                 <li>O principal deles estava relacionado ao entendimento do processo. Muitos usuários ainda confundiam avaliação e devolutiva, demonstrando dificuldade para identificar em que etapa da jornada estavam e qual era a origem das informações apresentadas.</li>
                 <li>Também observamos dificuldades de navegação. Alguns participantes encontravam obstáculos para localizar suas devolutivas, interpretar determinados rótulos e compreender o significado de alguns estados da interface.</li>
                 <li>Outro ponto recorrente foi a falta de visibilidade para gestores e RH. Os usuários esperavam filtros, indicadores de andamento e uma visão consolidada que facilitasse o acompanhamento das devolutivas realizadas e pendentes.</li>
                 <li>Além disso, surgiram dúvidas sobre o funcionamento das anotações privadas, comportamento de componentes colapsáveis e alguns padrões de interação que geravam expectativas diferentes da implementação proposta.</li>
               </ul>
-              <p className="text-sm text-[#4A5559] leading-relaxed mt-3 italic">Esses aprendizados direcionaram grande parte das melhorias realizadas antes do lançamento.</p>
+              <p className="text-sm text-[#7D7169] leading-relaxed mt-3 italic">Esses aprendizados direcionaram grande parte das melhorias realizadas antes do lançamento.</p>
             </div>
           </div>
 
@@ -1023,12 +807,12 @@ export const DevolutivaContent = () => {
 
           <div className="my-10 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col items-center">
-              <img src={ia1Img} alt="Inteligência Artificial 1" className="w-full h-auto rounded-2xl border border-[#DCD7CA] " />
-              <p className="text-center text-sm text-[#787265] mt-3 font-medium">Assistência contextual destacando os principais pontos identificados nas avaliações.</p>
+              <img src={ia1Img} alt="Inteligência Artificial 1" className="w-full h-auto rounded-2xl border border-[#E2DCD4] " />
+              <p className="text-center text-sm text-[#6F625B] mt-3 font-medium">Assistência contextual destacando os principais pontos identificados nas avaliações.</p>
             </div>
             <div className="flex flex-col items-center">
-              <img src={ia2Img} alt="Inteligência Artificial 2" className="w-full h-auto rounded-2xl border border-[#DCD7CA] " />
-              <p className="text-center text-sm text-[#787265] mt-3 font-medium">Geração de um primeiro rascunho para apoiar a preparação da devolutiva.</p>
+              <img src={ia2Img} alt="Inteligência Artificial 2" className="w-full h-auto rounded-2xl border border-[#E2DCD4] " />
+              <p className="text-center text-sm text-[#6F625B] mt-3 font-medium">Geração de um primeiro rascunho para apoiar a preparação da devolutiva.</p>
             </div>
           </div>
 
@@ -1043,21 +827,21 @@ export const DevolutivaContent = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
             <div className="flex flex-col items-center">
-              <img src={rh1Img} alt="Visão do RH" className="w-full h-auto rounded-2xl border border-[#DCD7CA] " />
-              <h4 className="font-bold text-[#2C3539] mt-4 mb-2 text-lg">RH</h4>
-              <p className="text-center text-sm text-[#4A5559] leading-relaxed">O RH passou a configurar os períodos de devolutiva, acompanhar a evolução das lideranças, identificar pendências e monitorar indicadores relacionados ao processo.</p>
+              <img src={rh1Img} alt="Visão do RH" className="w-full h-auto rounded-2xl border border-[#E2DCD4] " />
+              <h4 className="font-bold text-[#241510] mt-4 mb-2 text-lg">RH</h4>
+              <p className="text-center text-sm text-[#7D7169] leading-relaxed">O RH passou a configurar os períodos de devolutiva, acompanhar a evolução das lideranças, identificar pendências e monitorar indicadores relacionados ao processo.</p>
             </div>
 
             <div className="flex flex-col items-center">
-              <img src={gestor1Img} alt="Visão do Gestor" className="w-full h-auto rounded-2xl border border-[#DCD7CA] " />
-              <h4 className="font-bold text-[#2C3539] mt-4 mb-2 text-lg">Gestor</h4>
-              <p className="text-center text-sm text-[#4A5559] leading-relaxed">Os gestores passaram a preparar, registrar e compartilhar devolutivas diretamente na plataforma, contando com apoio da Inteligência Artificial para organizar informações e reduzir o tempo gasto na preparação das conversas.</p>
+              <img src={gestor1Img} alt="Visão do Gestor" className="w-full h-auto rounded-2xl border border-[#E2DCD4] " />
+              <h4 className="font-bold text-[#241510] mt-4 mb-2 text-lg">Gestor</h4>
+              <p className="text-center text-sm text-[#7D7169] leading-relaxed">Os gestores passaram a preparar, registrar e compartilhar devolutivas diretamente na plataforma, contando com apoio da Inteligência Artificial para organizar informações e reduzir o tempo gasto na preparação das conversas.</p>
             </div>
 
             <div className="flex flex-col items-center">
-              <img src={colab1Img} alt="Visão do Colaborador" className="w-full h-auto rounded-2xl border border-[#DCD7CA] " />
-              <h4 className="font-bold text-[#2C3539] mt-4 mb-2 text-lg">Colaborador</h4>
-              <p className="text-center text-sm text-[#4A5559] leading-relaxed">Os colaboradores passaram a receber oficialmente suas devolutivas dentro do produto, criando um histórico permanente de desenvolvimento conectado às avaliações anteriores e ao Plano de Desenvolvimento Individual.</p>
+              <img src={colab1Img} alt="Visão do Colaborador" className="w-full h-auto rounded-2xl border border-[#E2DCD4] " />
+              <h4 className="font-bold text-[#241510] mt-4 mb-2 text-lg">Colaborador</h4>
+              <p className="text-center text-sm text-[#7D7169] leading-relaxed">Os colaboradores passaram a receber oficialmente suas devolutivas dentro do produto, criando um histórico permanente de desenvolvimento conectado às avaliações anteriores e ao Plano de Desenvolvimento Individual.</p>
             </div>
           </div>
 
@@ -1110,21 +894,21 @@ export const DevolutivaContent = () => {
             Este projeto reforçou alguns aprendizados que continuam influenciando minha forma de conduzir processos de Design.
           </p>
           <div className="space-y-6 mb-8">
-            <div className="border-l-4 border-[#006266] pl-4">
-              <h4 className="font-bold text-[#2C3539] mb-2">Discovery não significa começar do zero</h4>
-              <p className="text-sm text-[#4A5559] leading-relaxed">Grande parte das respostas que precisávamos já existia dentro da empresa. Consolidar pesquisas realizadas anteriormente permitiu acelerar o entendimento do problema, evitar retrabalho e concentrar esforços nas lacunas que realmente precisavam ser investigadas. Mais do que produzir novas pesquisas, o desafio foi transformar conhecimento disperso em uma visão única e acionável.</p>
+            <div className="border-l-4 border-[#9E4322] pl-4">
+              <h4 className="font-bold text-[#241510] mb-2">Discovery não significa começar do zero</h4>
+              <p className="text-sm text-[#7D7169] leading-relaxed">Grande parte das respostas que precisávamos já existia dentro da empresa. Consolidar pesquisas realizadas anteriormente permitiu acelerar o entendimento do problema, evitar retrabalho e concentrar esforços nas lacunas que realmente precisavam ser investigadas. Mais do que produzir novas pesquisas, o desafio foi transformar conhecimento disperso em uma visão única e acionável.</p>
             </div>
-            <div className="border-l-4 border-[#006266] pl-4">
-              <h4 className="font-bold text-[#2C3539] mb-2">O maior desafio era comportamental</h4>
-              <p className="text-sm text-[#4A5559] leading-relaxed">Criar uma funcionalidade para registrar devolutivas era relativamente simples. O verdadeiro desafio era convencer gestores a abandonar processos que já funcionavam para eles, ainda que fossem baseados em documentos, planilhas ou apresentações. Isso exigiu que a solução oferecesse ganhos claros de eficiência e organização desde o primeiro uso.</p>
+            <div className="border-l-4 border-[#9E4322] pl-4">
+              <h4 className="font-bold text-[#241510] mb-2">O maior desafio era comportamental</h4>
+              <p className="text-sm text-[#7D7169] leading-relaxed">Criar uma funcionalidade para registrar devolutivas era relativamente simples. O verdadeiro desafio era convencer gestores a abandonar processos que já funcionavam para eles, ainda que fossem baseados em documentos, planilhas ou apresentações. Isso exigiu que a solução oferecesse ganhos claros de eficiência e organização desde o primeiro uso.</p>
             </div>
-            <div className="border-l-4 border-[#006266] pl-4">
-              <h4 className="font-bold text-[#2C3539] mb-2">A Inteligência Artificial precisava potencializar o gestor</h4>
-              <p className="text-sm text-[#4A5559] leading-relaxed">Durante todo o projeto buscamos evitar que a IA substituísse a tomada de decisão humana. Seu papel foi reduzir o esforço operacional de analisar grandes volumes de avaliações, permitindo que gestores dedicassem mais tempo ao que realmente importa: a conversa, o desenvolvimento e a construção de planos de ação. Esse equilíbrio foi determinante para a boa aceitação da funcionalidade.</p>
+            <div className="border-l-4 border-[#9E4322] pl-4">
+              <h4 className="font-bold text-[#241510] mb-2">A Inteligência Artificial precisava potencializar o gestor</h4>
+              <p className="text-sm text-[#7D7169] leading-relaxed">Durante todo o projeto buscamos evitar que a IA substituísse a tomada de decisão humana. Seu papel foi reduzir o esforço operacional de analisar grandes volumes de avaliações, permitindo que gestores dedicassem mais tempo ao que realmente importa: a conversa, o desenvolvimento e a construção de planos de ação. Esse equilíbrio foi determinante para a boa aceitação da funcionalidade.</p>
             </div>
-            <div className="border-l-4 border-[#006266] pl-4">
-              <h4 className="font-bold text-[#2C3539] mb-2">Encerrar o ciclo foi tão importante do quanto iniciar</h4>
-              <p className="text-sm text-[#4A5559] leading-relaxed">O principal resultado deste projeto não foi a criação de uma nova tela. Foi conectar uma etapa crítica que permanecia desconectada de todo o restante da experiência. Ao integrar avaliações, devolutivas e desenvolvimento contínuo em um único fluxo, o produto passou a acompanhar toda a jornada de Performance, oferecendo mais valor para RH, gestores e colaboradores. Esse projeto reforçou uma convicção que levo para outros desafios: muitas vezes, inovação não significa adicionar novas funcionalidades, mas eliminar rupturas existentes na experiência e conectar processos que já fazem parte da rotina dos usuários.</p>
+            <div className="border-l-4 border-[#9E4322] pl-4">
+              <h4 className="font-bold text-[#241510] mb-2">Encerrar o ciclo foi tão importante do quanto iniciar</h4>
+              <p className="text-sm text-[#7D7169] leading-relaxed">O principal resultado deste projeto não foi a criação de uma nova tela. Foi conectar uma etapa crítica que permanecia desconectada de todo o restante da experiência. Ao integrar avaliações, devolutivas e desenvolvimento contínuo em um único fluxo, o produto passou a acompanhar toda a jornada de Performance, oferecendo mais valor para RH, gestores e colaboradores. Esse projeto reforçou uma convicção que levo para outros desafios: muitas vezes, inovação não significa adicionar novas funcionalidades, mas eliminar rupturas existentes na experiência e conectar processos que já fazem parte da rotina dos usuários.</p>
             </div>
           </div>
         </>

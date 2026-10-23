@@ -14,7 +14,7 @@ export function PlatformToday({ images }: PlatformTodayProps) {
         {images.map((src, index) => (
           <motion.div
             key={index}
-            className="group relative cursor-pointer bg-white rounded-2xl overflow-hidden border border-[#E9E4DB] hover:border-[#006266]/30 shadow-sm hover:shadow-md transition-all duration-300 aspect-[4/3] flex items-center justify-center bg-[#F5F2EB]"
+            className="group relative cursor-pointer bg-white rounded-2xl overflow-hidden border border-[#E9E4DB] hover:border-[#9E4322]/30 shadow-sm hover:shadow-md transition-all duration-300 aspect-[4/3] flex items-center justify-center bg-[#F5F2EB]"
             whileHover={{ y: -4 }}
             onClick={(e) => {
               e.stopPropagation();
@@ -37,7 +37,7 @@ export function PlatformToday({ images }: PlatformTodayProps) {
             
             {/* Hover Overlay with Zoom Icon */}
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-              <div className="bg-white/90 p-3 rounded-full text-[#006266] shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
+              <div className="bg-white/90 p-3 rounded-full text-[#9E4322] shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
                 <Maximize2 className="w-5 h-5" />
               </div>
             </div>
@@ -50,7 +50,7 @@ export function PlatformToday({ images }: PlatformTodayProps) {
       </div>
       
       {/* Single Caption for the 3 images */}
-      <p className="text-center text-sm text-[#787265] mt-4 font-medium">
+      <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">
         Essas são imagens que mostram a plataforma como é hoje.
       </p>
     </div>
