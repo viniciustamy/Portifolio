@@ -22,6 +22,14 @@ const METHODS: Record<string, string[]> = {
     'Recontextualização do time',
     'Documentação de decisões',
   ],
+  'analise-metricas': [
+    'Definição da métrica (CES)',
+    'Mapeamento de fluxos por persona',
+    'Configuração das pesquisas no Hotjar',
+    'Acompanhamento mensal',
+    'Análise de comentários',
+    'Apresentação de resultados',
+  ],
 };
 
 function PillGroup({ label, items }: { label: string; items: string[] }) {

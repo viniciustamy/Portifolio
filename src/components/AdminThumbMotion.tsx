@@ -42,8 +42,9 @@ function PageTitle({ title, desc, link }: { title: string; desc: string; link?: 
   return (
     <div>
       <p className="text-[21px] font-semibold leading-none">{title}</p>
-      <p className="text-[11px] mt-2" style={{ color: C.sub }}>{desc}</p>
-      {link && <p className="text-[11px] mt-1" style={{ color: C.blue }}>{link}</p>}
+      <p className="text-[11px] mt-2" style={{ color: C.sub }}>
+        {desc}{link && <> <span style={{ color: C.blue }}>{link}</span></>}
+      </p>
     </div>
   );
 }
@@ -68,31 +69,38 @@ function Initials({ text, bg, fg }: { text: string; bg: string; fg: string }) {
 function GeralPage() {
   return (
     <div className="flex flex-col gap-3">
-      <div className="rounded-xl px-6 py-5 text-white" style={{ background: '#03122B' }}>
-        <p className="text-[19px] font-semibold leading-tight max-w-[340px]">Gestão centralizada da sua empresa em um único lugar</p>
-        <p className="text-[11px] mt-2 text-white/85">Gerencie estruturas, posições e acessos de forma simples e escalável.</p>
-        <span className="inline-flex items-center gap-1 mt-3.5 rounded-full border px-3 py-1 text-[10.5px]" style={{ borderColor: '#B7F36B', color: '#B7F36B' }}>
-          Conhecer o Admin Global <ArrowUpRight size={11} />
-        </span>
-      </div>
-      <Panel className="px-5 py-4 flex gap-6">
-        <div className="shrink-0" style={{ width: 150 }}>
-          <p className="text-[12.5px] font-semibold leading-snug">Configure em poucos passos</p>
-          <p className="text-[10px] mt-1.5 leading-snug" style={{ color: C.sub }}>Estruture sua empresa e prepare os acessos para usar os produtos da Gupy.</p>
-          <p className="text-[10px] mt-2 underline" style={{ color: C.blue }}>Aprenda como configurar</p>
+      {/* Um único card: boas-vindas em azul em cima, passos de configuração em branco embaixo */}
+      <div className="rounded-xl overflow-hidden bg-white">
+        <div className="px-6 py-5 text-white" style={{ background: '#03122B' }}>
+          <p className="text-[19px] font-semibold leading-tight max-w-[340px]">Gestão centralizada da sua empresa em um único lugar</p>
+          <p className="text-[11px] mt-2 text-white/85 max-w-[300px]">Gerencie estruturas, posições e acessos de forma simples e escalável.</p>
+          <span className="inline-flex items-center gap-1 mt-3.5 rounded-full border px-3 py-1 text-[10.5px]" style={{ borderColor: '#B7F36B', color: '#B7F36B' }}>
+            Conhecer o Admin Global <ArrowUpRight size={11} />
+          </span>
         </div>
-        {[
-          { n: 1, Icon: MapPin, t: 'Cadastrar Entidades', d: 'Unidades operacionais, centros de custo, departamento, área, cargo' },
-          { n: 2, Icon: Network, t: 'Cadastrar Posições', d: 'Defina as posições e monte a hierarquia da sua empresa' },
-          { n: 3, Icon: Users, t: 'Cadastrar Usuários', d: 'Adicione colaboradores a sua empresa' },
-        ].map(s => (
-          <div key={s.n} className="flex-1 min-w-0">
-            <span className="flex items-center justify-center w-4 h-4 rounded-full text-[9px]" style={{ background: C.line }}>{s.n}</span>
-            <p className="flex items-center gap-1.5 text-[11px] font-semibold mt-2.5"><s.Icon size={12} color={C.sub} /> {s.t}</p>
-            <p className="text-[9.5px] mt-1 leading-snug" style={{ color: C.sub }}>{s.d}</p>
+        <div className="px-5 py-4 flex gap-4">
+          <div className="shrink-0" style={{ width: 142 }}>
+            <p className="text-[12.5px] font-semibold leading-snug">Configure em poucos passos</p>
+            <p className="text-[10px] mt-1.5 leading-snug" style={{ color: C.sub }}>Estruture sua empresa e prepare os acessos para usar os produtos da Gupy.</p>
+            <p className="flex items-center gap-1 text-[10px] mt-2.5 underline whitespace-nowrap" style={{ color: C.blue }}>Aprenda como configurar <ArrowUpRight size={10} /></p>
           </div>
-        ))}
-      </Panel>
+          {[
+            { n: 1, Icon: MapPin, t: 'Cadastrar Entidades', d: 'Unidades operacionais, centros de custo, departamento, área, cargo' },
+            { n: 2, Icon: Network, t: 'Cadastrar Posições', d: 'Defina as posições e monte a hierarquia da sua empresa' },
+            { n: 3, Icon: Users, t: 'Cadastrar Usuários', d: 'Adicione colaboradores a sua empresa' },
+          ].map(s => (
+            <div key={s.n} className="flex-1 min-w-0">
+              {/* Número + linha até o próximo passo */}
+              <div className="flex items-center gap-2">
+                <span className="flex items-center justify-center w-4 h-4 rounded-full text-[9px] shrink-0" style={{ background: C.line }}>{s.n}</span>
+                {s.n < 3 && <span className="flex-1 h-px" style={{ background: C.line }} />}
+              </div>
+              <p className="flex items-center gap-1.5 text-[11px] font-semibold mt-2.5 whitespace-nowrap"><s.Icon size={12} color={C.sub} /> {s.t}</p>
+              <p className="text-[9.5px] mt-1 leading-snug pl-[18px]" style={{ color: C.sub }}>{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
       <Panel className="px-5 py-4">
         <p className="flex items-center gap-2 text-[15px] font-medium">
           Gupy Soluções de RH
@@ -278,7 +286,8 @@ const PAGES: Record<PageId, () => any> = {
   pessoas: PessoasPage,
 };
 
-export function AdminThumbMotion({ active }: { active: boolean }) {
+// `fill`: a janela ocupa o palco inteiro, sem moldura (uso dentro do notebook)
+export function AdminThumbMotion({ active, fill = false }: { active: boolean; fill?: boolean }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const menuRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -287,7 +296,8 @@ export function AdminThumbMotion({ active }: { active: boolean }) {
   const [page, setPage] = useState<PageId>('geral');
   const [cursor, setCursor] = useState({ x: 420, y: 420, visible: false, down: false });
 
-  const scale = size.w / STAGE_W;
+  const stageW = fill ? 900 : STAGE_W;
+  const scale = size.w / stageW;
   const stageH = scale ? size.h / scale : 0;
 
   useLayoutEffect(() => {
@@ -312,7 +322,7 @@ export function AdminThumbMotion({ active }: { active: boolean }) {
       if (!el || !stage) return { x: 120, y: 200 };
       const r = el.getBoundingClientRect();
       const s = stage.getBoundingClientRect();
-      const k = s.width / STAGE_W;
+      const k = s.width / stageW;
       return { x: (r.left + r.width * 0.35 - s.left) / k, y: (r.top + r.height / 2 - s.top) / k };
     };
 
@@ -337,29 +347,32 @@ export function AdminThumbMotion({ active }: { active: boolean }) {
 
     run().catch(() => {});
     return () => { token.cancelled = true; };
-  }, [active]);
+  }, [active, stageW]);
 
   const Page = PAGES[page];
 
   return (
     <div ref={wrapRef} className="absolute inset-0 overflow-hidden select-none" aria-hidden="true">
       {scale > 0 && (
-        <div ref={stageRef} className="absolute left-0 top-0 origin-top-left font-sans" style={{ width: STAGE_W, height: stageH, transform: `scale(${scale})`, color: C.ink }}>
+        <div ref={stageRef} className="absolute left-0 top-0 origin-top-left font-sans" style={{ width: stageW, height: stageH, transform: `scale(${scale})`, color: C.ink }}>
           {/* Janela da Administração Global — sai pelas bordas da direita e de baixo */}
-          <div className="absolute rounded-tl-[16px] overflow-hidden flex flex-col" style={{ left: 36, top: 36, width: 900, bottom: 0, boxShadow: '0 0 0 1px rgb(255 255 255 / .12), 0 24px 50px rgb(0 0 0 / .45)' }}>
+          <div
+            className={`absolute overflow-hidden flex flex-col ${fill ? '' : 'rounded-tl-[16px]'}`}
+            style={fill ? { inset: 0 } : { left: 36, top: 36, width: 900, bottom: 0, boxShadow: '0 0 0 1px rgb(255 255 255 / .12), 0 24px 50px rgb(0 0 0 / .45)' }}
+          >
             {/* Barra de produtos */}
             <div className="flex items-center gap-5 px-5 bg-white border-b shrink-0 text-[10.5px] font-medium" style={{ height: 40, borderColor: C.line }}>
               <span className="text-[16px] font-bold mr-2">Gupy</span>
               {['Central de Carreiras', 'Recrutamento e Seleção', 'Admissão', 'Engajamento', 'Performance'].map(p => (
                 <span key={p} className="whitespace-nowrap rounded px-1.5 py-1" style={p === 'Admissão' ? { background: '#E8EEFB', color: C.blue } : undefined}>{p}</span>
               ))}
-              <span className="ml-auto mr-[150px] flex items-center gap-1.5 rounded-full border-2 px-2.5 py-1 whitespace-nowrap" style={{ borderColor: '#141B2D' }}><LayoutGrid size={11} /> Admin global</span>
+              <span className={`ml-auto ${fill ? '' : 'mr-[150px]'} flex items-center gap-1.5 rounded-full border-2 px-2.5 py-1 whitespace-nowrap`} style={{ borderColor: '#141B2D' }}><LayoutGrid size={11} /> Admin global</span>
             </div>
 
             <div className="flex flex-1 min-h-0">
               {/* Menu lateral */}
-              <div className="shrink-0 px-2.5 pt-5 text-white" style={{ width: SIDEBAR_W, background: NAVY }}>
-                <p className="px-2.5 text-[15px] font-semibold">Administração Global</p>
+              <div className="shrink-0 px-2.5 pt-5 text-white" style={{ width: fill ? 200 : SIDEBAR_W, background: NAVY }}>
+                <p className={`px-2.5 text-[15px] font-semibold ${fill ? "whitespace-nowrap" : ""}`}>Administração Global</p>
                 <p className="px-2.5 text-[9.5px] mt-1.5 leading-snug text-white/75">Gerencie as configurações que afetam os produtos e pessoas usuárias da plataforma.</p>
                 <div className="mt-5 flex flex-col gap-1">
                   {MENU.map(({ id, label, Icon }, i) => (
@@ -377,7 +390,7 @@ export function AdminThumbMotion({ active }: { active: boolean }) {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={page}
-                    style={{ width: 620 }}
+                    style={fill ? { maxWidth: 610, margin: '0 auto' } : { width: 620 }}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}

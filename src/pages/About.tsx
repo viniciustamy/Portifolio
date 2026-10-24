@@ -84,6 +84,11 @@ export default function About() {
         {/* Duas colunas: foto grande à esquerda, fixa enquanto o conteúdo da direita rola */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start">
           <motion.div className="md:sticky md:top-8" variants={itemVariants}>
+            {/* No mobile, o voltar fica acima da foto */}
+            <Link to="/" className="md:hidden inline-flex items-center gap-2 text-[13px] font-semibold text-[#6F625B] hover:text-[#241510] transition-colors group mb-5">
+              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+              Voltar
+            </Link>
             <img
               src={perfilImg}
               alt="Vinicius Tamy"
@@ -93,21 +98,21 @@ export default function About() {
 
           <div>
             <motion.div variants={itemVariants}>
-              <Link to="/" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#6F625B] hover:text-[#241510] transition-colors group mb-6">
+              <Link to="/" className="hidden md:inline-flex items-center gap-2 text-[13px] font-semibold text-[#6F625B] hover:text-[#241510] transition-colors group mb-6">
                 <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                Voltar para o início
+                Voltar
               </Link>
               <h1 className="font-serif text-[2.5rem] sm:text-[3rem] font-bold text-[#241510] tracking-tight leading-none">
                 Vinicius Tamy
               </h1>
               <p className="text-[#6F625B] text-lg font-medium mt-4">31 anos - Virginiano</p>
               <p className="text-[#241510] text-lg font-medium mt-1">Volta Redonda - Rio de Janeiro</p>
-              <div className="flex flex-col sm:flex-row gap-3 mt-6">
+              <div className="flex flex-row gap-3 mt-6">
                 <a
                   href="https://www.instagram.com/viniciustamy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-5 py-2.5 gap-2 rounded-full border border-[#E2DCD4] bg-white text-[#241510] hover:text-[#9E4322] hover:border-[#9E4322] transition-colors"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center px-3 sm:px-5 py-2.5 gap-2 rounded-full border border-[#E2DCD4] bg-white text-[#241510] hover:text-[#9E4322] hover:border-[#9E4322] transition-colors"
                   title="Instagram"
                 >
                   <Instagram size={18} />
@@ -117,7 +122,7 @@ export default function About() {
                   href="https://www.linkedin.com/in/viniciustamy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-5 py-2.5 gap-2 rounded-full border border-[#E2DCD4] bg-white text-[#241510] hover:text-[#9E4322] hover:border-[#9E4322] transition-colors"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center px-3 sm:px-5 py-2.5 gap-2 rounded-full border border-[#E2DCD4] bg-white text-[#241510] hover:text-[#9E4322] hover:border-[#9E4322] transition-colors"
                   title="LinkedIn"
                 >
                   <Linkedin size={18} />

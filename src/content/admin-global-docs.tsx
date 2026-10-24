@@ -1,6 +1,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Puzzle, FileSpreadsheet, Headphones, AlertTriangle, Plug, Brain, Sparkles, BookOpen } from 'lucide-react';
+import { Puzzle, FileSpreadsheet, Headphones, AlertTriangle, Plug, Brain, Sparkles, BookOpen, ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
+import { AnimatedNumber } from '../components/AnimatedNumber';
+import { AdminEcossistemaMotion } from '../components/AdminEcossistemaMotion';
+import { AdminLaptopMotion } from '../components/AdminLaptopMotion';
 
 import reset1 from '../assets/images/Imagem Reset/1.png';
 import reset2 from '../assets/images/Imagem Reset/2.png';
@@ -23,15 +27,10 @@ import c2 from '../assets/images/C-2.png';
 import videoCursor from '../assets/Video Cursor.mov';
 
 // Imagens do Admin Simplificado
-import contextoSimplificado from '../assets/images/Admin/Admin simplificado/Contexto.png';
 import discoverySimplificado from '../assets/images/Admin/Admin simplificado/Discovery.png';
 import estrategiaSimplificado from '../assets/images/Admin/Admin simplificado/Estratégia.png';
 import evolucaoSimplificado from '../assets/images/Admin/Admin simplificado/Evolucao.png';
 import handoff1 from '../assets/images/Admin/Admin simplificado/Handoff 1.png';
-import handoff2 from '../assets/images/Admin/Admin simplificado/Handoff 2.png';
-import handoff3 from '../assets/images/Admin/Admin simplificado/Handoff 3.png';
-import handoff4 from '../assets/images/Admin/Admin simplificado/Handoff 4.png';
-import handoff5 from '../assets/images/Admin/Admin simplificado/Handoff 5.png';
 
 import notebookLmLogo from '../assets/images/Logos IA/Notebook LM.svg';
 import figmaMakeLogo from '../assets/images/Logos IA/Figma Make.png';
@@ -799,10 +798,10 @@ const AdminGlobalDocsSimplificado = () => (
     <div className="mb-32">
       <h2 id="desafio" className="font-serif text-3xl font-bold text-[#241510] mb-4">O problema não era falta de informação, era o excesso dela</h2>
       <p className="text-[#7D7169] leading-relaxed mb-6">
-        A decisão de criar uma camada administrativa centralizada já existia. O verdadeiro desafio era outro: anos de pesquisas, entrevistas, protótipos e decisões espalhados entre documentos, apresentações e pessoas. Cada material respondia só parte do problem, e cada retomada virava praticamente um recomeço.
+        A decisão de criar uma camada administrativa centralizada já existia. O verdadeiro desafio era outro: anos de pesquisas, entrevistas, protótipos e decisões espalhados entre documentos, apresentações e pessoas. Cada material respondia só parte do problema, e cada retomada virava praticamente um recomeço.
       </p>
-      <div className="my-10 not-prose min-h-[350px] flex items-center justify-center">
-        <img src={contextoSimplificado} alt="Contexto Admin Global" className="w-[500px] max-w-full mx-auto" />
+      <div className="my-12">
+        <AdminEcossistemaMotion />
       </div>
     </div>
 
@@ -816,35 +815,21 @@ const AdminGlobalDocsSimplificado = () => (
         Mas a pesquisa mostrava outra realidade: grande parte dos clientes, sobretudo SMB, sequer trabalhava com posições formais. Começar por ali seria impor um modelo mental que não era o deles.
       </p>
 
-      {/* Custom Stool and Chair comparison card grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10 not-prose">
-        {/* Card 1: Job Manager */}
-        <div className="bg-[#F4F6F6] p-8 flex flex-row items-center gap-6 transition-all duration-300 relative overflow-hidden border-b-4 border-b-[#9E4322] shadow-none rounded-2xl">
-          <div className="w-24 h-24 shrink-0 flex items-center justify-center">
-            <img src={banco} alt="Banco - Job Manager" className="max-w-full max-h-full object-contain" />
+      {/* Job Manager x Position Manager */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-10 not-prose">
+        {[
+          { img: banco, alt: 'Banco - Job Manager', kicker: 'O banco', title: 'Job Manager', desc: 'Representa só a função exercida. Quando a pessoa sai, o vínculo desaparece. Mais simples, próximo da realidade de empresas menores.' },
+          { img: cadeira, alt: 'Cadeira - Position Manager', kicker: 'A cadeira', title: 'Position Manager', desc: 'Representa uma posição permanente. Quando a pessoa sai, a posição permanece e pode ser reocupada. Adequado a organogramas estruturados.' },
+        ].map(card => (
+          <div key={card.title} className="border border-[#E2DCD4] rounded-2xl p-7 flex flex-col">
+            <div className="h-36 flex items-center justify-center rounded-xl bg-[#F7F5F2] mb-6">
+              <img src={card.img} alt={card.alt} className="h-28 w-auto object-contain" />
+            </div>
+            <span className="text-[14px] text-[#6F625B] mb-1">{card.kicker}</span>
+            <h4 className="font-serif font-bold text-[24px] text-[#241510] leading-tight mb-2.5">{card.title}</h4>
+            <p className="text-[15px] text-[#6F625B] leading-relaxed">{card.desc}</p>
           </div>
-          <div className="flex-1 min-w-0">
-            <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#9E4322] block mb-1">BANCO</span>
-            <h4 className="font-serif font-bold text-lg text-[#241510] mb-1.5">Job Manager</h4>
-            <p className="text-xs text-[#6F625B] leading-relaxed">
-              Representa só a função exercida. Quando a pessoa sai, o vínculo desaparece. Mais simples, próximo da realidade de empresas menores.
-            </p>
-          </div>
-        </div>
-
-        {/* Card 2: Position Manager */}
-        <div className="bg-[#F6F5F4] p-8 flex flex-row items-center gap-6 transition-all duration-300 relative overflow-hidden border-b-4 border-b-[#8c8273] shadow-none rounded-2xl">
-          <div className="w-24 h-24 shrink-0 flex items-center justify-center">
-            <img src={cadeira} alt="Cadeira - Position Manager" className="max-w-full max-h-full object-contain" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#8c8273] block mb-1">CADEIRA</span>
-            <h4 className="font-serif font-bold text-lg text-[#241510] mb-1.5">Position Manager</h4>
-            <p className="text-xs text-[#696662] leading-relaxed">
-              Representa uma posição permanente. Quando a pessoa sai, a posição permanece e pode ser reocupada. Adequado a organogramas estruturados.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
 
       <p className="text-[15px] text-[#241510] leading-relaxed mt-6">
@@ -864,61 +849,37 @@ const AdminGlobalDocsSimplificado = () => (
         <img src={discoverySimplificado} className="max-w-[600px] w-full animate-float" />
       </div>
 
-      {/* Stats block */}
-      <div className="border border-[#E2DCD4] rounded-2xl p-6 md:p-8 bg-[#FAF9F6] my-10 not-prose flex flex-col md:flex-row gap-8 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-[#E2DCD4] shadow-none">
-        <div className="flex-1 pb-6 md:pb-0 md:pr-8 flex flex-col justify-center">
-          <span className="font-serif text-5xl font-bold text-[#9E4322] mb-3">19</span>
-          <p className="text-sm text-[#7D7169] leading-relaxed font-sans">
-            participantes entre especialistas internos (IS e CS) e clientes de diferentes portes
-          </p>
-        </div>
-        <div className="flex-1 pt-6 md:pt-0 md:pl-8 flex flex-col justify-center">
-          <span className="font-serif text-5xl font-bold text-[#9E4322] mb-3">200</span>
-          <p className="text-sm text-[#7D7169] leading-relaxed font-sans">
-            respostas assíncronas de clientes de Recrutamento & Seleção
-          </p>
-        </div>
+      {/* Números da base consolidada: contam até o valor ao entrar na tela */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-10 not-prose">
+        {[
+          { value: 19, prefix: '', desc: 'participantes entre especialistas internos (IS e CS) e clientes de diferentes portes' },
+          { value: 200, prefix: '+', desc: 'respostas assíncronas de clientes de Recrutamento & Seleção' },
+        ].map(stat => (
+          <div key={stat.value} className="border border-[#E2DCD4] rounded-2xl p-7">
+            <span className="font-serif text-6xl font-bold text-[#241510] leading-none tracking-tight">
+              {stat.prefix}<AnimatedNumber value={stat.value} duration={1.6} />
+            </span>
+            <p className="text-[15px] text-[#6F625B] leading-relaxed mt-3">{stat.desc}</p>
+          </div>
+        ))}
       </div>
 
-      {/* Dores Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-10 not-prose">
+      {/* Dores encontradas */}
+      <h3 className="font-serif text-xl font-bold text-[#241510] mb-2">As dores que se repetiam</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 not-prose">
         {[
-          {
-            num: 1,
-            title: "Complexidade do cadastro",
-            desc: "Dividido entre módulos distintos. Quando manter ficava difícil, o cliente parava de atualizar."
-          },
-          {
-            num: 2,
-            title: "A dor das planilhas",
-            desc: "Planilhas com mais de 50 colunas, sequência rígida, erros pouco claros, reenvios constantes."
-          },
-          {
-            num: 3,
-            title: "Dependência do suporte",
-            desc: "Mudanças simples exigiam chamado ou nova planilha. Pouca autonomia de edição direta."
-          },
-          {
-            num: 4,
-            title: "Bases desatualizadas",
-            desc: "Colaboradores desligados seguiam cadastrados, distorcendo clima, indicadores e automações."
-          },
-          {
-            num: 5,
-            title: "Integrações complexas",
-            desc: "Clientes grandes construíam integrações próprias ou contratavam consultoria. EduCorp sofria sem estrutura central."
-          },
-          {
-            num: 6,
-            title: "Modelo mental inconsistente",
-            desc: "Grupos, Atributos e Filiais eram confundidos. A arquitetura não refletia o modelo mental do cliente."
-          }
-        ].map((dor) => (
-          <div key={dor.num} className="bg-[#FAF0EF] border-l-2 border-l-[#D3524A] p-8 hover:bg-[#FCEAE8] transition-all duration-300 flex flex-col justify-between rounded-2xl">
+          { title: 'Cadastro fragmentado', desc: 'Dividido entre módulos; quando manter ficava difícil, o cliente parava de atualizar.' },
+          { title: 'Planilhas complexas', desc: 'Mais de 50 colunas, sequência rígida e erros pouco claros.' },
+          { title: 'Dependência do suporte', desc: 'Mudanças simples exigiam chamado ou uma nova planilha.' },
+          { title: 'Bases desatualizadas', desc: 'Desligados seguiam ativos, distorcendo clima, indicadores e automações.' },
+          { title: 'Integrações complexas', desc: 'Clientes grandes dependiam de integrações próprias ou consultoria.' },
+          { title: 'Modelo mental inconsistente', desc: 'Grupos, Atributos e Filiais eram confundidos pelos clientes.' },
+        ].map((dor, i) => (
+          <div key={dor.title} className={`flex gap-4 py-5 ${i > 1 ? 'border-t border-[#E2DCD4]' : ''} ${i === 1 ? 'border-t md:border-t-0 border-[#E2DCD4]' : ''}`}>
+            <span className="text-[15px] font-semibold text-[#9E4322] tabular-nums pt-px">{String(i + 1).padStart(2, '0')}</span>
             <div>
-              <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#D3524A] block mb-2">DOR #{dor.num}</span>
-              <h4 className="font-sans font-bold text-[#1A1A1A] text-[15px] mb-2 leading-snug">{dor.title}</h4>
-              <p className="text-xs text-[#5C5050] leading-relaxed">{dor.desc}</p>
+              <h4 className="font-sans font-semibold text-[16px] text-[#241510] leading-snug mb-1">{dor.title}</h4>
+              <p className="text-[14px] text-[#6F625B] leading-relaxed">{dor.desc}</p>
             </div>
           </div>
         ))}
@@ -977,49 +938,39 @@ const AdminGlobalDocsSimplificado = () => (
     <div className="mb-32">
       <h2 id="estrategia-evolucao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Uma evolução incremental</h2>
 
-      {/* Steps layout */}
-      <div className="flex flex-col md:flex-row items-stretch justify-between gap-4 my-8 not-prose">
-        {/* Fase 1 */}
-        <div className="bg-white border border-[#E2DCD4] rounded-2xl p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#9E4322]/30 transition-all duration-300">
-          <div>
-            <span className="text-[10px] font-sans font-bold tracking-widest text-[#6F625B] uppercase block mb-1">FASE 1</span>
-            <h4 className="font-serif font-bold text-base text-[#241510] mb-3">Ponto de entrada único</h4>
-            <p className="text-xs text-[#6F625B] leading-relaxed">Uma única planilha alimenta todas as bases existentes.</p>
-          </div>
-        </div>
-
-        <div className="hidden md:flex items-center justify-center text-[#E2DCD4] shrink-0">
-          <span className="text-3xl">→</span>
-        </div>
-        <div className="flex md:hidden items-center justify-center text-[#E2DCD4] shrink-0 my-1">
-          <span className="text-3xl">↓</span>
-        </div>
-
-        {/* Fase 2 */}
-        <div className="bg-white border border-[#E2DCD4] rounded-2xl p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#9E4322]/30 transition-all duration-300">
-          <div>
-            <span className="text-[10px] font-sans font-bold tracking-widest text-[#6F625B] uppercase block mb-1">FASE 2</span>
-            <h4 className="font-serif font-bold text-base text-[#241510] mb-3">Base central como origem</h4>
-            <p className="text-xs text-[#6F625B] leading-relaxed">A nova base vira fonte oficial e distribui os dados automaticamente.</p>
-          </div>
-        </div>
-
-        <div className="hidden md:flex items-center justify-center text-[#E2DCD4] shrink-0">
-          <span className="text-3xl">→</span>
-        </div>
-        <div className="flex md:hidden items-center justify-center text-[#E2DCD4] shrink-0 my-1">
-          <span className="text-3xl">↓</span>
-        </div>
-
-        {/* Fase 3 */}
-        <div className="bg-white border border-[#E2DCD4] rounded-2xl p-6 shadow-none flex-1 flex flex-col justify-between hover:border-[#9E4322]/30 transition-all duration-300">
-          <div>
-            <span className="text-[10px] font-sans font-bold tracking-widest text-[#6F625B] uppercase block mb-1">FASE 3</span>
-            <h4 className="font-serif font-bold text-base text-[#241510] mb-3">Fonte única de verdade</h4>
-            <p className="text-xs text-[#6F625B] leading-relaxed">Cadastros locais são eliminados. Tudo passa pela camada central.</p>
-          </div>
-        </div>
-      </div>
+      {/* Fases: aparecem em sequência (fase → seta → fase); a fase 3 é o destino */}
+      <motion.div
+        className="flex flex-col md:flex-row items-stretch justify-between gap-3 my-8 not-prose"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ staggerChildren: 0.45 }}
+      >
+        {[
+          { n: 1, title: 'Ponto de entrada único', desc: 'Uma única planilha alimenta todas as bases existentes.' },
+          { n: 2, title: 'Base central como origem', desc: 'A nova base vira fonte oficial e distribui os dados automaticamente.' },
+          { n: 3, title: 'Fonte única de verdade', desc: 'Cadastros locais são eliminados. Tudo passa pela camada central.' },
+        ].map((fase, i) => (
+          <React.Fragment key={fase.n}>
+            {i > 0 && (
+              <motion.div
+                className="flex items-center justify-center text-[#B5A99F] shrink-0 md:px-1"
+                variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0, transition: { duration: 0.35 } } }}
+              >
+                <ArrowRight size={22} className="rotate-90 md:rotate-0" />
+              </motion.div>
+            )}
+            <motion.div
+              className={`rounded-2xl p-6 flex-1 border ${fase.n === 3 ? 'bg-[#F6EAE3] border-[#EBD3C6]' : 'bg-white border-[#E2DCD4]'}`}
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } } }}
+            >
+              <span className={`text-[14px] block mb-1 ${fase.n === 3 ? 'text-[#9E4322]' : 'text-[#6F625B]'}`}>Fase {fase.n}</span>
+              <h4 className="font-serif font-bold text-[19px] text-[#241510] leading-snug mb-2">{fase.title}</h4>
+              <p className="text-[14px] text-[#6F625B] leading-relaxed">{fase.desc}</p>
+            </motion.div>
+          </React.Fragment>
+        ))}
+      </motion.div>
 
       {/* Architecture diagram */}
       <div className="my-10 not-prose">
@@ -1030,47 +981,29 @@ const AdminGlobalDocsSimplificado = () => (
     {/* Handoff */}
     <div className="w-screen relative left-1/2 -translate-x-1/2 bg-[#141515] text-white py-16 md:py-24 mb-32 not-prose rounded-2xl">
       <div className="max-w-[1000px] mx-auto">
-        <span className="text-white/60 font-sans font-bold text-xs uppercase tracking-widest block mb-3">HANDOFF</span>
         <h2 id="handoff" className="font-serif text-3xl font-bold text-white mb-4 leading-tight">Uma administração única para todo o ecossistema</h2>
         <p className="text-[#A0A5B5] leading-relaxed mb-12 max-w-3xl text-sm md:text-base">
           Uma única base passou a concentrar pessoas, entidades e estruturas organizacionais, reutilizadas entre os diferentes produtos da Gupy.
         </p>
         <div className="space-y-12">
           {/* Overlapping Composite layout — H2 sobrepõe a parte de baixo da H1 */}
-          <div className="relative w-full pb-[30%]">
+          <div className="relative w-full pb-[26%] md:pb-[34%]">
             {/* Handoff 1: animação de entrada de baixo pra cima */}
             <HandoffSlideIn src={handoff1} alt="Handoff 1" />
-            {/* Handoff 2: levemente sobrepondo a parte inferior da H1, com flutuação */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[100%] md:w-[90%] z-10">
-              <img
-                src={handoff2}
-                alt="Handoff 2"
-                className="w-full"
-              />
+            {/* Notebook com a Administração Global trocando de página, sobrepondo a parte de baixo da H1 */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[100%] md:w-[103.5%] z-10">
+              <AdminLaptopMotion />
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Handoff 3, 4 e 5 — full width da seção preta */}
-      <div className="grid grid-cols-3 p-24 gap-4 mt-4">
-        <div className="group cursor-zoom-in">
-          <img src={handoff3} alt="Handoff 3" className="w-full mx-auto hover:opacity-90 transition-opacity" />
-        </div>
-        <div className="group cursor-zoom-in">
-          <img src={handoff4} alt="Handoff 4" className="w-full mx-auto hover:opacity-90 transition-opacity" />
-        </div>
-        <div className="group cursor-zoom-in">
-          <img src={handoff5} alt="Handoff 5" className="w-full mx-auto hover:opacity-90 transition-opacity" />
         </div>
       </div>
     </div>
 
     {/* IA como aceleradora do processo */}
     <div className="mb-32">
-      <h2 id="ia-aceleradora" className="font-serif text-3xl font-bold text-[#241510] mb-4">Uma ferramenta para cada etapa, sem substituir decisão</h2>
+      <h2 id="ia-aceleradora" className="font-serif text-3xl font-bold text-[#241510] mb-4">Ferramentas de IA em cada etapa</h2>
 
-      <div className="my-10 divide-y divide-[#E2DCD4] border-y border-[#E2DCD4] not-prose">
+      <div className="my-10 divide-y divide-[#E2DCD4] not-prose">
         {[
           {
             stage: "Descoberta",
@@ -1102,7 +1035,7 @@ const AdminGlobalDocsSimplificado = () => (
           }
         ].map((row, idx) => (
           <div key={idx} className="py-6 flex flex-col md:flex-row gap-4 md:gap-8 items-start">
-            <div className="w-full md:w-[20%] shrink-0 text-sm font-sans text-[#6F625B] uppercase tracking-wider font-semibold pt-1">
+            <div className="w-full md:w-[20%] shrink-0 text-[15px] font-sans text-[#6F625B] font-medium pt-1">
               {row.stage}
             </div>
             <div className="flex-1">
@@ -1120,10 +1053,6 @@ const AdminGlobalDocsSimplificado = () => (
           </div>
         ))}
       </div>
-
-      <p className="text-[#7D7169] leading-relaxed">
-        Em nenhum momento a IA substituiu decisões de Design. O ganho foi de tempo operacional, convertido em mais profundidade estratégica.
-      </p>
     </div>
 
     {/* Potencial de Negócio */}

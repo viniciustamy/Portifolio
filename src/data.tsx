@@ -206,6 +206,30 @@ export const projects = [
     content: <KbaSenhaContent />
   },
   {
+    id: 'analise-metricas',
+    title: 'Métricas de Experiência',
+    tag: 'UX Research',
+    status: { progress: 100, label: 'Publicado' },
+    description: 'Como transformamos feedback contínuo em insumos para decisões de produto, implementando o acompanhamento de CES em 11 fluxos diferentes.',
+    role: 'Design Lead',
+    roles: ['UX Research', 'Design Lead'],
+    tools: ['CES', 'Hotjar', 'Google Analytics'],
+    team: ['Design'],
+    year: '2025',
+    platform: 'Métricas e Processos',
+    readingTime: '4 min de leitura',
+    tldr: {
+      problem: 'Falta de mensuração de impacto a longo prazo e ausência de acompanhamento contínuo dos principais fluxos obrigatórios do produto.',
+      action: 'Estruturei a primeira rotina de métricas de experiência focada no CES, mapeando 11 jornadas chave para 3 personas principais (RH, Líder e Colaborador).',
+      result: 'Em 6 meses, coletamos mais de 3.700 respostas e analisamos centenas de comentários, transformando feedback em direcionamentos reais para o time de Design.'
+    },
+    bg: 'bg-[#FAF9F7]',
+    heroBg: 'bg-[#7D888B]',
+    textColor: 'text-[#241510]',
+    tagColor: 'text-[#9E4322]',
+    content: <MetricasExperienciaContent />
+  },
+  {
     id: 'ia-dia-dia',
     title: 'IA como extensão da minha prática de Design',
     tag: 'Processos & IA',
@@ -273,29 +297,6 @@ export const projects = [
     textColor: 'text-[#241510]',
     tagColor: 'text-[#9E4322]',
     content: <OrquestracaoAgentesContent />
-  },
-  {
-    id: 'analise-metricas',
-    title: 'Métricas de Experiência',
-    tag: 'UX Research',
-    status: { progress: 100, label: 'Publicado' },
-    description: 'Como transformamos feedback contínuo em insumos para decisões de produto, implementando o acompanhamento de CES em 11 fluxos diferentes.',
-    role: 'Design Lead',
-    roles: ['UX Research', 'Design Lead'],
-    tools: ['CES', 'Hotjar', 'Google Analytics'],
-    team: ['Design'],
-    year: '2025',
-    platform: 'Métricas e Processos',
-    tldr: {
-      problem: 'Falta de mensuração de impacto a longo prazo e ausência de acompanhamento contínuo dos principais fluxos obrigatórios do produto.',
-      action: 'Estruturei a primeira rotina de métricas de experiência focada no CES, mapeando 11 jornadas chave para 3 personas principais (RH, Líder e Colaborador).',
-      result: 'Em 6 meses, coletamos mais de 3.700 respostas e analisamos centenas de comentários, transformando feedback em direcionamentos reais para o time de Design.'
-    },
-    bg: 'bg-[#FAF9F7]',
-    heroBg: 'bg-[#7D888B]',
-    textColor: 'text-[#241510]',
-    tagColor: 'text-[#9E4322]',
-    content: <MetricasExperienciaContent />
   },
   {
     id: 'aprendizados-rh',

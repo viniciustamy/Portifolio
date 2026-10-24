@@ -17,8 +17,9 @@ const socials = [
   { href: 'https://wa.me/5524974020554', label: 'WhatsApp', icon: MessageCircle },
 ];
 
-// Coloque o arquivo do currículo em public/curriculo.pdf
+// Currículo em public/curriculo.pdf; baixa com o nome abaixo
 const RESUME_URL = '/curriculo.pdf';
+const RESUME_FILENAME = 'Curriculo-Vinicius-Tamy.pdf';
 
 // Posição do scroll da coluna direita, para voltar no mesmo ponto ao sair de um projeto
 const SCROLL_KEY = 'home-content-scroll';
@@ -68,6 +69,7 @@ function ProjectMeta({ project, tagColor }: { project: ProjectData; tagColor: st
 }
 
 // Case: card largo, fundo pintado com a cor predominante da thumbnail, título à esquerda e imagem à direita
+// (no mobile, título em cima e o motion embaixo, colado na base)
 // (`key` declarado nos cards porque o projeto não tem @types/react instalado)
 function CaseCard({ project }: { project: ProjectData; key?: string }) {
   const thumbBg = project.thumbnail ? project.thumbBg : undefined;
@@ -82,12 +84,12 @@ function CaseCard({ project }: { project: ProjectData; key?: string }) {
       ref={cardRef}
       data-snap="center"
       to={`/project/${project.id}`}
-      className={`block w-full shrink-0 ${thumbBg ? 'h-[105vw]' : 'h-[60vw]'} md:h-[500px] min-h-[260px] lg:snap-center lg:snap-always ${thumbBg ? '' : project.bg} rounded-2xl relative overflow-hidden group ${cardFrame} ${thumbBg ? 'grid grid-rows-[1fr_auto] md:grid-rows-1 md:grid-cols-[2fr_3fr]' : 'flex flex-col justify-end p-6 lg:p-8'}`}
+      className={`block w-full shrink-0 ${thumbBg ? 'h-[105vw]' : 'h-[60vw]'} md:h-[500px] min-h-[260px] lg:snap-center lg:snap-always ${thumbBg ? '' : project.bg} rounded-2xl relative overflow-hidden group ${cardFrame} ${thumbBg ? 'grid grid-rows-[auto_1fr] md:grid-rows-1 md:grid-cols-[2fr_3fr]' : 'flex flex-col justify-end p-6 lg:p-8'}`}
       style={thumbBg ? { backgroundColor: thumbBg } : undefined}
     >
       {thumbBg && (
-        <div className="row-start-1 md:col-start-2 relative min-w-0 min-h-0">
-          {/* Respiro em cima e à esquerda; a tela continua saindo pelas bordas da direita e de baixo */}
+        <div className="row-start-2 md:row-start-1 md:col-start-2 relative min-w-0 min-h-0">
+          {/* Respiro em cima e à esquerda; a tela continua saindo pelas bordas da direita e de baixo (no mobile, colada na base do card) */}
           <div className="absolute inset-0 md:top-16 md:left-6">
             {ThumbMotion ? (
               <ThumbMotion active={focused} />
@@ -101,12 +103,12 @@ function CaseCard({ project }: { project: ProjectData; key?: string }) {
           </div>
         </div>
       )}
-      <div className={`relative z-10 ${thumbBg ? 'row-start-2 md:col-start-1 md:row-start-1 md:self-end p-6 lg:p-8 md:pr-2' : ''} ${textColor}`}>
-        <p className={`text-[13px] font-medium mb-2 ${tagColor}`}>{project.tag}</p>
-        <h3 className="font-sans text-[28px] xl:text-[34px] font-semibold tracking-tight leading-[1.1] mb-2">
+      <div className={`relative z-10 ${thumbBg ? 'row-start-1 md:col-start-1 md:self-end p-6 pb-5 md:pl-10 md:pb-10 xl:pl-12 xl:pb-12 md:pr-4' : ''} ${textColor}`}>
+        <p className={`text-[15px] font-medium mb-2.5 ${tagColor}`}>{project.tag}</p>
+        <h3 className="font-sans text-[30px] xl:text-[38px] font-semibold tracking-tight leading-[1.08] mb-2.5">
           {project.title}
         </h3>
-        {project.readingTime && <p className="text-[13px] opacity-80">{project.readingTime}</p>}
+        {project.readingTime && <p className="text-[15px] opacity-80">{project.readingTime}</p>}
       </div>
     </Link>
   );
@@ -242,7 +244,7 @@ export default function Home() {
         className="flex-1 flex flex-col min-h-0 px-6 py-8 lg:px-11 lg:pt-[min(3.5rem,6vh)] lg:pb-11"
       >
         {/* Foto já recortada no rosto, em círculo */}
-        <div className="w-40 h-40 lg:w-[min(240px,26vh)] lg:h-[min(240px,26vh)] rounded-full overflow-hidden mx-auto shrink-0">
+        <div className="w-40 h-40 lg:w-[min(240px,26vh)] lg:h-[min(240px,26vh)] rounded-full overflow-hidden lg:mx-auto shrink-0">
           <img
             src="/profile-face.webp"
             alt="Vinicius Tamy"
@@ -250,12 +252,12 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-6 lg:mt-[3vh] text-center lg:text-left">
+        <div className="mt-6 lg:mt-[3vh] text-left">
           <h1 className="font-serif font-extrabold text-4xl lg:text-[2rem] xl:text-[2.25rem] tracking-tight leading-[1.05] text-[#241510]">
             Olá, eu sou o Tamy
           </h1>
-          <p className="text-[#241510] text-lg lg:text-[17px] font-normal leading-snug mt-3">
-            Designer de problemas, produtos e IA.
+          <p className="font-serif font-extrabold text-4xl lg:text-[2rem] xl:text-[2.25rem] tracking-tight leading-[1.05] text-[#6F625B] mt-1 [text-wrap:balance]">
+            Designer sênior de produtos, problemas e IA.
           </p>
         </div>
 
@@ -274,7 +276,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-8 lg:mt-6 flex flex-wrap items-center justify-center lg:justify-between gap-2">
+        <div className="mt-8 lg:mt-6 flex flex-wrap items-center justify-start lg:justify-between gap-2">
           <div className="flex items-center gap-2">
             {socials.map(({ href, label, icon: Icon }) => (
               <a
@@ -292,7 +294,7 @@ export default function Home() {
           </div>
           <a
             href={RESUME_URL}
-            download
+            download={RESUME_FILENAME}
             className="inline-flex items-center gap-2 h-10 px-4 rounded-full whitespace-nowrap bg-[#241510] text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition-opacity"
           >
             <Download size={16} /> Baixar currículo
@@ -310,7 +312,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 1.2, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-[920px] mx-auto px-6 md:px-10 pt-8 lg:pt-12 pb-10 flex flex-col gap-14"
+            className="w-full max-w-[1080px] mx-auto px-6 md:px-10 pt-8 lg:pt-12 pb-10 flex flex-col gap-14"
           >
             <div className="lg:snap-start lg:scroll-mt-12">
               <SectionTitle title="Cases" description="Trabalhos que desenvolvi nos últimos anos" />

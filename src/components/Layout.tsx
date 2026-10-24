@@ -63,12 +63,12 @@ export default function Layout() {
         className="min-h-screen lg:h-screen flex flex-col bg-[var(--color-muted-background)] text-foreground font-sans selection:bg-brand selection:text-white relative overflow-hidden"
       >
         <motion.div
-          className="fixed top-0 left-0 w-[51vw] h-full bg-brand z-[9999] pointer-events-none"
+          className="fixed top-0 left-0 w-[51vw] h-full bg-[#2E211B] z-[9999] pointer-events-none"
           variants={leftDoorVariants}
           transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         />
         <motion.div
-          className="fixed top-0 right-0 w-[51vw] h-full bg-brand z-[9999] pointer-events-none"
+          className="fixed top-0 right-0 w-[51vw] h-full bg-[#2E211B] z-[9999] pointer-events-none"
           variants={rightDoorVariants}
           transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         />
@@ -97,13 +97,13 @@ export default function Layout() {
 
         {/* Left Curtain Door */}
         <motion.div
-          className="fixed top-0 left-0 w-[51vw] h-full bg-brand z-[9999] pointer-events-none"
+          className="fixed top-0 left-0 w-[51vw] h-full bg-[#2E211B] z-[9999] pointer-events-none"
           variants={leftDoorVariants}
           transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         />
         {/* Right Curtain Door */}
         <motion.div
-          className="fixed top-0 right-0 w-[51vw] h-full bg-brand z-[9999] pointer-events-none"
+          className="fixed top-0 right-0 w-[51vw] h-full bg-[#2E211B] z-[9999] pointer-events-none"
           variants={rightDoorVariants}
           transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         />
@@ -149,13 +149,13 @@ export default function Layout() {
 
       {/* Left Curtain Door */}
       <motion.div
-        className="fixed top-0 left-0 w-[51vw] h-full bg-brand z-[9999] pointer-events-none"
+        className="fixed top-0 left-0 w-[51vw] h-full bg-[#2E211B] z-[9999] pointer-events-none"
         variants={leftDoorVariants}
         transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
       />
       {/* Right Curtain Door */}
       <motion.div
-        className="fixed top-0 right-0 w-[51vw] h-full bg-brand z-[9999] pointer-events-none"
+        className="fixed top-0 right-0 w-[51vw] h-full bg-[#2E211B] z-[9999] pointer-events-none"
         variants={rightDoorVariants}
         transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
       />

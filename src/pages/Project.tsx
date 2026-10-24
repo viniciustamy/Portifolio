@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
-import { ArrowLeft as ArrowLeftIcon, Monitor as MonitorIcon } from 'lucide-react';
+import { ArrowLeft as ArrowLeftIcon } from 'lucide-react';
 import { useProjects } from '../context/ProjectsContext';
-import { PresentationMode } from '../components/PresentationMode';
 import { motion } from 'motion/react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { FloatingPostHeader } from '../components/FloatingPostHeader';
@@ -13,11 +12,13 @@ import { Typography } from '../components/ui/Typography';
 import { AtuacaoInfo, HAS_OWN_ATUACAO } from '../components/AtuacaoInfo';
 import { DevolutivaLaptopMotion } from '../components/DevolutivaLaptopMotion';
 import { DashboardLaptopMotion } from '../components/DashboardLaptopMotion';
+import { MetricasCesMotion } from '../components/MetricasCesMotion';
 
-// Cases cujo hero é o notebook animado no lugar da imagem de capa
+// Cases cujo hero é um motion (notebook ou composição) no lugar da imagem de capa
 const LAPTOP_HEROES: Record<string, () => any> = {
   devolutiva: DevolutivaLaptopMotion,
   'dashboard-admissao': DashboardLaptopMotion,
+  'analise-metricas': MetricasCesMotion,
 };
 
 export default function Project() {
@@ -31,9 +32,8 @@ export default function Project() {
   const nextProject = projects[currentIndex + 1] || projects[0];
 
   const [sections, setSections] = useState<{ id: string; text: string }[]>([]);
-  const [isPresentationOpen, setIsPresentationOpen] = useState(false);
-  // Scroll assistido entre as seções do case (desligado com a apresentação aberta)
-  useAssistedPageScroll(!!project && !isPresentationOpen);
+  // Scroll assistido entre as seções do case
+  useAssistedPageScroll(!!project);
   const [isSimplified, setIsSimplified] = useState(false);
 
   // Use the new Scroll Spy hook
@@ -239,17 +239,6 @@ export default function Project() {
               <Typography variant="h2" className="text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.25rem] leading-[1.12] mb-0 border-none">
                 {project.title}
               </Typography>
-
-              {project.id === 'admin-global-docs' && (
-                <Button
-                  variant="outline"
-                  onClick={() => setIsPresentationOpen(true)}
-                  className="rounded-full border-border hover:bg-brand/5 hover:border-brand text-brand font-semibold transition-all shrink-0 sm:mt-1 h-auto py-2.5 px-4"
-                >
-                  <MonitorIcon className="w-4 h-4 mr-2" />
-                  Apresentar Case (Slide Deck)
-                </Button>
-              )}
             </div>
 
             <Typography variant="lead" className="md:text-xl text-muted-foreground leading-relaxed mb-6 mt-0">
@@ -398,11 +387,6 @@ export default function Project() {
         )}
       </div>
 
-      <PresentationMode
-        isOpen={isPresentationOpen}
-        onClose={() => setIsPresentationOpen(false)}
-        projectTitle={project.title}
-      />
     </div>
   );
 }

@@ -62,7 +62,7 @@ export function useLaptopViewport(threshold = 0.3) {
 }
 
 export function LaptopMockup({
-  viewRef, width, stageRef, screenRef, tabs, activeTab, cursor, label, children,
+  viewRef, width, stageRef, screenRef, tabs, activeTab, cursor, label, pageBg = "#fff", ratio = 0.625, children,
 }: {
   viewRef: any;
   width: number;
@@ -72,19 +72,26 @@ export function LaptopMockup({
   activeTab: number;
   cursor: Cursor;
   label: string;
+  pageBg?: string; // fundo sob a página (evita filete branco nas bordas ao escalar)
+  ratio?: number; // altura/largura da tela (padrão 16:10)
   children: any;
 }) {
   const s = width / STAGE_W;
+  // Medidas que dependem da proporção da tela
+  const viewH = Math.round(VIEW_W * ratio);
+  const screenH = BEZEL + TABS_H + URL_H + viewH + 30;
+  const stageH = 20 + screenH + BASE_H + SHADOW_H;
+  const appH = viewH / APP_SCALE;
   return (
-    <div ref={viewRef} className="relative w-full select-none" style={{ aspectRatio: `${STAGE_W} / ${STAGE_H}` }} role="img" aria-label={label}>
+    <div ref={viewRef} className="relative w-full select-none" style={{ aspectRatio: `${STAGE_W} / ${stageH}` }} role="img" aria-label={label}>
       {width > 0 && (
-        <div ref={stageRef} className="absolute left-0 top-0 origin-top-left font-sans" style={{ width: STAGE_W, height: STAGE_H, transform: `scale(${s})` }}>
+        <div ref={stageRef} className="absolute left-0 top-0 origin-top-left font-sans" style={{ width: STAGE_W, height: stageH, transform: `scale(${s})` }}>
           {/* Tela do notebook */}
-          <div className="absolute rounded-[28px]" style={{ left: SCREEN_LEFT, top: 20, width: SCREEN_W, height: SCREEN_H, background: '#0E1116', boxShadow: 'inset 0 0 0 2px #2A2F36' }}>
+          <div className="absolute rounded-[28px]" style={{ left: SCREEN_LEFT, top: 20, width: SCREEN_W, height: screenH, background: '#0E1116', boxShadow: 'inset 0 0 0 2px #2A2F36' }}>
             <span className="absolute left-1/2 -translate-x-1/2 rounded-full" style={{ top: 9, width: 8, height: 8, background: '#2E343C' }} />
 
             {/* Navegador */}
-            <div className="absolute overflow-hidden rounded-[8px] bg-white" style={{ left: BEZEL, top: BEZEL, width: VIEW_W, height: TABS_H + URL_H + VIEW_H }}>
+            <div className="absolute overflow-hidden rounded-[8px]" style={{ background: pageBg, left: BEZEL, top: BEZEL, width: VIEW_W, height: TABS_H + URL_H + viewH }}>
               <div className="flex items-end gap-1.5 px-3.5" style={{ height: TABS_H, background: '#DEE1E6' }}>
                 <span className="flex gap-2 mr-3 mb-[15px]">
                   {['#FF5F57', '#FEBC2E', '#28C840'].map(c => <span key={c} className="w-3 h-3 rounded-full" style={{ background: c }} />)}
@@ -103,7 +110,7 @@ export function LaptopMockup({
                   </span>
                 ))}
               </div>
-              <div className="flex items-center gap-4 px-4 border-b" style={{ height: URL_H, borderColor: '#E3E5E8' }}>
+              <div className="flex items-center gap-4 px-4 border-b bg-white" style={{ height: URL_H, borderColor: '#E3E5E8' }}>
                 <span className="flex gap-3 text-[#5F6368]"><ChevronLeft size={18} /><ChevronRight size={18} /><RotateCw size={16} /></span>
                 <span className="flex-1 flex items-center gap-2 rounded-full px-4 text-[13px] text-[#3C4043]" style={{ height: 28, background: '#F1F3F4' }}>
                   <Lock size={12} /> {tabs[activeTab]?.url}
@@ -111,8 +118,8 @@ export function LaptopMockup({
               </div>
 
               {/* Página */}
-              <div className="relative overflow-hidden" style={{ width: VIEW_W, height: VIEW_H }}>
-                <div ref={screenRef} className="absolute left-0 top-0 origin-top-left" style={{ width: APP_W, height: APP_H, transform: `scale(${APP_SCALE})` }}>
+              <div className="relative overflow-hidden" style={{ width: VIEW_W, height: viewH }}>
+                <div ref={screenRef} className="absolute left-0 top-0 origin-top-left" style={{ width: APP_W, height: appH, transform: `scale(${APP_SCALE})` }}>
                   {children}
                 </div>
               </div>
@@ -120,11 +127,11 @@ export function LaptopMockup({
           </div>
 
           {/* Sombra no chão: uma mancha larga e suave + uma faixa escura de contato colada à base */}
-          <span className="absolute rounded-[50%]" style={{ left: 40, right: 40, top: 20 + SCREEN_H + BASE_H - 26, height: 64, background: 'radial-gradient(closest-side, rgb(20 22 26 / .30), rgb(20 22 26 / 0))', filter: 'blur(6px)' }} />
-          <span className="absolute rounded-[50%]" style={{ left: 120, right: 120, top: 20 + SCREEN_H + BASE_H - 12, height: 20, background: 'radial-gradient(closest-side, rgb(20 22 26 / .45), rgb(20 22 26 / 0))', filter: 'blur(2px)' }} />
+          <span className="absolute rounded-[50%]" style={{ left: 40, right: 40, top: 20 + screenH + BASE_H - 26, height: 64, background: 'radial-gradient(closest-side, rgb(20 22 26 / .30), rgb(20 22 26 / 0))', filter: 'blur(6px)' }} />
+          <span className="absolute rounded-[50%]" style={{ left: 120, right: 120, top: 20 + screenH + BASE_H - 12, height: 20, background: 'radial-gradient(closest-side, rgb(20 22 26 / .45), rgb(20 22 26 / 0))', filter: 'blur(2px)' }} />
 
           {/* Base do notebook */}
-          <div className="absolute" style={{ left: 0, top: 20 + SCREEN_H - 4, width: STAGE_W, height: BASE_H }}>
+          <div className="absolute" style={{ left: 0, top: 20 + screenH - 4, width: STAGE_W, height: BASE_H }}>
             <div className="absolute inset-0 rounded-b-[26px]" style={{ background: 'linear-gradient(#ECEEF1 0%, #D3D7DC 55%, #AEB3BA 100%)', boxShadow: 'inset 0 -2px 0 rgb(0 0 0 / .08)' }} />
             <span className="absolute left-1/2 -translate-x-1/2 top-0 rounded-b-[12px]" style={{ width: 220, height: 14, background: '#C9CDD3' }} />
           </div>

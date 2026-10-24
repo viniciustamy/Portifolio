@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import {
   Sparkles,
   BookOpen,
@@ -107,86 +108,49 @@ export const DevolutivaContent = () => {
               Antes de investigar qualquer solução, precisávamos garantir que Produto, Design e Negócio partissem do mesmo entendimento do problema.
             </p>
 
-            <div className="relative not-prose mb-10">
-              <div className="absolute top-8 h-[1px] bg-[#E2DCD4] z-0 hidden md:block" style={{ left: '2rem', right: 'calc(25% - 2rem)' }}></div>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-                {/* Kickoff */}
-                <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6 ">
-                    <Flag size={20} />
+            {/* Etapas em sequência: bolinha → título → texto → imagem, e a linha cresce até a próxima */}
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-4 gap-8 not-prose mb-10"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.35 }}
+            >
+              {[
+                { Icon: Flag, title: 'Kickoff', desc: 'Contexto, objetivos, riscos e métricas de sucesso alinhados com os stakeholders.', img: '/thumb-kickoff.png' },
+                { Icon: Pencil, title: 'CSD', desc: '5 stakeholders. Certezas e dúvidas viraram perguntas de pesquisa.', img: '/thumb-csd.png' },
+                { Icon: LayoutGrid, title: 'Benchmark', desc: '10 plataformas de mercado comparadas em funcionalidades de devolutiva.', img: '/thumb-bench.png' },
+                { Icon: GitFork, title: 'Faz / não faz', desc: 'Limites de escopo definidos antes de aprofundar a pesquisa.', img: '/thumb-faz-naofaz.png' },
+              ].map((step, i) => {
+                const start = i * 1.25;
+                const reveal = (delay: number) => ({
+                  hidden: { opacity: 0, y: 12 },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.45, delay: start + delay, ease: [0.16, 1, 0.3, 1] } },
+                });
+                return (
+                  <div key={step.title} className="relative flex flex-col items-center md:items-start text-center md:text-left">
+                    {/* Linha até a próxima etapa */}
+                    {i < 3 && (
+                      <motion.span
+                        className="absolute top-8 h-px bg-[#E2DCD4] hidden md:block origin-left"
+                        style={{ left: '4rem', width: 'calc(100% - 2rem)' }}
+                        variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.7, delay: start + 0.55, ease: 'easeInOut' } } }}
+                      />
+                    )}
+                    <motion.div
+                      className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6"
+                      variants={{ hidden: { opacity: 0, scale: 0.5 }, show: { opacity: 1, scale: 1, transition: { duration: 0.4, delay: start, ease: [0.16, 1, 0.3, 1] } } }}
+                    >
+                      <step.Icon size={20} />
+                    </motion.div>
+                    <motion.h4 className="font-sans font-bold text-base text-[#241510] mb-2" variants={reveal(0.15)}>{step.title}</motion.h4>
+                    <motion.p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]" variants={reveal(0.25)}>{step.desc}</motion.p>
+                    <motion.div className="w-full border border-[#E2DCD4] rounded-lg overflow-hidden hover:border-[#9E4322]/30 transition-colors duration-300" variants={reveal(0.4)}>
+                      <img src={step.img} alt={step.title} className="w-full h-[188px] object-cover" />
+                    </motion.div>
                   </div>
-                  <h4 className="font-sans font-bold text-base text-[#241510] mb-2">Kickoff</h4>
-                  <p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]">
-                    Contexto, objetivos, riscos e métricas de sucesso alinhados com os stakeholders.
-                  </p>
-                  <div className="w-full border border-[#E2DCD4] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#9E4322]/30 transition-all duration-300">
-                    <img
-                      src="/thumb-kickoff.png"
-                      alt="Kickoff"
-                      className="w-full h-[188px] object-cover"
-                    />
-                  </div>
-                </div>
-
-                {/* CSD */}
-                <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6 ">
-                    <Pencil size={20} />
-                  </div>
-                  <h4 className="font-sans font-bold text-base text-[#241510] mb-2">CSD</h4>
-                  <p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]">
-                    5 stakeholders. Certezas e dúvidas viraram perguntas de pesquisa.
-                  </p>
-
-                  <div className="w-full border border-[#E2DCD4] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#9E4322]/30 transition-all duration-300">
-                    <img
-                      src="/thumb-csd.png"
-                      alt="CSD"
-                      className="w-full h-[188px] object-cover"
-                    />
-                  </div>
-                </div>
-
-                {/* Benchmark */}
-                <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6 ">
-                    <LayoutGrid size={20} />
-                  </div>
-                  <h4 className="font-sans font-bold text-base text-[#241510] mb-2">Benchmark</h4>
-                  <p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]">
-                    10 plataformas de mercado comparadas em funcionalidades de devolutiva.
-                  </p>
-
-                  <div className="w-full border border-[#E2DCD4] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#9E4322]/30 transition-all duration-300">
-                    <img
-                      src="/thumb-bench.png"
-                      alt="Benchmark"
-                      className="w-full h-[188px] object-cover"
-                    />
-                  </div>
-                </div>
-
-                {/* Faz / não faz */}
-                <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full border border-[#E2DCD4] bg-white flex items-center justify-center text-[#9E4322] mb-6 ">
-                    <GitFork size={20} />
-                  </div>
-                  <h4 className="font-sans font-bold text-base text-[#241510] mb-2">Faz / não faz</h4>
-                  <p className="text-xs text-[#6F625B] leading-relaxed mb-6 min-h-[60px]">
-                    Limites de escopo definidos antes de aprofundar a pesquisa.
-                  </p>
-
-                  <div className="w-full border border-[#E2DCD4] rounded-lg flex items-center justify-center relative overflow-hidden group hover:border-[#9E4322]/30 transition-all duration-300">
-                    <img
-                      src="/thumb-faz-naofaz.png"
-                      alt="Faz / Não Faz"
-                      className="w-full h-[188px] object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+                );
+              })}
+            </motion.div>
           </div>
 
           {/* Discovery */}
@@ -215,12 +179,9 @@ export const DevolutivaContent = () => {
 
           {/* Principais Insights */}
           <div className="mb-32">
-            <h2 id="principais-insights" className="font-serif text-3xl font-bold text-[#241510] mb-4">Os 5 problemas estruturais</h2>
-            <p className="text-[#7D7169] leading-relaxed mb-8">
-              O produto de Performance cobria ciclos, avaliações e calibração, mas a jornada parava antes da etapa mais importante: a conversa entre gestor e colaborador.
-            </p>
+            <h2 id="principais-insights" className="font-serif text-3xl font-bold text-[#241510] mb-6">Os 5 problemas estruturais</h2>
 
-            <div className="not-prose border-y border-[#E2DCD4] divide-y divide-[#E2DCD4]">
+            <div className="not-prose divide-y divide-[#E2DCD4]">
               {[
                 { Icon: FileSpreadsheet, title: 'Gestores com ferramentas externas', text: 'Dependiam de documentos e planilhas para preparar a conversa.' },
                 { Icon: History, title: 'Colaboradores sem histórico', text: 'Não acumulavam um registro consolidado do próprio desenvolvimento.' },
@@ -245,19 +206,6 @@ export const DevolutivaContent = () => {
             <p className="text-[#7D7169] leading-relaxed mb-8">
               Com a arquitetura validada, explorei wireframes para testar alternativas de navegação e reduzir a complexidade percebida, antes de qualquer decisão visual.
             </p>
-
-            <div className="flex flex-wrap items-center gap-3 mb-8 not-prose">
-              {['Integração entre etapas do ciclo', 'Configuração do RH', 'Preparo do gestor', 'Consulta do colaborador'].map((item, index, arr) => (
-                <React.Fragment key={item}>
-                  <span className="px-5 py-2.5 bg-[#FAF9F6] border border-[#E2DCD4] rounded-full text-xs font-semibold text-[#6F625B] ">
-                    {item}
-                  </span>
-                  {index < arr.length - 1 && (
-                    <span className="text-[#6F625B]/50 text-xl font-light">→</span>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
 
             <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] my-0 overflow-hidden">
               <img
@@ -314,9 +262,11 @@ export const DevolutivaContent = () => {
           </div>
 
           {/* Da pesquisa à Inteligência Artificial */}
-          <div className="mb-32">
-            <h2 id="da-pesquisa-a-inteligencia-artificial" className="font-serif text-3xl font-bold text-[#241510] mb-4">Agente de IA para ajudar o gestor</h2>
-            <p className="text-[#7D7169] leading-relaxed mb-8">
+          <div className="relative isolate mb-32 py-20 md:py-24">
+            {/* Faixa escura de ponta a ponta: dá peso à seção da IA sem tirar o conteúdo do alinhamento */}
+            <span aria-hidden="true" className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-screen bg-[#2E211B] -z-10" />
+            <h2 id="da-pesquisa-a-inteligencia-artificial" className="font-serif text-3xl font-bold text-[#F4EFEB] mb-4">Agente de IA para ajudar o gestor</h2>
+            <p className="text-[#C9BDB4] leading-relaxed mb-10">
               O problema não era só acessar os dados, era interpretá-los: gestores gastavam tempo demais lendo o volume de avaliações antes da conversa. Com a Gupy IA, o gestor gera a conclusão, revisa e aplica direto nos campos da devolutiva.
             </p>
 
@@ -383,12 +333,9 @@ export const DevolutivaContent = () => {
 
           {/* Principais Aprendizados */}
           <div className="mb-32">
-            <h2 id="principais-aprendizados" className="font-serif text-3xl font-bold text-[#241510] mb-4">O que este projeto reforçou</h2>
-            <p className="text-[#7D7169] leading-relaxed mb-8">
-              Quatro aprendizados que levo para os próximos projetos.
-            </p>
+            <h2 id="principais-aprendizados" className="font-serif text-3xl font-bold text-[#241510] mb-6">Aprendizados</h2>
 
-            <div className="not-prose border-y border-[#E2DCD4] divide-y divide-[#E2DCD4]">
+            <div className="not-prose divide-y divide-[#E2DCD4]">
               {[
                 { title: 'Discovery não é começar do zero', text: 'Consolidar pesquisas existentes acelerou o entendimento sem repetir o que já estava validado.' },
                 { title: 'O desafio era comportamental', text: 'Gestores só trocam processos que funcionam quando percebem ganho logo no primeiro uso.' },

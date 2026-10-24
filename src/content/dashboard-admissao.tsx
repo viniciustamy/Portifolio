@@ -55,6 +55,7 @@ import LogoLM from '../assets/images/logoLM.png';
 import LogoGoogleIA from '../assets/images/google ia.png';
 import logocursor from '../assets/images/logocursor.png';
 import { AtuacaoInfo } from '../components/AtuacaoInfo';
+import { VersoesPrototipoMotion } from '../components/VersoesPrototipoMotion';
 
 
 
@@ -373,19 +374,12 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 6: Prototipação com IA */}
           <div className="mb-32">
-            <h2 id="prototipacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Explorando ideias em média fidelidade</h2>
-            <p className="text-[#7D7169] leading-relaxed mb-6">
-              Em vez de wireframes estáticos no Figma, usei o Google AI Studio para construir protótipos navegáveis de média fidelidade que evoluíam junto com as discussões, reduzindo o tempo entre hipótese e validação.
+            <h2 id="prototipacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Usando IA para gerar a evolução do produto em média fidelidade</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              Em vez de wireframes estáticos no Figma, usei o Google AI Studio para gerar versões navegáveis do produto em minutos. Cada versão testava uma hipótese e era iterada durante os workshops, para que a estrutura chegasse validada à alta fidelidade.
             </p>
 
-            <img
-              src={prototipoImg}
-              alt="Protótipo em média fidelidade no Google AI Studio"
-            />
-            {/* Legenda */}
-            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">
-              Protótipo em média fidelidade no Google AI Studio
-            </p>
+            <VersoesPrototipoMotion />
           </div>
 
           {/* Seção 7: Validação */}
