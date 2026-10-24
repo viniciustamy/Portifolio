@@ -1,8 +1,8 @@
 import { Outlet, useLocation, useNavigationType } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
-import { Button } from './ui/Button';
 import { Typography } from './ui/Typography';
+import { SocialLinks } from './SocialLinks';
 
 const leftDoorVariants = {
   initial: { x: "0%" },
@@ -121,19 +121,7 @@ export default function Layout() {
         {/* Footer */}
         <footer className="w-full max-w-[1240px] mx-auto px-6 md:px-10 lg:px-12 py-8 mt-auto border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
           <Typography variant="small" className="text-[12px] text-muted-foreground tracking-wide font-medium">© 2020 — 2026 Vinicius Tamy</Typography>
-          <div className="flex items-center gap-4">
-            <Button variant="brand" className="rounded-full tracking-wide text-[13px] px-6" asChild>
-              <a href="https://wa.me/5524974020554" target="_blank" rel="noopener noreferrer">
-                Say hello!
-              </a>
-            </Button>
-            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#E2DCD4] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
-              <a href="#">in</a>
-            </Button>
-            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#E2DCD4] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
-              <a href="#">ig</a>
-            </Button>
-          </div>
+          <SocialLinks />
         </footer>
       </motion.div>
     );
@@ -174,19 +162,7 @@ export default function Layout() {
       {/* Footer */}
       <footer className="w-full max-w-[1240px] mx-auto px-6 md:px-10 lg:px-12 py-8 mt-auto border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
         <Typography variant="small" className="text-[12px] text-muted-foreground tracking-wide font-medium">© 2020 — 2026 Vinicius Tamy</Typography>
-        <div className="flex items-center gap-4">
-          <Button variant="brand" className="rounded-full tracking-wide text-[13px] px-6" asChild>
-            <a href="https://wa.me/5524974020554" target="_blank" rel="noopener noreferrer">
-              Say hello!
-            </a>
-          </Button>
-          <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#E2DCD4] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
-            <a href="#">in</a>
-          </Button>
-          <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-[#E2DCD4] bg-background hover:bg-muted-background text-[14px] font-medium" asChild>
-            <a href="#">ig</a>
-          </Button>
-        </div>
+        <SocialLinks />
       </footer>
     </motion.div>
   );

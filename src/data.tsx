@@ -8,15 +8,17 @@ import capaDashboard from './assets/images/Capas/Capa Dashboard.png';
 import capaDevolutiva from './assets/images/Capas/Capa Devolutiva.png';
 import capaKba from './assets/images/Capas/Capa KBA.png';
 import capaAdmin from './assets/images/Capas/Capa Admin.png';
-import { DashboardAdmissaoContent } from "./content/dashboard-admissao";
-import { DevolutivaContent } from "./content/devolutiva";
-import { KbaSenhaContent } from "./content/kba-senha";
-import { AdminGlobalDocsContent } from "./content/admin-global-docs";
-import { IaDiaDiaContent } from "./content/ia-dia-dia";
-import { OrquestracaoAgentesContent } from "./content/orquestracao-agentes";
-import { FrameworkDynamicsContent } from "./content/framework-dynamics";
-import { AprendizadosRhContent } from "./content/aprendizados-rh";
-import { MetricasExperienciaContent } from "./content/metricas-experiencia";
+// Conteúdo dos cases carregado sob demanda: a Home não baixa o texto e as imagens de todos os cases
+const lazyContent = (load: () => Promise<any>, name: string) => React.lazy(() => load().then(m => ({ default: m[name] })));
+const DashboardAdmissaoContent = lazyContent(() => import("./content/dashboard-admissao"), "DashboardAdmissaoContent");
+const DevolutivaContent = lazyContent(() => import("./content/devolutiva"), "DevolutivaContent");
+const KbaSenhaContent = lazyContent(() => import("./content/kba-senha"), "KbaSenhaContent");
+const AdminGlobalDocsContent = lazyContent(() => import("./content/admin-global-docs"), "AdminGlobalDocsContent");
+const IaDiaDiaContent = lazyContent(() => import("./content/ia-dia-dia"), "IaDiaDiaContent");
+const OrquestracaoAgentesContent = lazyContent(() => import("./content/orquestracao-agentes"), "OrquestracaoAgentesContent");
+const FrameworkDynamicsContent = lazyContent(() => import("./content/framework-dynamics"), "FrameworkDynamicsContent");
+const AprendizadosRhContent = lazyContent(() => import("./content/aprendizados-rh"), "AprendizadosRhContent");
+const MetricasExperienciaContent = lazyContent(() => import("./content/metricas-experiencia"), "MetricasExperienciaContent");
 
 
 
@@ -302,7 +304,7 @@ export const projects = [
     id: 'aprendizados-rh',
     title: 'O que eu aprendi no mundo do RH',
     tag: 'Artigo · Aprendizados',
-    description: 'Reflexões sobre a complexidade dos processos de RH projetar após passar tantando tempo projetando ferramentas que impactam diretamente a vida e a carreira de milhões de pessoas.',
+    description: 'Reflexões sobre a complexidade dos processos de RH depois de passar tanto tempo projetando ferramentas que impactam diretamente a vida e a carreira de milhões de pessoas.',
     role: 'Liderança de UX',
     roles: ['Liderança de UX'],
     tools: ['Pesquisa Qualitativa', 'Análise de Processos'],
@@ -311,7 +313,7 @@ export const projects = [
     platform: 'Reflexões de Carreira',
     readingTime: '4 min de leitura',
     tldr: {
-      problem: 'A perception inicial de que o trabalho com RH se limitava a fluxos de recrutamento e avaliação, subestimando a complexidade e variação dos contextos organizacionais.',
+      problem: 'A percepção inicial de que o trabalho com RH se limitava a fluxos de recrutamento e avaliação, subestimando a complexidade e variação dos contextos organizacionais.',
       action: 'Atuação por 5 anos projetando produtos para diferentes cenários de RH, aprendendo a equilibrar flexibilidade e orientação a boas práticas.',
       result: 'A compreensão de que desenhar para RH exige entender o contexto específico de cada empresa e saber impor limites para evitar configurações impossíveis de usar.'
     },

@@ -31,7 +31,7 @@ const CONFETTI = Array.from({ length: 48 }, (_, i) => {
   };
 });
 
-const C = {
+export const C = {
   ink: '#1F2328',
   sub: '#4B5058',
   muted: '#8A8F98',
@@ -42,14 +42,14 @@ const C = {
   disabled: '#D9DADD',
 };
 
-const QUESTIONS = [
+export const QUESTIONS = [
   { q: 'Qual desses endereços você já residiu?', options: ['Rua das Flores', 'Av. Paulista', 'Rua Augusta', 'Rua XV de Novembro'], pick: 1 },
   { q: 'Quais são os últimos 4 dígitos do seu CPF?', options: ['1234', '6587', '9834', '3490'], pick: 2 },
   { q: 'Qual é o número do seu endereço cadastrado?', options: ['123', '1000', '456', '789'], pick: 0 },
   { q: 'Qual seu dia de nascimento cadastrado?', options: ['23', '13', '09', '16'], pick: 0 },
 ];
 
-const EMAIL = 'candidato@gmail.com';
+export const EMAIL = 'candidato@gmail.com';
 
 type Screen = 'start' | 'q0' | 'q1' | 'q2' | 'q3' | 'email' | 'success';
 type Tap = { x: number; y: number; id: number } | null;
@@ -69,7 +69,8 @@ function PrimaryButton({ children, color = C.blue, enabled = true, pressed = fal
   );
 }
 
-function StartScreen({ pressed }: { pressed: boolean }) {
+// captcha: estado da caixa do Cloudflare (a thumb já mostra concluído)
+export function StartScreen({ pressed, captcha = 'done' }: { pressed: boolean; captcha?: 'idle' | 'loading' | 'done' }) {
   return (
     <div className="px-6 pt-7">
       <p className="text-[24px] font-semibold leading-tight">Recuperação de conta</p>
@@ -79,7 +80,12 @@ function StartScreen({ pressed }: { pressed: boolean }) {
         <span><b>Atenção:</b> Se não conseguir responder corretamente, você precisará <b>aguardar 5 minutos</b> para tentar novamente.</span>
       </div>
       <div className="mt-6 flex items-center justify-between border px-4 py-4" style={{ borderColor: '#D9DADD', background: '#FAFAFA' }}>
-        <span className="flex items-center gap-3 text-[14px]"><CircleCheck size={26} fill="#1F9D3A" color="#fff" /> Sucesso!</span>
+        <span data-captcha className="flex items-center gap-3 text-[14px]">
+          {captcha === 'done' && <motion.span initial={{ scale: 0.4 }} animate={{ scale: 1 }} transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}><CircleCheck size={26} fill="#1F9D3A" color="#fff" /></motion.span>}
+          {captcha === 'loading' && <motion.span className="block rounded-full border-[3px]" style={{ width: 26, height: 26, borderColor: '#D9DADD', borderTopColor: '#F38020' }} animate={{ rotate: 360 }} transition={{ duration: 0.7, repeat: Infinity, ease: 'linear' }} />}
+          {captcha === 'idle' && <span className="block rounded-[4px] border-2 bg-white" style={{ width: 26, height: 26, borderColor: '#8A8F98' }} />}
+          {captcha === 'done' ? 'Sucesso!' : captcha === 'loading' ? 'Verificando...' : 'Confirme que você é humano'}
+        </span>
         <span className="text-right leading-none">
           <span className="block text-[11px] font-black tracking-wide" style={{ color: '#F38020' }}>CLOUDFLARE</span>
           <span className="text-[8.5px]" style={{ color: C.sub }}>Privacy • Terms</span>
@@ -93,7 +99,7 @@ function StartScreen({ pressed }: { pressed: boolean }) {
   );
 }
 
-function QuestionScreen({ index, selected, pressed }: { index: number; selected: boolean; pressed: boolean }) {
+export function QuestionScreen({ index, selected, pressed }: { index: number; selected: boolean; pressed: boolean }) {
   const q = QUESTIONS[index];
   const last = index === QUESTIONS.length - 1;
   return (
@@ -124,7 +130,7 @@ function QuestionScreen({ index, selected, pressed }: { index: number; selected:
   );
 }
 
-function EmailScreen({ first, second, pressed }: { first: string; second: string; pressed: boolean }) {
+export function EmailScreen({ first, second, pressed }: { first: string; second: string; pressed: boolean }) {
   const field = (label: string, value: string, active: boolean) => (
     <div className="mt-6">
       <p className="text-[14px]" style={{ color: C.sub }}>{label}</p>

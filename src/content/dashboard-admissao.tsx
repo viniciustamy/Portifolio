@@ -48,7 +48,7 @@ import logoAjinomoto from '../assets/images/Admin/ajinomoto.png';
 import logoSoma from '../assets/images/Admin/soma.png';
 import logoClaro from '../assets/images/Admin/claro.png';
 import dash21 from '../assets/images/Dash/Dash-21.png';
-import dash22 from '../assets/images/Dash/Dash-22.mov';
+import dash22 from '../assets/images/Dash/Dash-22.mp4';
 import dash23 from '../assets/images/Dash/Dash-23.png';
 import dash24 from '../assets/images/Dash/Dash-24.png';
 import LogoLM from '../assets/images/logoLM.png';

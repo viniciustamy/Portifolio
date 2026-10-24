@@ -24,7 +24,7 @@ import v3v4 from '../assets/images/Imagens versionamento/v3 e v4.png';
 import googleIa from '../assets/images/IA Studio.png';
 import c1 from '../assets/images/C-1.png';
 import c2 from '../assets/images/C-2.png';
-import videoCursor from '../assets/Video Cursor.mov';
+import videoCursor from '../assets/Video Cursor.mp4';
 
 // Imagens do Admin Simplificado
 import discoverySimplificado from '../assets/images/Admin/Admin simplificado/Discovery.png';

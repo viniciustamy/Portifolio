@@ -17,7 +17,7 @@ import onboarding2 from '../assets/images/Imagens IA/onbording 2.png';
 import onboarding3 from '../assets/images/Imagens IA/onbording 3.png';
 import baseImg from '../assets/images/Imagem recorte/Base.png';
 import flutuante2Img from '../assets/images/Imagem recorte/Flutuante 2.png';
-import videoCursor from '../assets/Video Cursor.mov';
+import videoCursor from '../assets/Video Cursor.mp4';
 
 
 

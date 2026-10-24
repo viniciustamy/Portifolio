@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { Suspense, useEffect, useState, useCallback } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { ArrowLeft as ArrowLeftIcon } from 'lucide-react';
 import { useProjects } from '../context/ProjectsContext';
@@ -13,12 +13,14 @@ import { AtuacaoInfo, HAS_OWN_ATUACAO } from '../components/AtuacaoInfo';
 import { DevolutivaLaptopMotion } from '../components/DevolutivaLaptopMotion';
 import { DashboardLaptopMotion } from '../components/DashboardLaptopMotion';
 import { MetricasCesMotion } from '../components/MetricasCesMotion';
+import { KbaHeroMotion } from '../components/KbaHeroMotion';
 
 // Cases cujo hero é um motion (notebook ou composição) no lugar da imagem de capa
 const LAPTOP_HEROES: Record<string, () => any> = {
   devolutiva: DevolutivaLaptopMotion,
   'dashboard-admissao': DashboardLaptopMotion,
   'analise-metricas': MetricasCesMotion,
+  'kba-senha': KbaHeroMotion,
 };
 
 export default function Project() {
@@ -281,7 +283,8 @@ export default function Project() {
             {project.contentHtml ? (
               <div dangerouslySetInnerHTML={{ __html: project.contentHtml }} />
             ) : project.content ? (
-              project.content
+              // O conteúdo de cada case vem em um chunk próprio; reserva altura enquanto carrega
+              <Suspense fallback={<div className="min-h-[60vh]" />}>{project.content}</Suspense>
             ) : (
               <>
                 <h2 className="text-2xl font-bold mb-4">Visão Geral</h2>

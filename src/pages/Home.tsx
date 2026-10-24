@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { Bot, BrainCircuit, ChartColumn, ChevronRight, Download, Instagram, Linkedin, MessageCircle, Shapes } from 'lucide-react';
+import { Bot, BrainCircuit, ChartColumn, ChevronRight, Download, Shapes } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useProjects, ProjectData } from '../context/ProjectsContext';
 import { motion } from 'motion/react';
@@ -10,12 +10,7 @@ import { DevolutivaThumbMotion } from '../components/DevolutivaThumbMotion';
 import { DashboardThumbMotion } from '../components/DashboardThumbMotion';
 import { AdminThumbMotion } from '../components/AdminThumbMotion';
 import { KbaThumbMotion } from '../components/KbaThumbMotion';
-
-const socials = [
-  { href: 'https://www.linkedin.com/in/viniciustamy', label: 'LinkedIn', icon: Linkedin },
-  { href: 'https://www.instagram.com/viniciustamy', label: 'Instagram', icon: Instagram },
-  { href: 'https://wa.me/5524974020554', label: 'WhatsApp', icon: MessageCircle },
-];
+import { SocialLinks } from '../components/SocialLinks';
 
 // Currículo em public/curriculo.pdf; baixa com o nome abaixo
 const RESUME_URL = '/curriculo.pdf';
@@ -263,10 +258,10 @@ export default function Home() {
 
         <div className="mt-6 lg:mt-[3vh] lg:flex-1">
           <p className="text-[#6F625B] text-[15px] leading-[1.55]">
-            Designer há 12 anos, os últimos seis dedicados a produtos digitais. Tenho um perfil end-to-end: gosto de transformar problemas complexos em soluções simples e centradas no usuário.
+            Designer há 12 anos, com os últimos seis dedicados a produtos digitais. Amo projetar produtos de ponta a ponta, transformando problemas complexos em soluções simples e centradas no usuário.
           </p>
           <p className="text-[#6F625B] text-[15px] leading-[1.55] mt-3">
-            Cada dia mais AI-first, uso IA para acelerar pesquisas, explorar ideias e prototipar, sem perder o olhar humano.
+            Totalmente AI-first, usando IA para acelerar pesquisas, explorar ideias, prototipar e entregar funcionalidades de alto nível, tudo isso sem perder o olhar humano.
           </p>
           <Link
             to="/sobre-mim"
@@ -277,27 +272,14 @@ export default function Home() {
         </div>
 
         <div className="mt-8 lg:mt-6 flex flex-wrap items-center justify-start lg:justify-between gap-2">
-          <div className="flex items-center gap-2">
-            {socials.map(({ href, label, icon: Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={label}
-                aria-label={label}
-                className="w-10 h-10 rounded-full border border-[#241510]/15 text-[#241510] flex items-center justify-center hover:border-[#9E4322] hover:text-[#9E4322] transition-colors"
-              >
-                <Icon size={17} />
-              </a>
-            ))}
-          </div>
+          <SocialLinks />
           <a
             href={RESUME_URL}
             download={RESUME_FILENAME}
-            className="inline-flex items-center gap-2 h-10 px-4 rounded-full whitespace-nowrap bg-[#241510] text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition-opacity"
+            title="Baixar currículo"
+            className="inline-flex items-center gap-1.5 h-10 px-3.5 rounded-full whitespace-nowrap bg-[#241510] text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition-opacity"
           >
-            <Download size={16} /> Baixar currículo
+            <Download size={15} /> Currículo
           </a>
         </div>
       </motion.div>

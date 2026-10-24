@@ -33,6 +33,9 @@ import kbaIaImg from '../assets/images/KBA/KBA-IA.png';
 import kbaHandoffImg from '../assets/images/KBA/KBA-Handoff.png';
 
 
+const H2 = 'font-serif text-3xl font-bold text-[#241510] mb-4';
+const LEAD = 'text-[#7D7169] leading-relaxed mb-8';
+
 const kbaContextGallery1 = [
   { src: k01, title: 'Contexto', description: 'Oportunidade e impacto de negócio gerado pelo processo de recuperação', fullWidth: true }
 ];
@@ -98,395 +101,187 @@ export const KbaSenhaContent = () => {
 
       {viewMode === 'simplificado' ? (
         <>
-          {/* Seção 2: Contexto */}
-          <div className="mb-24">
-            <h2 id="contexto" className="font-serif text-3xl font-bold text-[#241510] mb-4">
-              Um problema recorrente, e caro, de suporte
-            </h2>
-            <p className="text-[#7D7169] leading-relaxed mb-8">
-              Entre os casos mais recorrentes de contato com o suporte estavam candidatos que não recebiam o e-mail de redefinição de senha, haviam perdido acesso ao e-mail cadastrado, ou encontravam dificuldade para concluir o processo.
+          {/* Contexto */}
+          <div className="mb-32">
+            <h2 id="contexto" className={H2}>Um problema recorrente, e caro, de suporte</h2>
+            <p className={LEAD}>
+              Entre os contatos mais frequentes com o suporte estavam candidatos que não recebiam o e-mail de redefinição, tinham perdido acesso ao e-mail cadastrado ou não conseguiam concluir o processo.
+            </p>
+            <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                ['Centenas de tickets', 'nos últimos 90 dias, só nesse fluxo.'],
+                ['Milhares de reais', 'por mês em atendimento desse tipo de chamado.'],
+              ].map(([value, label]) => (
+                <div key={value} className="border border-[#E2DCD4] rounded-2xl p-7">
+                  <p className="font-serif text-[32px] font-bold text-[#241510] leading-tight">{value}</p>
+                  <p className="text-[15px] text-[#6F625B] leading-relaxed mt-2">{label}</p>
+                </div>
+              ))}
+            </div>
+            <p className="not-prose text-[13px] text-[#8A7F78] mt-4">Tínhamos o valor exato desse impacto, mas optei por não divulgá-lo neste case.</p>
+          </div>
+
+          {/* Desafio */}
+          <div className="mb-32">
+            <h2 id="desafio" className={H2}>Tornar o fluxo self-service</h2>
+            <p className={LEAD}>O desafio era equilibrar três fatores ao mesmo tempo:</p>
+            <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+              {[
+                { Icon: Shield, title: 'Segurança', desc: 'Sem abrir espaço para fraude ou uso indevido.' },
+                { Icon: Code, title: 'Viabilidade técnica', desc: 'Algo possível de entregar no curto prazo.' },
+                { Icon: User, title: 'Experiência self-service', desc: 'Recuperar o acesso sem depender do suporte.', highlight: true },
+              ].map(({ Icon, title, desc, highlight }) => (
+                <div key={title} className={`rounded-2xl p-7 ${highlight ? 'bg-[#F6EAE3]' : 'border border-[#E2DCD4]'}`}>
+                  <Icon size={22} className={highlight ? 'text-[#9E4322]' : 'text-[#6F625B]'} />
+                  <h3 className="font-serif font-bold text-[19px] text-[#241510] leading-snug mt-4 mb-1.5">{title}</h3>
+                  <p className="text-[14px] text-[#6F625B] leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
+            <h3 className="font-serif text-xl font-bold text-[#241510] mb-2">Perguntas que precisavam de resposta</h3>
+            <ol className="not-prose divide-y divide-[#E2DCD4]">
+              {[
+                'Como recuperar o acesso sem depender do e-mail cadastrado originalmente?',
+                'Como manter a segurança contra fraude sem adicionar fricção à experiência?',
+                'Como entregar algo tecnicamente viável no curto prazo?',
+              ].map((q, i) => (
+                <li key={q} className="flex gap-4 py-4">
+                  <span className="text-[15px] font-semibold text-[#9E4322] tabular-nums pt-px">{String(i + 1).padStart(2, '0')}</span>
+                  <p className="text-[15px] text-[#4F4440] leading-relaxed">{q}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Discovery */}
+          <div className="mb-32">
+            <h2 id="discovery" className={H2}>A recuperação de conta era só o sintoma</h2>
+            <p className={LEAD}>
+              Analisei diferentes fontes para entender onde as pessoas travavam na jornada de acesso como um todo: login, recuperação de conta e de senha.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8 not-prose">
-              <div className="border-l-2 border-[#E2DCD4] p-10 rounded-2xl">
-                <h3 className="font-serif text-3xl md:text-4xl font-bold text-[#C05621] mb-2">
-                  Centenas de tickets
-                </h3>
-                <p className="text-sm text-[#6F625B] leading-relaxed">
-                  nos últimos 90 dias, só nesse fluxo.
+            <div className="not-prose grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-12">
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { Icon: MessageSquare, text: <>Principais motivos de <b>tickets de suporte</b></> },
+                  { Icon: PlayCircle, text: <>Sessões gravadas e mapas de calor no <b>Hotjar</b></> },
+                  { Icon: BarChart2, text: <>Dados de navegação no <b>Google Analytics</b></> },
+                  { Icon: LayoutGrid, text: <><b>Benchmark</b> de login social e recuperação de conta</> },
+                ].map(({ Icon, text }, i) => (
+                  <div key={i} className="border border-[#E2DCD4] rounded-2xl p-5">
+                    <Icon size={20} className="text-[#6F625B] mb-3" />
+                    <p className="text-[14px] text-[#4F4440] leading-snug">{text}</p>
+                  </div>
+                ))}
+              </div>
+              <img src={kbaDiscoveryImg} alt="Análise das telas de login e recuperação" className="w-full h-auto animate-float" />
+            </div>
+
+            <p className={LEAD}>A investigação mostrou que a recuperação de conta era apenas o sintoma de problemas mais amplos na jornada de login.</p>
+            <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
+              {[
+                { group: 'Autenticação e login', items: ['Baixa adoção do login social', 'Fluxos inconsistentes entre login tradicional e Google', 'Criação obrigatória de senha mesmo após login social', 'Mensagens pouco claras durante o login'] },
+                { group: 'Cadastro', items: ['Erros de digitação no e-mail ao criar a conta', 'E-mails corporativos, depois desativados, impediam recuperações futuras'] },
+              ].map(({ group, items }) => (
+                <div key={group}>
+                  <h3 className="font-sans font-semibold text-[16px] text-[#241510] mb-1">{group}</h3>
+                  <ul className="divide-y divide-[#E2DCD4]">
+                    {items.map(item => <li key={item} className="py-3 text-[14px] text-[#6F625B] leading-relaxed">{item}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Estratégia */}
+          <div className="mb-32">
+            <h2 id="estrategia" className={H2}>Dividindo o mapa de oportunidades em frentes</h2>
+            <p className={LEAD}>As oportunidades viraram duas frentes: uma para evoluir a autenticação e outra, do meu time, para resolver a recuperação de conta.</p>
+            <img src={kbaEstrategiaImg} alt="Mapa de oportunidades e hipóteses" className="w-full h-auto mb-8" />
+
+            <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="border border-[#E2DCD4] rounded-2xl p-7">
+                <span className="text-[14px] text-[#6F625B]">Frente 1 · Time de Candidatos</span>
+                <h3 className="font-serif font-bold text-[21px] text-[#241510] leading-snug mt-1 mb-4">Evolução da jornada de autenticação</h3>
+                <ul className="divide-y divide-[#E2DCD4]">
+                  {['Incentivar o login social', 'Eliminar a senha obrigatória após cadastro via Google', 'Melhorar as mensagens de erro', 'Detectar erros de digitação no e-mail', 'Alertar sobre o risco de e-mail corporativo', 'Evoluir para um modelo passwordless'].map(item => (
+                    <li key={item} className="py-2.5 text-[14px] text-[#6F625B]">{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="bg-[#F6EAE3] rounded-2xl p-7">
+                <span className="text-[14px] text-[#9E4322]">Frente 2 · Meu time</span>
+                <h3 className="font-serif font-bold text-[21px] text-[#241510] leading-snug mt-1 mb-3">Nova recuperação de conta</h3>
+                <p className="text-[14px] text-[#6F625B] leading-relaxed mb-5">
+                  Recuperar o acesso mesmo sem o e-mail original, equilibrando segurança, experiência e viabilidade técnica. Avaliamos três formas de validar a identidade:
                 </p>
-              </div>
-
-              <div className="border-l-2 border-[#E2DCD4] p-10 rounded-2xl">
-                <h3 className="font-serif text-3xl md:text-4xl font-bold text-[#8C2727] mb-2">
-                  Milhares de reais
-                </h3>
-                <p className="text-sm text-[#6F625B] leading-relaxed">
-                  de custo em atendimento desse tipo de chamado por mês. Um número fora do aceitável.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-xs italic text-[#6F625B] mt-4">
-              Nota: tínhamos o valor exato desse impacto, mas optamos por não divulgá-lo neste case.
-            </p>
-          </div>
-
-          {/* Seção 3: O Desafio */}
-          <div className="mb-24">
-            <h2 id="desafio" className="font-serif text-3xl font-bold text-[#241510] mb-4">
-              Tornar o fluxo self service
-            </h2>
-            <p className="text-[#7D7169] leading-relaxed mb-8">
-              O principal desafio era encontrar uma solução que equilibrasse os seguintes fatores:
-            </p>
-
-            {/* Diagrama */}
-            <div className="p-8 my-8 not-prose">
-              <div className="flex flex-col md:flex-row items-center justify-center gap-6 max-w-2xl mx-auto">
-                {/* Left Stack */}
-                <div className="flex flex-col gap-4 w-full md:w-56">
-                  <div className="bg-white border border-[#E2DCD4] rounded-2xl p-4 flex items-center justify-center gap-3 text-[#241510] font-medium text-sm shadow-sm">
-                    <Shield size={18} className="text-[#4F4440]" />
-                    <span>Segurança</span>
-                  </div>
-                  <div className="bg-white border border-[#E2DCD4] rounded-2xl p-4 flex items-center justify-center gap-3 text-[#241510] font-medium text-sm shadow-sm">
-                    <Code size={18} className="text-[#4F4440]" />
-                    <span>Viabilidade tecnica</span>
-                  </div>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="rounded-full border border-[#E2C9BB] bg-white/60 px-4 py-2 text-[14px] text-[#4F4440]">Gov.br</span>
+                  <span className="rounded-full border border-[#E2C9BB] bg-white/60 px-4 py-2 text-[14px] text-[#4F4440]">Reconhecimento facial</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#9E4322] px-4 py-2 text-[14px] font-semibold text-white"><Check size={15} strokeWidth={2.5} /> KBA</span>
                 </div>
-
-                {/* Plus Sign */}
-                <div className="text-2xl font-light text-[#6F625B] px-2">+</div>
-
-                {/* Right Big Box */}
-                <div className="bg-white border-2 border-[#9E4322] rounded-2xl p-8 flex flex-col items-center justify-center text-center w-full md:w-64 shadow-sm">
-                  <User size={28} className="text-[#9E4322] mb-2" />
-                  <span className="font-bold text-[#9E4322] text-base md:text-lg">
-                    Experiência Self service
-                  </span>
-                </div>
-              </div>
-
-              <div className="text-center mt-12 mb-6">
-                <span className="font-bold text-[#241510] text-sm">
-                  Perguntas que precisavam ser respondidas.
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-                <div className="border-l-2 border-[#E2DCD4] p-8 rounded-2xl">
-                  <p className="italic text-xs md:text-base text-[#7D7169] leading-relaxed">
-                    Como permitir o usuário recuperar acesso sem depender do e-mail originalmente cadastrado?
-                  </p>
-                </div>
-                <div className="border-l-2 border-[#E2DCD4] p-8 rounded-2xl">
-                  <p className="italic text-xs md:text-base text-[#7D7169] leading-relaxed">
-                    Como manter segurança sem abrir espaço para fraude/uso indevido, sem adicionar fricção à experiência?
-                  </p>
-                </div>
-                <div className="border-l-2 border-[#E2DCD4] p-8 rounded-2xl">
-                  <p className="italic text-xs md:text-base text-[#7D7169] leading-relaxed">
-                    Como entregar algo tecnicamente viável no curto prazo?
-                  </p>
-                </div>
+                <p className="text-[14px] text-[#6F625B] leading-relaxed">O KBA atendia melhor ao conjunto de critérios.</p>
               </div>
             </div>
           </div>
 
-          {/* Seção 4: Discovery */}
-          <div className="mb-24">
-            <h2 id="discovery" className="font-serif text-3xl font-bold text-[#241510] mb-4">
-              A recuperação de conta era só o sintoma
-            </h2>
-            <p className="text-[#7D7169] leading-relaxed mb-8">
-              Realizamos a análise de diferentes fontes para entender onde os usuários encontravam dificuldades no fluxo de login como um todo: Login, recuperação de conta, recuperação de senha etc.
+          {/* Prototipação */}
+          <div className="mb-32">
+            <h2 id="prototipacao" className={H2}>Estressando cenários e a lógica</h2>
+            <p className={LEAD}>
+              Usei o Figma Make para validar a lógica, as regras de negócio e os cenários antes de construir as telas definitivas. Isso acelerou o alinhamento entre Produto, Design e Engenharia e reduziu retrabalho antes do desenvolvimento.
             </p>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center not-prose my-16">
-              {/* Left Column 4 Cards */}
-              <div className="lg:col-span-6 grid grid-cols-2 gap-x-4 gap-y-2.5">
-                <div className="h-[200px] bg-white border border-[#E2DCD4] rounded-2xl p-8 flex flex-col justify-center">
-                  <MessageSquare size={24} className="text-[#2E211B] mb-4" />
-                  <span className="text-base font-normal text-[#241510] leading-snug">
-                    Principais motivos de <b>tickets de suporte</b>.
-                  </span>
-                </div>
-                <div className="h-[200px] bg-white border border-[#E2DCD4] rounded-2xl p-8 flex flex-col justify-center">
-                  <PlayCircle size={24} className="text-[#2E211B] mb-4" />
-                  <span className="text-base font-normal text-[#241510] leading-snug">
-                    Análise de sessões gravadas e mapas de <b>comportamento no Hotjar</b>.
-                  </span>
-                </div>
-                <div className="h-[200px] bg-white border border-[#E2DCD4] rounded-2xl p-8 flex flex-col justify-center">
-                  <BarChart2 size={24} className="text-[#2E211B] mb-4" />
-                  <span className="text-base font-normal text-[#241510] leading-snug">
-                    Dados de navegação no <b>Google Analytics</b>.
-                  </span>
-                </div>
-                <div className="h-[200px] bg-white border border-[#E2DCD4] rounded-2xl p-8 flex flex-col justify-center">
-                  <LayoutGrid size={24} className="text-[#2E211B] mb-4" />
-                  <span className="text-base font-normal text-[#241510] leading-snug">
-                    <b>Benchmark</b> de autenticação social e recuperação de conta.
-                  </span>
-                </div>
-              </div>
-
-              {/* Right Column Image */}
-              <div className="lg:col-span-4 flex flex-col justify-center">
-                <img
-                  src={kbaDiscoveryImg}
-                  alt="Discovery - Análise de Login e Telas"
-                  className="w-[180%] max-w-none h-auto translate-x-12 animate-float"
-                />
-              </div>
-            </div>
-
-            <p className="text-[#7D7169] leading-relaxed mb-8">
-              A investigação mostrou que a recuperação de conta era apenas um sintoma de problemas mais amplos na jornada de login.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 not-prose">
-              {/* Left Group */}
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <Users size={18} className="text-[#8C2727]" />
-                  <h4 className="font-serif font-bold text-[#8C2727] text-xl">
-                    Relacionados à autenticação e login
-                  </h4>
-                </div>
-                <div className="space-y-3">
-                  <div className="border-l-2 border-[#8C2727] bg-[#FFF5F5] p-6 rounded-2xl">
-                    <p className="text-xs md:text-sm font-medium text-[#241510]">
-                      Baixa adoção do login social
-                    </p>
-                  </div>
-                  <div className="border-l-2 border-[#8C2727] bg-[#FFF5F5] p-6 rounded-2xl">
-                    <p className="text-xs md:text-sm font-medium text-[#241510]">
-                      Fluxos inconsistentes entre login tradicional e Google
-                    </p>
-                  </div>
-                  <div className="border-l-2 border-[#8C2727] bg-[#FFF5F5] p-6 rounded-2xl">
-                    <p className="text-xs md:text-sm font-medium text-[#241510]">
-                      Criação obrigatória de senha mesmo após login social
-                    </p>
-                  </div>
-                  <div className="border-l-2 border-[#8C2727] bg-[#FFF5F5] p-6 rounded-2xl">
-                    <p className="text-xs md:text-sm font-medium text-[#241510]">
-                      Mensagens pouco claras durante o login
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Group */}
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <UserPlus size={18} className="text-[#C05621]" />
-                  <h4 className="font-serif font-bold text-[#C05621] text-xl">
-                    Relacionados ao cadastro
-                  </h4>
-                </div>
-                <div className="space-y-3">
-                  <div className="border-l-2 border-[#C05621] bg-[#FBF8F5] p-6 rounded-2xl">
-                    <p className="text-xs md:text-sm font-medium text-[#241510]">
-                      Erros de digitação no e-mail na criação da conta
-                    </p>
-                  </div>
-                  <div className="border-l-2 border-[#C05621] bg-[#FBF8F5] p-6 rounded-2xl">
-                    <p className="text-xs md:text-sm font-medium text-[#241510]">
-                      Uso de e-mails corporativos, depois desativados, que impediam recuperações futuras
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <img src={kbaIaImg} alt="Protótipos no Figma Make e telas" className="w-full h-auto" />
           </div>
 
-          {/* Seção 5: Estratégia e Hipóteses de Solução */}
-          <div className="mb-24">
-            <h2 id="estrategia" className="font-serif text-3xl font-bold text-[#241510] mb-4">
-              Dividindo o mapa de oportunidades em suas frentes.
-            </h2>
-
-            {/* Imagem Diagrama/Mapa de Oportunidades */}
-            <img
-              src={kbaEstrategiaImg}
-              alt="Mapa de Oportunidades e Hipóteses"
-              className="w-full h-auto"
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 -mt-24 relative z-10 not-prose">
-              {/* Frente 1 */}
-              <div className="border border-[#E2DCD4] rounded-2xl overflow-hidden bg-white flex flex-col justify-between">
-                <div className="bg-[#D8D2C5] px-6 py-4 border-b border-[#E2DCD4] rounded-2xl">
-                  <span className="text-sm font-bold text-[#241510]">
-                    Frente 1 - Time de Candidatos
-                  </span>
-                </div>
-                <div className="p-8 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-serif font-bold text-2xl text-[#241510] mb-6">
-                      Evolução da jornada de autenticação
-                    </h3>
-                    <ul className="list-disc pl-5 space-y-2 text-sm text-[#7D7169] leading-relaxed">
-                      <li>Incentivar login social</li>
-                      <li>Eliminar senha obrigatória após cadastro via Google</li>
-                      <li>Melhorar mensagens de erro</li>
-                      <li>Detectar erros de digitação em e-mails</li>
-                      <li>Alertar sobre riscos de e-mail corporativo</li>
-                      <li>Evoluir para um modelo passwordless</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Frente 2 */}
-              <div className="border border-[#E2DCD4] rounded-2xl overflow-hidden bg-white flex flex-col justify-between">
-                <div className="bg-[#1F5459] px-6 py-4 rounded-2xl">
-                  <span className="text-sm font-bold text-white">
-                    Frente 2 · Meu time
-                  </span>
-                </div>
-                <div className="p-8 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-serif font-bold text-2xl text-[#241510] mb-6">
-                      Nova recuperação de conta
-                    </h3>
-                    <p className="text-sm text-[#7D7169] leading-relaxed mb-6">
-                      Resolver o problema mais crítico: recuperar acesso mesmo sem o e-mail originalmente cadastrado, equilibrando segurança, experiência e viabilidade técnica.
-                    </p>
-                    <p className="text-sm text-[#4F4440] mb-3">
-                      Avaliamos as seguintes opções de validação de identidade:
-                    </p>
-                    <div className="flex flex-wrap items-center gap-3 mb-6">
-                      <div className="bg-white border border-[#E2DCD4] px-4 py-2 rounded-2xl text-xs md:text-sm font-medium text-[#241510]">
-                        Gov.br
-                      </div>
-                      <div className="bg-white border border-[#E2DCD4] px-4 py-2 rounded-2xl text-xs md:text-sm font-medium text-[#241510]">
-                        Reconhecimento facial
-                      </div>
-                      <div className="bg-[#1F5459] text-white px-4 py-2 rounded-2xl text-xs md:text-sm font-semibold flex items-center gap-1.5">
-                        <Check size={16} className="stroke-[2.5]" />
-                        <span>KBA</span>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-sm text-[#7D7169] leading-relaxed">
-                    O KBA foi escolhido por atender melhor ao conjunto de critérios avaliados.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Seção 6: Prototipação Acelerada com IA */}
-          <div className="mb-24">
-            <h2 id="prototipacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">
-              Estressar cenários e a lógica
-            </h2>
-            <p className="text-[#7D7169] leading-relaxed mb-6">
-              Usei o Figma Make para validar rapidamente a lógica do produto, as regras de negócio e os cenários, antes de investir tempo na construção definitiva das telas. Isso acelerou o alinhamento entre Produto, Design e Engenharia, reduzindo retrabalho antes mesmo do início do desenvolvimento.
-            </p>
-
-            <img
-              src={kbaIaImg}
-              alt="Protótipos Figma Make e Telas"
-              className="w-full h-auto my-8"
-            />
-          </div>
-
-          {/* Seção 7: Handoff */}
-          <div className="mb-24">
-            <h2 id="handoff" className="font-serif text-3xl font-bold text-[#241510] mb-4">
-              Documentação completa
-            </h2>
-            <p className="text-[#7D7169] leading-relaxed mb-6">
-              Com o Cursor integrado ao MCP do Figma e ao Storybook, construí telas próximas da implementação real e simulei estados extremos, entregando um handoff mais completo para engenharia.
-            </p>
-
-            {/* Bloco da Imagem Full Width */}
-            <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#272727] py-16 md:py-20 px-4 md:px-12 my-10 not-prose overflow-hidden flex items-center justify-center rounded-2xl">
-              <div className="max-w-7xl mx-auto w-full">
-                <img
-                  src={kbaHandoffImg}
-                  alt="Documentação Completa & Handoff"
-                  className="w-full h-auto object-contain"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-3 my-6 not-prose">
-              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs md:text-sm font-medium text-[#241510]">
-                Fluxo completo documentado
-              </div>
-              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs md:text-sm font-medium text-[#241510]">
-                Estados de sucesso e erro
-              </div>
-              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs md:text-sm font-medium text-[#241510]">
-                Especificação dos edge cases
-              </div>
-              <div className="bg-white border border-[#E2DCD4] px-5 py-2.5 rounded-full text-xs md:text-sm font-medium text-[#241510]">
-                Mapeamento de eventos para Google Analytics
-              </div>
-            </div>
-          </div>
-
-          {/* Seção 8: Rollout e Resultados */}
-          <div className="mb-24">
-            <h2 id="rollout" className="font-serif text-3xl font-bold text-[#241510] mb-4">
-              Resultados da liberação gradual
-            </h2>
-            <p className="text-[#7D7169] leading-relaxed mb-8">
-              5% da base liberada inicialmente, para acompanhar comportamento em produção antes da expansão. Com uam semana foi possivel oberservar:
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose">
-              <div className="border-l-2 border-[#9E4322] bg-[#F5F9F9] p-8 flex flex-col justify-between rounded-2xl">
-                <Check size={32} className="text-[#9E4322] mb-6 stroke-[2]" />
-                <p className="text-[#241510] font-medium text-base md:text-lg leading-relaxed">
-                  Candidatos recuperando contas com sucesso pelo novo fluxo. 100% self service
-                </p>
-              </div>
-
-              <div className="border-l-2 border-[#9E4322] bg-[#F5F9F9] p-8 flex flex-col justify-between rounded-2xl">
-                <Check size={32} className="text-[#9E4322] mb-6 stroke-[2]" />
-                <p className="text-[#241510] font-medium text-base md:text-lg leading-relaxed">
-                  Ausência de erros relevantes no rollout inicial.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Seção 9: Impacto */}
-          <div className="mb-24">
-            <h2 id="impacto" className="font-serif text-3xl font-bold text-[#241510] mb-4">
-              De ticket manual a funcionalidade de produto
-            </h2>
-
-            <div className="border-l-2 border-[#241510] pl-6 py-2 my-8">
-              <p className="font-sans font-semibold text-lg md:text-xl text-[#2E211B] leading-relaxed">
-                Um processo que dependia inteiramente do suporte virou uma funcionalidade self-service, com uma base escalável para evoluir a estratégia de autenticação do produto.
+          {/* Handoff: título, texto e imagem dentro do bloco escuro */}
+          <div className="not-prose w-screen relative left-1/2 -translate-x-1/2 bg-[#272727] py-20 md:py-24 mb-32 overflow-hidden rounded-2xl">
+            <div className="max-w-[1100px] mx-auto px-6 md:px-12">
+              <h2 id="handoff" className="font-serif text-3xl font-bold text-white mb-4">Documentação completa</h2>
+              <p className="text-[#B9B4AE] leading-relaxed max-w-3xl mb-8">
+                Com o Cursor integrado ao MCP do Figma e ao Storybook, construí telas próximas da implementação real e simulei estados extremos, entregando um handoff mais completo para a engenharia.
               </p>
+              <div className="flex flex-wrap gap-2 mb-12">
+                {['Fluxo completo documentado', 'Estados de sucesso e erro', 'Edge cases especificados', 'Eventos mapeados para o Google Analytics'].map(item => (
+                  <span key={item} className="rounded-full border border-white/20 px-4 py-2 text-[14px] text-white/85">{item}</span>
+                ))}
+              </div>
+              <img src={kbaHandoffImg} alt="Documentação completa e handoff" className="w-full h-auto object-contain" />
             </div>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose my-8">
-              <div className="border-l-2 border-[#E2DCD4] pl-6 py-2">
-                <p className="text-sm text-[#7D7169] leading-relaxed">
-                  Potencial de redução relevante no volume de tickets de recuperação de acesso gerando menos custo operacional.
-                </p>
-              </div>
-              <div className="border-l-2 border-[#E2DCD4] pl-6 py-2">
-                <p className="text-sm text-[#7D7169] leading-relaxed">
-                  Menor custo operacional associado ao atendimento manual
-                </p>
-              </div>
-              <div className="border-l-2 border-[#E2DCD4] pl-6 py-2">
-                <p className="text-sm text-[#7D7169] leading-relaxed">
-                  Fundação estabelecida para a evolução da estratégia de autenticação
-                </p>
-              </div>
+          {/* Rollout */}
+          <div className="mb-32">
+            <h2 id="rollout" className={H2}>Resultados da liberação gradual</h2>
+            <p className={LEAD}>Liberamos para 5% da base para acompanhar o comportamento em produção antes de expandir. Em uma semana, observamos:</p>
+            <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-4">
+              {['Candidatos recuperando a conta pelo novo fluxo, 100% self-service.', 'Nenhum erro relevante no rollout inicial.'].map(item => (
+                <div key={item} className="border border-[#E2DCD4] rounded-2xl p-7">
+                  <Check size={24} className="text-[#2E7D4F]" strokeWidth={2.5} />
+                  <p className="text-[16px] text-[#241510] font-medium leading-relaxed mt-4">{item}</p>
+                </div>
+              ))}
             </div>
+          </div>
+
+          {/* Impacto */}
+          <div className="mb-16">
+            <h2 id="impacto" className={H2}>De ticket manual a funcionalidade de produto</h2>
+            <p className="not-prose border-l-2 border-[#9E4322] pl-6 text-[17px] text-[#4F4440] leading-relaxed mb-10">
+              Um processo que dependia inteiramente do suporte virou uma funcionalidade self-service, com uma base escalável para evoluir a estratégia de autenticação do produto.
+            </p>
+            <ol className="not-prose divide-y divide-[#E2DCD4]">
+              {[
+                'Redução esperada no volume de tickets de recuperação de acesso.',
+                'Menor custo operacional com atendimento manual.',
+                'Fundação para evoluir a estratégia de autenticação.',
+              ].map((item, i) => (
+                <li key={item} className="flex gap-4 py-4">
+                  <span className="text-[15px] font-semibold text-[#9E4322] tabular-nums pt-px">{String(i + 1).padStart(2, '0')}</span>
+                  <p className="text-[15px] text-[#4F4440] leading-relaxed">{item}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </>
       ) : (
