@@ -31,7 +31,9 @@ export default function Project() {
   const project = projects.find(p => p.id === id);
   useDocumentTitle(project ? project.title : 'Projeto');
   const currentIndex = projects.findIndex(p => p.id === id);
-  const nextProject = projects[currentIndex + 1] || projects[0];
+  // Próximo case pula os que ainda não têm página ("Em breve")
+  const published = projects.filter(p => !(p as { comingSoon?: boolean }).comingSoon);
+  const nextProject = published[published.findIndex(p => p.id === id) + 1] || published[0];
 
   const [sections, setSections] = useState<{ id: string; text: string }[]>([]);
   // Scroll assistido entre as seções do case

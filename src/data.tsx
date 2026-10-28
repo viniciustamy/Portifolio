@@ -209,6 +209,27 @@ export const projects = [
     content: <KbaSenhaContent />
   },
   {
+    // Case em produção: aparece na Home com "Em breve" e ainda não tem página
+    id: 'mindi',
+    title: 'Lançando um app do zero na App Store',
+    tag: 'Criando um app de filmes e séries para mim e meus amigos, totalmente com IA',
+    description: 'Como criei o Mindi, um app para gerenciar e descobrir filmes e séries, do zero à App Store, com IA em todas as etapas.',
+    role: 'Product Designer',
+    roles: ['Product Design', 'Desenvolvimento com IA'],
+    tools: ['Claude Code', 'Cursor', 'Figma'],
+    team: ['Projeto pessoal'],
+    year: '2026',
+    platform: 'iOS',
+    readingTime: 'Em breve',
+    comingSoon: true,
+    thumbBg: '#484AAC',
+    bg: 'bg-[#09090B]',
+    heroBg: 'bg-[#09090B]',
+    textColor: 'text-white',
+    tagColor: 'text-white/75',
+    content: null
+  },
+  {
     id: 'analise-metricas',
     title: 'Métricas de Experiência',
     tag: 'UX Research',

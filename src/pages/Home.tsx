@@ -10,6 +10,7 @@ import { DevolutivaThumbMotion } from '../components/DevolutivaThumbMotion';
 import { DashboardThumbMotion } from '../components/DashboardThumbMotion';
 import { AdminThumbMotion } from '../components/AdminThumbMotion';
 import { KbaThumbMotion } from '../components/KbaThumbMotion';
+import { MindiThumbMotion } from '../components/MindiThumbMotion';
 import { SocialLinks } from '../components/SocialLinks';
 
 // Currículo em public/curriculo.pdf; baixa com o nome abaixo
@@ -40,6 +41,7 @@ const caseMotions: Record<string, typeof DevolutivaThumbMotion> = {
   'dashboard-admissao': DashboardThumbMotion,
   'admin-global-docs': AdminThumbMotion,
   'kba-senha': KbaThumbMotion,
+  mindi: MindiThumbMotion,
 };
 
 // Anel branco + sombra suave; no hover só a capa interna (.card-cover) cresce — ver index.css
@@ -55,7 +57,9 @@ function ProjectMeta({ project, tagColor }: { project: ProjectData; tagColor: st
 // (no mobile, título em cima e o motion embaixo, colado na base)
 // (`key` declarado nos cards porque o projeto não tem @types/react instalado)
 function CaseCard({ project }: { project: ProjectData; key?: string }) {
-  const thumbBg = project.thumbnail ? project.thumbBg : undefined;
+  // Cor de fundo da thumb vale para quem tem imagem ou motion próprio
+  const thumbBg = project.thumbnail || caseMotions[project.id] ? project.thumbBg : undefined;
+  const comingSoon = Boolean((project as { comingSoon?: boolean }).comingSoon);
   const lightText = thumbBg ? isDark(thumbBg) : false;
   const textColor = thumbBg ? (lightText ? 'text-white' : 'text-[#241510]') : project.textColor;
   const tagColor = thumbBg ? (lightText ? 'text-white/75' : 'text-[#6F625B]') : project.tagColor;
@@ -67,7 +71,10 @@ function CaseCard({ project }: { project: ProjectData; key?: string }) {
       ref={cardRef}
       data-snap="center"
       to={`/project/${project.id}`}
-      className={`block w-full shrink-0 ${thumbBg ? 'h-[105vw]' : 'h-[60vw]'} md:h-[500px] min-h-[260px] lg:snap-center lg:snap-always ${thumbBg ? '' : project.bg} rounded-2xl relative overflow-hidden group ${cardFrame} ${thumbBg ? 'grid grid-rows-[auto_1fr] md:grid-rows-1 md:grid-cols-[2fr_3fr]' : 'flex flex-col justify-end p-6 lg:p-8'}`}
+      // Case ainda sem página: o card aparece, mas não navega
+      onClick={comingSoon ? (e: any) => e.preventDefault() : undefined}
+      aria-disabled={comingSoon || undefined}
+      className={`block w-full shrink-0 ${comingSoon ? 'cursor-default' : ''} ${thumbBg ? 'h-[105vw]' : 'h-[60vw]'} md:h-[500px] min-h-[260px] lg:snap-center lg:snap-always ${thumbBg ? '' : project.bg} rounded-2xl relative overflow-hidden group ${cardFrame} ${thumbBg ? 'grid grid-rows-[auto_1fr] md:grid-rows-1 md:grid-cols-[2fr_3fr]' : 'flex flex-col justify-end p-6 lg:p-8'}`}
       style={thumbBg ? { backgroundColor: thumbBg } : undefined}
     >
       {thumbBg && (
@@ -87,9 +94,10 @@ function CaseCard({ project }: { project: ProjectData; key?: string }) {
         </div>
       )}
       <div className={`relative z-10 ${thumbBg ? 'row-start-1 md:col-start-1 md:self-end p-6 pb-5 md:pl-10 md:pb-10 xl:pl-12 xl:pb-12 md:pr-4' : ''} ${textColor}`}>
-        {/* Tempo de leitura em cima, título e a descrição curta do case embaixo */}
-        {/* Tempo de leitura discreto (menor e mais leve) para destacar título e descrição */}
-        {project.readingTime && <p className={`text-[13px] font-normal mb-2 opacity-80 ${tagColor}`}>{project.readingTime}</p>}
+        {/* Tempo de leitura em cima (discreto), título e a descrição curta embaixo; case futuro mostra "Em breve" */}
+        {comingSoon ? (
+          <span className="inline-block rounded-full border border-current/30 px-3 py-1 text-[12px] font-semibold mb-3 opacity-90">Em breve</span>
+        ) : project.readingTime && <p className={`text-[13px] font-normal mb-2 opacity-80 ${tagColor}`}>{project.readingTime}</p>}
         <h3 className="font-sans text-[30px] xl:text-[38px] font-semibold tracking-tight leading-[1.08] mb-2.5">
           {project.title}
         </h3>
@@ -146,9 +154,9 @@ function SectionTitle({ title, description }: { title: string; description?: str
 export default function Home() {
   useDocumentTitle('Início');
   const { projects } = useProjects();
-  const cases = projects.slice(0, 4);
-  const works = projects.slice(4, 8);
-  const articles = projects.slice(8);
+  const cases = projects.slice(0, 5);
+  const works = projects.slice(5, 9);
+  const articles = projects.slice(9);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
