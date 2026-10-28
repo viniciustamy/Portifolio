@@ -15,7 +15,8 @@ export const BEZEL = 24;
 export const TABS_H = 44;
 const URL_H = 40;
 const VIEW_W = SCREEN_W - BEZEL * 2; // 1352
-const VIEW_H = Math.round(VIEW_W * 0.625); // 845 (16:10)
+const SCREEN_RATIO = 9 / 16; // área da página em 16:9
+const VIEW_H = Math.round(VIEW_W * SCREEN_RATIO); // 761
 export const APP_W = 1366; // largura em que as telas foram desenhadas
 const APP_SCALE = VIEW_W / APP_W;
 export const APP_H = VIEW_H / APP_SCALE; // altura visível das telas, em px de desenho
@@ -62,7 +63,7 @@ export function useLaptopViewport(threshold = 0.3) {
 }
 
 export function LaptopMockup({
-  viewRef, width, stageRef, screenRef, tabs, activeTab, cursor, label, pageBg = "#fff", ratio = 0.625, children,
+  viewRef, width, stageRef, screenRef, tabs, activeTab, cursor, label, pageBg = "#fff", ratio = SCREEN_RATIO, showTabs = true, children,
 }: {
   viewRef: any;
   width: number;
@@ -73,7 +74,8 @@ export function LaptopMockup({
   cursor: Cursor;
   label: string;
   pageBg?: string; // fundo sob a página (evita filete branco nas bordas ao escalar)
-  ratio?: number; // altura/largura da tela (padrão 16:10)
+  ratio?: number; // altura/largura da área da página (padrão 16:9)
+  showTabs?: boolean; // false: só os botões da janela, sem abas (a troca de tela vem de fora)
   children: any;
 }) {
   const s = width / STAGE_W;
@@ -96,7 +98,7 @@ export function LaptopMockup({
                 <span className="flex gap-2 mr-3 mb-[15px]">
                   {['#FF5F57', '#FEBC2E', '#28C840'].map(c => <span key={c} className="w-3 h-3 rounded-full" style={{ background: c }} />)}
                 </span>
-                {tabs.map((t, i) => (
+                {showTabs && tabs.map((t, i) => (
                   <span
                     key={t.title}
                     className="relative flex items-center justify-between gap-2 px-4 text-[13px] rounded-t-[10px] transition-colors duration-200"

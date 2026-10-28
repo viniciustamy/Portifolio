@@ -4,44 +4,46 @@ import { TriangleAlert } from 'lucide-react';
 import { wait } from './DevolutivaIaMotion';
 
 /*
- * Motion do ciclo avaliativo (seção "A única etapa que acontecia fora do produto"):
- * "Ciclo avaliativo" no centro e as etapas aparecendo em volta, uma a uma, ligadas por setas que se
- * desenham. "Devolutivas" aparece em vermelho (era a etapa fora do produto). Ao voltar para
- * "Preparação", tudo some e o ciclo recomeça. Roda só enquanto está visível na tela.
+ * Motion do ciclo avaliativo (seção "A única etapa que acontecia fora do produto"): as etapas num
+ * circuito retangular, em duas linhas, ligadas por setas retas e cotovelos de 90°. "Etapas do ciclo
+ * avaliativo" fica no centro. As etapas aparecem uma a uma e as setas se desenham; "Devolutivas"
+ * aparece em vermelho (era a etapa fora do produto). Ao voltar para "Preparação", recomeça.
+ * Roda só enquanto está visível na tela.
  */
 
 const W = 900;
-const H = 520;
-const CX = W / 2;
-const CY = H / 2;
-const RX = 330;
-const RY = 185;
-const GAP = 24; // graus livres em volta de cada etapa para a seta não encostar na caixa
+const H = 330;
+const BOX_W = 200;
+const BOX_H = 56;
+const TOP = 70;
+const BOTTOM = 260;
+const COLS = [150, 450, 750];
+const GAP = 6; // espaço entre a ponta da seta e a caixa
+const SIDE = 24; // até onde os cotovelos saem pelas laterais
 
+// Sentido horário: linha de cima da esquerda para a direita, linha de baixo da direita para a esquerda
 const STEPS = [
-  { label: 'Preparação', angle: 180 },
-  { label: 'Definição de avaliadores', angle: 240 },
-  { label: 'Avaliações', angle: 300 },
-  { label: 'Comitês', angle: 0 },
-  { label: 'Devolutivas', angle: 60, alert: true },
-  { label: 'PDI', angle: 120 },
+  { label: 'Preparação', x: COLS[0], y: TOP },
+  { label: 'Definição de avaliadores', x: COLS[1], y: TOP },
+  { label: 'Avaliações', x: COLS[2], y: TOP },
+  { label: 'Comitês', x: COLS[2], y: BOTTOM },
+  { label: 'Devolutivas', x: COLS[1], y: BOTTOM, alert: true },
+  { label: 'PDI', x: COLS[0], y: BOTTOM },
+];
+
+const L = BOX_W / 2;
+// Seta que sai de cada etapa até a próxima (as dos cantos fazem dois cotovelos de 90°)
+const ARROWS = [
+  `M ${COLS[0] + L + GAP} ${TOP} H ${COLS[1] - L - GAP}`,
+  `M ${COLS[1] + L + GAP} ${TOP} H ${COLS[2] - L - GAP}`,
+  `M ${COLS[2] + L + GAP} ${TOP} H ${W - SIDE} V ${BOTTOM} H ${COLS[2] + L + GAP}`,
+  `M ${COLS[2] - L - GAP} ${BOTTOM} H ${COLS[1] + L + GAP}`,
+  `M ${COLS[1] - L - GAP} ${BOTTOM} H ${COLS[0] + L + GAP}`,
+  `M ${COLS[0] - L - GAP} ${BOTTOM} H ${SIDE} V ${TOP} H ${COLS[0] - L - GAP}`,
 ];
 
 const NEUTRAL = '#9B908A';
 const RED = '#B42318';
-
-const point = (deg: number) => {
-  const r = (deg * Math.PI) / 180;
-  return { x: CX + RX * Math.cos(r), y: CY + RY * Math.sin(r) };
-};
-
-// Arco da elipse de uma etapa até a próxima (sentido horário)
-function arcPath(from: number, to: number) {
-  const end = to < from ? to + 360 : to;
-  const a = point(from + GAP);
-  const b = point(end - GAP);
-  return `M ${a.x} ${a.y} A ${RX} ${RY} 0 0 1 ${b.x} ${b.y}`;
-}
 
 export function CicloAvaliativoMotion() {
   const viewRef = useRef<HTMLDivElement>(null);
@@ -73,7 +75,7 @@ export function CicloAvaliativoMotion() {
         // etapa, seta, etapa, seta... até a seta que volta para Preparação
         for (let i = 1; i <= STEPS.length * 2; i++) {
           setStep(i);
-          await wait(i % 2 === 1 ? 650 : 550, token);
+          await wait(i % 2 === 1 ? 600 : 500, token);
         }
         await wait(2200, token);
       }
@@ -86,7 +88,7 @@ export function CicloAvaliativoMotion() {
   const grow = [0.16, 1, 0.3, 1] as const;
 
   return (
-    <div ref={viewRef} className="relative w-full select-none" style={{ aspectRatio: `${W} / ${H}` }} role="img" aria-label="Ciclo avaliativo: preparação, definição de avaliadores, avaliações, comitês, devolutivas e PDI. A devolutiva era a única etapa fora do produto.">
+    <div ref={viewRef} className="relative w-full select-none" style={{ aspectRatio: `${W} / ${H}` }} role="img" aria-label="Etapas do ciclo avaliativo: preparação, definição de avaliadores, avaliações, comitês, devolutivas e PDI. A devolutiva era a única etapa fora do produto.">
       {width > 0 && (
         <motion.div
           className="absolute left-0 top-0 origin-top-left font-sans"
@@ -97,55 +99,49 @@ export function CicloAvaliativoMotion() {
           <svg width={W} height={H} className="absolute inset-0 overflow-visible">
             <defs>
               {[['neutral', NEUTRAL], ['red', RED]].map(([id, c]) => (
-                <marker key={id} id={`ciclo-arrow-${id}`} viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <marker key={id} id={`ciclo-arrow-${id}`} viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse">
                   <path d="M1 1 L8 5 L1 9" fill="none" stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 </marker>
               ))}
             </defs>
-            {STEPS.map((st, i) => {
+            {ARROWS.map((d, i) => {
               const next = STEPS[(i + 1) % STEPS.length];
               const visible = step >= i * 2 + 2;
-              const red = st.alert || next.alert;
+              const red = STEPS[i].alert || next.alert;
               return (
                 <motion.path
-                  key={st.label}
-                  d={arcPath(st.angle, next.angle)}
+                  key={d}
+                  d={d}
                   fill="none"
                   stroke={red ? RED : NEUTRAL}
-                  strokeWidth={2.5}
-                  strokeLinecap="round"
+                  strokeWidth={1.5}
+                  strokeLinejoin="miter"
                   markerEnd={visible ? `url(#ciclo-arrow-${red ? 'red' : 'neutral'})` : undefined}
                   initial={false}
                   animate={{ pathLength: visible ? 1 : 0, opacity: visible ? 1 : 0 }}
-                  transition={{ pathLength: { duration: 0.5, ease: 'easeInOut' }, opacity: { duration: 0.15 } }}
+                  transition={{ pathLength: { duration: 0.45, ease: 'easeInOut' }, opacity: { duration: 0.15 } }}
                 />
               );
             })}
           </svg>
 
           {/* Centro */}
-          <motion.p
-            className="absolute text-center font-sans font-medium text-[20px] leading-tight text-[#6F625B]"
-            style={{ left: CX - 150, top: CY - 14, width: 300 }}
-            initial={false}
-            animate={{ opacity: step >= 0 ? 1 : 0, scale: 1 }}
-          >
-            Ciclo avaliativo
-          </motion.p>
+          <p className="absolute text-center font-sans font-medium text-[19px] leading-tight text-[#6F625B]" style={{ left: W / 2 - 200, top: (TOP + BOTTOM) / 2 - 12, width: 400 }}>
+            Etapas do ciclo avaliativo
+          </p>
 
           {/* Etapas */}
           {STEPS.map((st, i) => {
-            const p = point(st.angle);
             const visible = step >= i * 2 + 1;
             return (
               <motion.div
                 key={st.label}
-                className="absolute flex items-center justify-center gap-2 rounded-lg border-2 bg-white text-center text-[19px] font-medium px-5"
+                className="absolute flex items-center justify-center gap-2 rounded-md border-2 bg-white text-center text-[17px] font-medium px-4"
                 style={{
-                  left: p.x - 105,
-                  top: p.y - 34,
-                  width: 210,
-                  height: 68,
+                  left: st.x - L,
+                  top: st.y - BOX_H / 2,
+                  width: BOX_W,
+                  height: BOX_H,
                   borderColor: st.alert ? RED : '#C9C0B6',
                   color: st.alert ? RED : '#241510',
                   fontWeight: st.alert ? 700 : 500,
@@ -153,9 +149,9 @@ export function CicloAvaliativoMotion() {
                 }}
                 initial={false}
                 animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.85, y: visible ? 0 : 8 }}
-                transition={{ duration: 0.45, ease: grow }}
+                transition={{ duration: 0.4, ease: grow }}
               >
-                {st.alert && <TriangleAlert size={20} strokeWidth={2.2} className="shrink-0" />}
+                {st.alert && <TriangleAlert size={18} strokeWidth={2.2} className="shrink-0" />}
                 <span className="leading-tight">{st.label}</span>
               </motion.div>
             );

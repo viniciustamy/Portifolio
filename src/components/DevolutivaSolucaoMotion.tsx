@@ -6,6 +6,7 @@ import {
   Trash2, TrendingUp, User, UserCheck, Users,
 } from 'lucide-react';
 import { C, FIELDS, FieldKey, Stage as FormStage, TEXT, emptyFields, typeText, wait } from './DevolutivaIaMotion';
+import { Callout } from './Callout';
 
 /*
  * Motion da "Solução final" do case da Devolutiva: apresenta as três jornadas da entrega.
@@ -83,38 +84,6 @@ function BackTitle({ children }: { children: string }) {
   );
 }
 
-// Destaque: anel em volta de um bloco + balão com a mensagem
-function Callout({ show, text, place = 'bottom' }: { show: boolean; text: string; place?: 'bottom' | 'top' }) {
-  return (
-    <AnimatePresence>
-      {show && (
-        <>
-          <motion.span
-            key="ring"
-            className="absolute pointer-events-none rounded-2xl z-20"
-            style={{ inset: -10, border: '3px solid #F2A93B', boxShadow: '0 0 0 6px rgb(242 169 59 / .18)' }}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: grow }}
-          />
-          <motion.span
-            key="bubble"
-            className="absolute z-30 left-1/2 whitespace-nowrap rounded-full px-6 py-3 text-[20px] font-semibold text-white"
-            style={{ background: '#141B2D', boxShadow: '0 14px 30px rgb(0 0 0 / .25)', [place === 'bottom' ? 'top' : 'bottom']: 'calc(100% + 22px)' }}
-            initial={{ opacity: 0, y: place === 'bottom' ? -8 : 8, x: '-50%' }}
-            animate={{ opacity: 1, y: 0, x: '-50%' }}
-            exit={{ opacity: 0, x: '-50%' }}
-            transition={{ duration: 0.4, delay: 0.15, ease: grow }}
-          >
-            {text}
-          </motion.span>
-        </>
-      )}
-    </AnimatePresence>
-  );
-}
-
 // Barra empilhada de status (pendentes / aguardando envio / enviados)
 function StatusBar({ parts, play, delay = 0, width = 296, height = 7 }: { parts: [number, number, number]; play: boolean; delay?: number; width?: number; height?: number }) {
   const total = parts[0] + parts[1] + parts[2];
@@ -169,13 +138,13 @@ export function RhScreen({ play, highlight, scroll, scrollDuration = 1.1 }: { pl
     <AppFrame>
       <motion.div data-scroll-content className="px-8 pt-8 pb-10" initial={false} animate={{ y: -scroll }} transition={{ duration: scrollDuration, ease }}>
         <div className="flex items-center justify-between">
-          <BackTitle>Plano de devolutivas 2024.1</BackTitle>
+          <BackTitle>Plano de devolutivas 2025.1</BackTitle>
           <span className="flex items-center gap-2 rounded-full px-6 py-3 text-white text-[16px] font-semibold" style={{ background: C.teal }}><Pencil size={16} /> Editar</span>
         </div>
         <div className="bg-white rounded-[20px] mt-7 px-6 pt-6 pb-4">
           <p className="text-[16px] font-semibold">Informações</p>
           <div className="grid grid-cols-4 mt-5 text-[13px]">
-            {[['Ciclo referente', '2024.1', false], ['Período', '23/02/2024 - 03/04/2024', false], ['Avaliações adicionadas', '6 avaliações', true], ['Público', 'Líderes (6); Área (Design) +2', true]].map(([k, v, link]) => (
+            {[['Ciclo referente', '2025.1', false], ['Período', '24/02/2025 - 04/04/2025', false], ['Avaliações adicionadas', '6 avaliações', true], ['Público', 'Líderes (6); Área (Design) +2', true]].map(([k, v, link]) => (
               <div key={k as string}><p style={{ color: C.sub }}>{k}</p><p className="text-[14.5px] font-semibold mt-2" style={{ color: link ? C.blue : C.ink, fontWeight: link ? 400 : 600 }}>{v}</p></div>
             ))}
           </div>
@@ -200,7 +169,7 @@ export function RhScreen({ play, highlight, scroll, scrollDuration = 1.1 }: { pl
                 </p>
               </motion.div>
             ))}
-            <Callout show={highlight === 'numbers'} text="O RH agora tem controle da operação" />
+            <Callout show={highlight === 'numbers'} text="O RH agora tem controle da operação" place="top" />
           </div>
 
           <div className="flex items-center gap-4 mt-8 text-[15px]">
@@ -261,12 +230,12 @@ function GestorScreen({ play, pressed, responderRef }: { play: boolean; pressed:
   return (
     <AppFrame>
       <div className="px-8 pt-8">
-        <BackTitle>Devolutiva Engenharia 2024.1</BackTitle>
+        <BackTitle>Devolutiva Engenharia 2025.1</BackTitle>
         <p className="text-[16px] mt-4" style={{ color: C.sub }}>Veja o relatório individual do seu liderado e faça uma conclusão sobre os resultados.</p>
         <div className="flex gap-6 mt-9 items-start">
           <div className="bg-white rounded-[20px] px-6 py-6 shrink-0" style={{ width: 285 }}>
             <p className="text-[16px] font-semibold">Informações</p>
-            {[['Nome da devolutiva', 'Devolutiva Engenharia 2024.1'], ['Período', '23/02/2024 - 03/04/2024'], ['Ciclo de referência', '4 TRI 2023']].map(([k, v]) => (
+            {[['Nome da devolutiva', 'Devolutiva Engenharia 2025.1'], ['Período', '24/02/2025 - 04/04/2025'], ['Ciclo de referência', '2025.1']].map(([k, v]) => (
               <div key={k} className="mt-5"><p className="text-[12.5px]" style={{ color: C.sub }}>{k}</p><p className="text-[14px] font-semibold mt-1.5">{v}</p></div>
             ))}
             <div className="mt-5"><p className="text-[12.5px]" style={{ color: C.sub }}>Avaliações referentes</p><p className="text-[14px] mt-1.5" style={{ color: C.blue }}>6 avaliações</p></div>
@@ -311,13 +280,20 @@ function GestorScreen({ play, pressed, responderRef }: { play: boolean; pressed:
   );
 }
 
-function ColabListScreen({ pressed, rowRef }: { pressed: boolean; rowRef: any }) {
+const HISTORY = [
+  { name: 'Devolutiva Geral 2025.1', cycle: '2025.1', period: '24/02/2025 - 04/04/2025' },
+  { name: 'Devolutiva Geral 2024.2', cycle: '2024.2', period: '19/08/2024 - 27/09/2024' },
+  { name: 'Devolutiva Geral 2024.1', cycle: '2024.1', period: '26/02/2024 - 05/04/2024' },
+];
+
+function ColabListScreen({ pressed, rowRef, highlight = false }: { pressed: boolean; rowRef: any; highlight?: boolean }) {
   return (
     <AppFrame>
       <div className="px-8 pt-10">
         <p className="text-[30px] font-medium">Minhas devolutivas</p>
-        <div className="flex flex-col gap-4 mt-10">
-          {['Devolutiva Geral 2024.1', 'Devolutiva Engenharia 2023.2'].map((n, i) => (
+        <div className="relative flex flex-col gap-4 mt-10">
+          <Callout show={highlight} text="Histórico de todas as devolutivas, sempre à mão" place="bottom" />
+          {HISTORY.map(({ name: n, cycle, period }, i) => (
             <motion.div
               key={n}
               ref={i === 0 ? rowRef : undefined}
@@ -328,8 +304,8 @@ function ColabListScreen({ pressed, rowRef }: { pressed: boolean; rowRef: any })
             >
               <div><p className="text-[12.5px]" style={{ color: C.sub }}>Nome</p><p className="text-[16px] font-semibold mt-2">{n}</p></div>
               <div><p className="text-[12.5px]" style={{ color: C.sub }}>Líder</p><p className="flex items-center gap-2.5 mt-1.5"><Avatar name="Beatriz Rodrigues" size={32} /><span><span className="block text-[14px] font-semibold">Beatriz Rodrigues</span><span className="block text-[12px]" style={{ color: C.sub }}>Design de Produto I</span></span></p></div>
-              <div><p className="text-[12.5px]" style={{ color: C.sub }}>Ciclo de referência</p><p className="text-[14px] font-semibold mt-2">{i === 0 ? '4 TRI 2023' : '2 TRI 2023'}</p></div>
-              <div><p className="text-[12.5px]" style={{ color: C.sub }}>Período</p><p className="text-[14px] font-semibold mt-2">23/02/2024 - 03/04/2024</p></div>
+              <div><p className="text-[12.5px]" style={{ color: C.sub }}>Ciclo de referência</p><p className="text-[14px] font-semibold mt-2">{cycle}</p></div>
+              <div><p className="text-[12.5px]" style={{ color: C.sub }}>Período</p><p className="text-[14px] font-semibold mt-2">{period}</p></div>
               <ChevronRight size={20} />
             </motion.div>
           ))}
@@ -399,20 +375,23 @@ function MiniTable({ head, rows }: { head: string[]; rows: string[][] }) {
 }
 
 // Relatório do colaborador: escala qualitativa, escala numérica, conclusão do líder e anotações
-export function ReportScreen({ play, scroll, contentRef, scrollDuration = 2.2 }: { play: boolean; scroll: number; contentRef?: any; scrollDuration?: number }) {
+export function ReportScreen({ play, scroll, contentRef, scrollDuration = 2.2, highlight = false }: { play: boolean; scroll: number; contentRef?: any; scrollDuration?: number; highlight?: boolean }) {
   const directions = ['Líder', 'Pares', 'Outros', 'Auto'];
   return (
     <AppFrame>
       <motion.div ref={contentRef} data-scroll-content className="mx-auto pt-8 pb-10" style={{ width: 880 }} initial={false} animate={{ y: -scroll }} transition={{ duration: scrollDuration, ease }}>
         <div className="flex items-center justify-between">
-          <BackTitle>Devolutiva Geral 2024.1</BackTitle>
-          <span className="flex items-center gap-2 rounded-full px-4 py-2 text-white text-[14px] font-semibold" style={{ background: C.teal }}><Download size={15} /> Baixar PDF</span>
+          <BackTitle>Devolutiva Geral 2025.1</BackTitle>
+          <span className="relative flex items-center gap-2 rounded-full px-4 py-2 text-white text-[14px] font-semibold" style={{ background: C.teal }}>
+            <Download size={15} /> Baixar PDF
+            <Callout show={highlight} text="Agora dá para baixar cada devolutiva" place="bottom" align="right" inset={-8} />
+          </span>
         </div>
 
         <motion.div className="bg-white rounded-[20px] mt-7 px-8 py-7" initial={play ? { opacity: 0, y: 16 } : false} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: grow }}>
           <div className="flex justify-between">
             <span className="flex items-center gap-4"><Avatar name="Marina Costa" size={52} /><span><span className="block text-[18px] font-medium">Marina Costa</span><span className="block text-[13px] mt-0.5" style={{ color: C.sub }}>Analista</span></span></span>
-            <span className="text-right"><span className="block text-[12px]" style={{ color: C.sub }}>Ciclo de referência</span><b className="block text-[15px] mt-1">4 TRI 2023</b></span>
+            <span className="text-right"><span className="block text-[12px]" style={{ color: C.sub }}>Ciclo de referência</span><b className="block text-[15px] mt-1">2025.1</b></span>
           </div>
 
           <ReportSection title="Avaliações com escala qualitativa">
@@ -446,7 +425,7 @@ export function ReportScreen({ play, scroll, contentRef, scrollDuration = 2.2 }:
             <p className="text-[13px] font-semibold mt-6">Médias</p>
             <MiniTable
               head={['Avaliações', 'Líder', 'Pares', 'Outros', 'Auto', 'Comentários']}
-              rows={['Empatia', 'Juntos somos mais forte', 'Ser referência'].map(n => [n, 'Referência', 'Mandando bem', 'Precisa melhorar', 'Não sei avaliar'])}
+              rows={['Comunicação clara', 'Colaboração', 'Foco no cliente'].map(n => [n, 'Referência', 'Mandando bem', 'Precisa melhorar', 'Não sei avaliar'])}
             />
           </ReportSection>
 
@@ -505,7 +484,7 @@ export function ReportScreen({ play, scroll, contentRef, scrollDuration = 2.2 }:
           <div className="mt-4 rounded-xl border px-4 py-4" style={{ borderColor: C.line }}>
             <span className="flex items-center gap-3"><Avatar name="João Silva" size={36} /><span><span className="block text-[13.5px] font-medium">João Silva</span><span className="block text-[12px]" style={{ color: C.sub }}>Head de Produto</span></span></span>
             <p className="text-[12.5px] leading-[1.55] mt-3" style={{ color: C.sub }}>Adicione conteúdos para ajudar a pessoa colaboradora no seu desenvolvimento. Esses links vão fazer parte do seu PDI.</p>
-            <p className="text-[11.5px] mt-3" style={{ color: C.muted }}>23 de janeiro de 2024</p>
+            <p className="text-[11.5px] mt-3" style={{ color: C.muted }}>08 de abril de 2025</p>
           </div>
           <p className="text-right text-[11px] mt-4" style={{ color: C.sub }}>0/1000</p>
           <div className="mt-1 rounded-xl px-4 py-3 text-[13px]" style={{ height: 88, background: '#ECEDEF', color: C.muted }}>Escreva sua anotação...</div>
@@ -549,7 +528,7 @@ export function DevolutivaSolucaoMotion() {
   const [inView, setInView] = useState(false);
   const [scene, setScene] = useState<Scene>('title-rh');
   const [cycle, setCycle] = useState(0);
-  const [highlight, setHighlight] = useState<'numbers' | 'leaders' | null>(null);
+  const [highlight, setHighlight] = useState<'numbers' | 'leaders' | 'ai' | 'report' | 'history' | 'download' | null>(null);
   const [scroll, setScroll] = useState(0);
   const [pressed, setPressed] = useState(false);
   const [cursor, setCursor] = useState({ x: 900, y: 600, visible: false, down: false });
@@ -618,6 +597,13 @@ export function DevolutivaSolucaoMotion() {
         setFields(emptyFields);
         go('form');
         await wait(900, token);
+        // Destaques: a IA e o histórico do colaborador ao lado
+        setHighlight('ai');
+        await wait(3400, token);
+        setHighlight('report');
+        await wait(3400, token);
+        setHighlight(null);
+        await wait(400, token);
         for (const f of FIELDS) {
           setScroll(Math.min(STAGE_FORM_MAX_SCROLL, Math.max(0, f.top - 330)));
           await wait(900, token);
@@ -634,10 +620,18 @@ export function DevolutivaSolucaoMotion() {
         go('colab');
         setCursor({ x: 1100, y: 640, visible: false, down: false });
         await wait(1200, token);
+        setHighlight('history');
+        await wait(3400, token);
+        setHighlight(null);
+        await wait(300, token);
         await clickOn(rowRef.current);
         setCursor(c => ({ ...c, visible: false }));
         go('report');
-        await wait(3000, token);
+        await wait(2200, token);
+        setHighlight('download');
+        await wait(3400, token);
+        setHighlight(null);
+        await wait(400, token);
         // Rola o relatório inteiro em etapas, com pausa para ler cada parte
         const content = reportRef.current;
         const max = content ? Math.max(0, content.offsetHeight - (H - 72)) : 0;
@@ -675,17 +669,17 @@ export function DevolutivaSolucaoMotion() {
               transition={{ duration: 0.4 }}
             >
               {title && <TitleScreen kicker={title.kicker} text={title.text} />}
-              {scene === 'rh' && <RhScreen play highlight={highlight} scroll={scroll} />}
+              {scene === 'rh' && <RhScreen play highlight={highlight === 'numbers' || highlight === 'leaders' ? highlight : null} scroll={scroll} />}
               {scene === 'gestor' && <GestorScreen play pressed={pressed} responderRef={responderRef} />}
               {scene === 'form' && (
                 <div className="absolute inset-0 overflow-hidden">
                   <motion.div className="absolute left-0 top-0" style={{ width: W, height: 1550 }} initial={false} animate={{ y: -scroll }} transition={{ duration: 1, ease }}>
-                    <FormStage fields={fields} activeField={activeField} pressed={null} showLogo={false} />
+                    <FormStage fields={fields} activeField={activeField} pressed={null} showLogo={false} highlight={highlight === 'ai' || highlight === 'report' ? highlight : null} />
                   </motion.div>
                 </div>
               )}
-              {scene === 'colab' && <ColabListScreen pressed={pressed} rowRef={rowRef} />}
-              {scene === 'report' && <ReportScreen play scroll={scroll} contentRef={reportRef} />}
+              {scene === 'colab' && <ColabListScreen pressed={pressed} rowRef={rowRef} highlight={highlight === 'history'} />}
+              {scene === 'report' && <ReportScreen play scroll={scroll} contentRef={reportRef} highlight={highlight === 'download'} />}
             </motion.div>
           </AnimatePresence>
 

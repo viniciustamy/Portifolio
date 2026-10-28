@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import { CountUpText } from '../components/CountUpText';
 import {
   Sparkles,
   BookOpen,
@@ -13,7 +14,8 @@ import {
   Link2,
   RefreshCw,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Bot
 } from 'lucide-react';
 import { DevolutivaIaMotion } from '../components/DevolutivaIaMotion';
 import { DevolutivaSolucaoMotion } from '../components/DevolutivaSolucaoMotion';
@@ -88,6 +90,27 @@ export const DevolutivaContent = () => {
 
       {viewMode === 'simplificado' ? (
         <>
+
+          {/* Impacto: escala e eficiência logo na abertura do case */}
+          <div className="mb-32">
+            <h2 id="impacto" className="font-serif text-3xl font-bold text-[#241510] mb-4">Impacto no primeiro ano</h2>
+            <p className="text-[#7D7169] leading-relaxed mb-8">
+              Lançada como POC interna na Gupy e liberada aos poucos até chegar a 100% da base em um ano.
+            </p>
+            <div className="not-prose grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { value: '+1.000', label: 'empresas com o módulo de Performance' },
+                { value: '~50%', label: 'da base usando a devolutiva em um ano' },
+                { value: '~200 mil', label: 'devolutivas entregues pela plataforma (estimado)' },
+                { value: '~2/3', label: 'dos gestores usaram a conclusão gerada pela Gupy IA' },
+              ].map(stat => (
+                <div key={stat.label} className="border border-[#E2DCD4] rounded-2xl p-6">
+                  <p className="font-serif text-[34px] font-bold text-[#241510] leading-none tracking-tight"><CountUpText text={stat.value} /></p>
+                  <p className="text-[14px] text-[#6F625B] leading-snug mt-3">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* O Desafio */}
           <div className="mb-32">
@@ -289,40 +312,88 @@ export const DevolutivaContent = () => {
             </div>
           </div>
 
-          {/* Resultados — mais respiro em cima e embaixo para separar dos blocos vizinhos */}
-          <div className="mb-32 py-16">
-            <h2 id="resultados" className="font-serif text-3xl font-bold text-[#241510] mb-4">Da POC interna à adoção oficial</h2>
+          {/* Resultados — métricas HEART depois de um ano de lançamento */}
+          <div className="mb-32">
+            <h2 id="resultados" className="font-serif text-3xl font-bold text-[#241510] mb-4">Resultados depois de um ano</h2>
             <p className="text-[#7D7169] leading-relaxed mb-8">
-              A funcionalidade foi lançada como prova de conceito para uso interno antes de uma disponibilização mais ampla.
+              Acompanhamos a funcionalidade pelo framework HEART durante o primeiro ano, da POC interna até 100% da base.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose">
-              <div className="bg-[#2E211B] p-8 text-left flex flex-col justify-start min-h-[200px] hover:bg-[#2E211B]/95 transition-all duration-300 rounded-2xl">
-                <span className="text-6xl font-serif font-bold text-[#E8DCC4] mb-3 leading-none">95%</span>
-                <p className="text-sm text-white/90 leading-relaxed font-sans">
-                  de adoção entre os gestores. E 100% do RH usando.
-                </p>
+            <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { dim: 'Adoção', value: '~80%', label: 'dos gestores convidados fizeram a devolutiva dentro da plataforma' },
+                { dim: 'Engajamento', value: '95%', label: 'de quem recebeu a devolutiva abriu o relatório; metade também baixou' },
+                { dim: 'Sucesso na tarefa', value: '~70%', label: 'das devolutivas iniciadas foram enviadas no prazo do ciclo' },
+                { dim: 'Esforço (CES)', value: '5 · 4', label: 'mediana de colaborador e gestor, de 1 a 5 (5 = muito fácil)' },
+                { dim: 'Suporte', value: 'Zero', label: 'chamados pedindo relatório para o colaborador ou controle da etapa para o RH' },
+                { dim: 'Operação do RH', value: 'Na hora', label: 'o RH sabe quem ainda não fez a devolutiva; antes levava até uma semana' },
+              ].map(m => (
+                <div key={m.dim} className="border border-[#E2DCD4] rounded-2xl p-6">
+                  <span className="text-[13px] text-[#9E4322]">{m.dim}</span>
+                  <p className="font-serif text-[30px] font-bold text-[#241510] leading-tight tracking-tight mt-1"><CountUpText text={m.value} /></p>
+                  <p className="text-[14px] text-[#6F625B] leading-snug mt-2">{m.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* O que os números da IA ensinaram */}
+            <div className="not-prose mt-16">
+              <h3 className="font-serif text-xl font-bold text-[#241510] mb-2">A IA como apoio, não como autora</h3>
+              <p className="text-[15px] text-[#6F625B] leading-relaxed mb-6 max-w-3xl">
+                Cerca de 2/3 dos gestores abriram a conclusão gerada pela IA. Desses, só ~10% enviaram o texto sem editar; a grande maioria adaptou ou reescreveu, que era o que queríamos: a devolutiva continua sendo do gestor. Os relatos de texto formal demais orientaram os ajustes de tom, e a adesão cresceu a cada versão.
+              </p>
+              <div className="flex h-3 rounded-full overflow-hidden mb-3">
+                <span className="bg-[#9E4322]" style={{ width: '10%' }} />
+                <span className="bg-[#E7D3C8]" style={{ width: '90%' }} />
               </div>
-              <div className="bg-[#2E211B] p-8 text-left flex flex-col justify-start min-h-[200px] hover:bg-[#2E211B]/95 transition-all duration-300 rounded-2xl">
-                <span className="text-4xl font-serif font-bold text-[#E8DCC4] mb-3 leading-tight">Dias para horas</span>
-                <p className="text-sm text-white/90 leading-relaxed font-sans">
-                  Gestores relataram que demoravam dias para fazer a devolutiva agora fazem em horas.
-                </p>
-              </div>
-              <div className="bg-[#2E211B] p-8 text-left flex flex-col justify-start min-h-[200px] hover:bg-[#2E211B]/95 transition-all duration-300 rounded-2xl">
-                <span className="text-4xl font-serif font-bold text-[#E8DCC4] mb-3 leading-tight">Nota 4,5/5</span>
-                <p className="text-sm text-white/90 leading-relaxed font-sans">
-                  em satisfação pelos RH entre os 6 RHs entrevistados. “Tenho visibilidade”
-                </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-1 text-[13px] text-[#6F625B]">
+                <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-[#9E4322]" /> ~10% enviaram sem editar</span>
+                <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-[#E7D3C8]" /> ~90% adaptaram ou reescreveram</span>
               </div>
             </div>
+
+            {/* Vozes de quem usa */}
+            <h3 className="not-prose font-serif text-xl font-bold text-[#241510] mt-16 mb-2">O que os usuários disseram</h3>
+            <p className="not-prose text-[15px] text-[#6F625B] leading-relaxed mb-5 max-w-3xl">
+              Nas entrevistas depois do lançamento, gestores relataram terminar em 3 a 4 dias as devolutivas que antes levavam de uma a quatro semanas.
+            </p>
+            <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { quote: 'Agora eu consigo saber quem cobrar. Eu não tinha essa informação antes, posso ir direto na pessoa.', who: 'RH de cliente' },
+                { quote: 'Tinha um gestor que levava duas semanas para fazer as devolutivas. Hoje ele termina em poucos dias.', who: 'RH de cliente' },
+                { quote: 'É muito bom ter um material padronizado, que eu não tinha antes.', who: 'Colaborador' },
+              ].map(q => (
+                <figure key={q.quote} className="bg-[#F6EAE3] rounded-2xl p-7">
+                  <blockquote className="font-serif text-[19px] font-semibold text-[#241510] leading-snug">“{q.quote}”</blockquote>
+                  <figcaption className="text-[13px] text-[#6F625B] mt-3">{q.who}</figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <p className="not-prose flex items-start gap-4 text-[15px] text-[#4F4440] leading-relaxed mt-10 max-w-3xl">
+              <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#F6EAE3] text-[#9E4322] shrink-0"><Bot size={20} /></span>
+              <span>Foi uma das primeiras funcionalidades com agente de IA dentro do produto e abriu caminho para os outros agentes que vieram depois no ecossistema da Gupy. Hoje é parte central do ciclo de Performance.</span>
+            </p>
+
+            {/* Como cheguei nesses números */}
+            <details className="not-prose mt-8 border-t border-[#E2DCD4] pt-5 group">
+              <summary className="cursor-pointer text-[14px] font-semibold text-[#241510] list-none flex items-center gap-2">
+                Como cheguei nesses números <span className="text-[#9E4322] transition-transform group-open:rotate-90">›</span>
+              </summary>
+              <ul className="mt-4 space-y-2.5 text-[14px] text-[#6F625B] leading-relaxed max-w-3xl">
+                <li><b className="text-[#4F4440]">Uso e adoção:</b> eventos em todos os botões do fluxo, analisados com apoio de IA sobre a base de um ano depois do lançamento. Os percentuais são aproximados; adoção conta sobre os gestores convidados, engajamento sobre quem recebeu a devolutiva e sucesso na tarefa sobre as devolutivas iniciadas.</li>
+                <li><b className="text-[#4F4440]">Devolutivas entregues:</b> estimativa de ~500 empresas × ~500 colaboradores em média × ~80% dos gestores fazendo a devolutiva pela plataforma, considerando um ciclo por ano.</li>
+                <li><b className="text-[#4F4440]">Esforço (CES):</b> pesquisa dentro do fluxo no 1º semestre de 2025, com 26 respostas de colaboradores e 58 de gestores. O RH teve só 9 respostas, pouco para conclusão, por isso ficou de fora. As respostas eram poucas porque a funcionalidade ainda estava sendo liberada aos poucos e a pesquisa aparecia para uma amostra. Usei a mediana porque ela não se distorce com poucas notas extremas; escolhemos CES e não CSAT porque é uma etapa obrigatória, em que o esforço diz mais que o gosto.</li>
+                <li><b className="text-[#4F4440]">Tempo do gestor e do RH:</b> relatos de entrevistas internas e com clientes depois do lançamento, e comentários do CES. Não havia uma medição de tempo anterior.</li>
+              </ul>
+            </details>
           </div>
 
           {/* Minha Atuação */}
           <div className="mb-32">
             <h2 id="minha-atuacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Ponta a ponta, do Discovery à priorização pós-lançamento</h2>
             <p className="text-[#7D7169] leading-relaxed mb-6">
-              Atuei como Product Designer do time de Performance e Desenvolvimento, conduzindo o projeto do Discovery à priorização depois do lançamento.
+              Atuei como Senior Product Designer do time de Performance e Desenvolvimento, conduzindo o projeto do Discovery à priorização depois do lançamento.
             </p>
 
             <AtuacaoInfo

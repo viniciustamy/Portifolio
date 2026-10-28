@@ -13,6 +13,7 @@ import {
   UserPlus,
   Check} from 'lucide-react';
 import { Gallery } from '../components/Gallery';
+import { AiWorkflowDiagram } from '../components/AiWorkflowDiagram';
 import k01 from '../assets/images/KBA/Completa/k-01.png';
 import k02 from '../assets/images/KBA/Completa/k-02.png';
 import k03 from '../assets/images/KBA/Completa/k-03.png';
@@ -247,6 +248,15 @@ export const KbaSenhaContent = () => {
                 ))}
               </div>
               <img src={kbaHandoffImg} alt="Documentação completa e handoff" className="w-full h-auto object-contain" />
+            </div>
+          </div>
+
+          <div className="mb-32">
+            {/* Fluxo de construção com IA: Figma → AI Studio → Figma → Cursor (MCP do Design System) → GitHub → time de dev */}
+            <div className="not-prose my-12">
+              <h3 className="font-serif text-xl font-bold text-[#241510] mb-2">Do Figma ao código com IA</h3>
+              <p className="text-[15px] text-[#6F625B] leading-relaxed mb-6 max-w-3xl">A IA encurtou a distância entre design e código: um protótipo rápido no Google AI Studio para validar a ideia, ajustes no Figma e o Cursor conectado ao MCP do Design System para gerar telas reais, que seguiram pelo GitHub direto para o time de desenvolvimento.</p>
+              <AiWorkflowDiagram />
             </div>
           </div>
 

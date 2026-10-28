@@ -55,6 +55,8 @@ import LogoLM from '../assets/images/logoLM.png';
 import LogoGoogleIA from '../assets/images/google ia.png';
 import logocursor from '../assets/images/logocursor.png';
 import { AtuacaoInfo } from '../components/AtuacaoInfo';
+import { DashboardTesteMotion } from '../components/DashboardTesteMotion';
+import { AiWorkflowDiagram } from '../components/AiWorkflowDiagram';
 import { VersoesPrototipoMotion } from '../components/VersoesPrototipoMotion';
 
 
@@ -250,34 +252,30 @@ export const DashboardAdmissaoContent = () => {
             </p>
           </div>
 
-          {/* Seção 3: O Desafio */}
+          {/* Seção 3: O Desafio — oculta por enquanto (não renderiza; o conteúdo fica guardado aqui) */}
+          {false && (
           <div className="mb-32">
             <h2 id="desafio" className="font-serif text-3xl font-bold text-[#241510] mb-4">Não era sobre replicar o que foi feito em R&S</h2>
             <p className="text-[#7D7169] leading-relaxed mb-8">
-              Antes de investigar qualquer solução, precisávamos garantir que Produto, Design e Tecnologia partissem do mesmo entendimento do problema.
+              Antes de investigar qualquer solução, precisávamos garantir que Produto, Design e Tecnologia partissem do mesmo entendimento do problema. Três perguntas guiaram esse alinhamento:
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 not-prose mb-8">
-              <div className="bg-[#FAF9F6] border-l-2 border-[#9E4322] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300 rounded-2xl">
-                <h4 className="font-sans font-bold text-[#241510] text-base mb-2">Sobre o que já temos?</h4>
-                <p className="text-sm text-[#6F625B] leading-relaxed">
-                  Quais informações realmente geravam valor.
-                </p>
-              </div>
-              <div className="bg-[#FAF9F6] border-l-2 border-[#9E4322] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300 rounded-2xl">
-                <h4 className="font-sans font-bold text-[#241510] text-base mb-2">O que precisa ter?</h4>
-                <p className="text-sm text-[#6F625B] leading-relaxed">
-                  Quais decisões o DP precisava tomar diariamente.
-                </p>
-              </div>
-              <div className="bg-[#FAF9F6] border-l-2 border-[#9E4322] border-y-0 border-r-0 p-6 flex flex-col hover:bg-[#FAF9F6]/80 transition-all duration-300 rounded-2xl">
-                <h4 className="font-sans font-bold text-[#241510] text-base mb-2">Contexto admissão</h4>
-                <p className="text-sm text-[#6F625B] leading-relaxed">
-                  Como virar ferramenta de trabalho, não só de consulta.
-                </p>
-              </div>
+            {/* Perguntas que guiaram o alinhamento, no mesmo card neutro dos outros cases */}
+            <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { title: 'O que já temos?', text: 'Quais informações do dashboard atual realmente geravam valor.' },
+                { title: 'O que precisa ter?', text: 'Quais decisões o DP precisava tomar no dia a dia.' },
+                { title: 'Contexto de admissão', text: 'Como virar ferramenta de trabalho, e não só de consulta.' },
+              ].map((q, i) => (
+                <div key={q.title} className="border border-[#E2DCD4] rounded-2xl p-7">
+                  <span className="text-[15px] font-semibold text-[#9E4322] tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="font-serif font-bold text-[19px] text-[#241510] leading-snug mt-3 mb-1.5">{q.title}</h3>
+                  <p className="text-[14px] text-[#6F625B] leading-relaxed">{q.text}</p>
+                </div>
+              ))}
             </div>
           </div>
+          )}
 
           {/* Seção 4: Discovery */}
           <div className="mb-32">
@@ -435,7 +433,7 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 8: Principal Descoberta */}
           <div className="mb-32">
-            <h2 id="descoberta-risco" className="font-serif text-3xl font-bold text-[#241510] mb-4">O foco não é o passado, é o risco em tempo real</h2>
+            <h2 id="descoberta-risco" className="font-serif text-3xl font-bold text-[#241510] mb-4">O maior aprendizado do teste foi descobrir que o foco não era o passado, e sim o risco em tempo real</h2>
             <p className="text-[#7D7169] leading-relaxed mb-6">
               Os usuários não usavam o dashboard para entender o passado. Eles precisavam saber quais admissões corriam risco, quem estava parado e quais etapas exigiam atenção imediata.
             </p>
@@ -484,7 +482,7 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 9: Mais Insights */}
           <div className="mb-32">
-            <h2 id="insights" className="font-serif text-3xl font-bold text-[#241510] mb-8">Cinco aprendizados sobre a rotina do DP</h2>
+            <h2 id="insights" className="font-serif text-3xl font-bold text-[#241510] mb-8">Outros aprendizados sobre a rotina do DP</h2>
 
             <div className="not-prose border-y border-[#E2DCD4] divide-y divide-[#E2DCD4]">
               {[
@@ -507,7 +505,7 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 10: Como isso mudou a solução */}
           <div className="mb-32">
-            <h2 id="priorizacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Dividindo a entrega em frentes de valor</h2>
+            <h2 id="priorizacao" className="font-serif text-3xl font-bold text-[#241510] mb-4">Priorizando os aprendizados do teste em frentes de valor</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose mb-10">
               {[
@@ -530,25 +528,25 @@ export const DashboardAdmissaoContent = () => {
               ))}
             </div>
 
-            <img
-              src={onepageImg}
-              alt="Material One Page estratégico"
-            />
-            {/* Legenda */}
-            <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">
-              One Page apresentando os aprendizados do discovery
-            </p>
+            {/* One Page dos aprendizados com as falas dos clientes aparecendo por cima */}
+            <div className="not-prose">
+              <DashboardTesteMotion />
+            </div>
           </div>
 
           {/* Seção 11: Preparando o Handoff */}
           <div className="mb-32">
-            <h2 id="handoff" className="font-serif text-3xl font-bold text-[#241510] mb-4">Telas funcionais e cenários de estresse</h2>
-            <p className="text-[#7D7169] leading-relaxed mb-6">
-              Após validar o direcionamento estratégico, utilizei o Cursor integrado ao MCP do Figma e ao Storybook para construir telas próximas do produto real. Desenhei comportamentos em cenários extremos, como grandes volumes de dados, indisponibilidade e estados de erro.
-            </p>
-
-            {/* Bloco de Imagens do Handoff (Full Screen 100% / Fundo Preto) */}
-            <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#151516] py-16 px-4 md:px-12 my-16 not-prose overflow-hidden rounded-2xl">
+            {/* Bloco do Handoff: o fundo preto vai de ponta a ponta, mas o título e o texto ficam na coluna do case */}
+            <div className="relative isolate py-16 md:py-20 not-prose">
+              <span aria-hidden="true" className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-screen bg-[#151516] rounded-2xl -z-10" />
+              <div className="mb-4">
+                <h2 id="handoff" className="font-serif text-3xl font-bold text-white mb-4">Telas funcionais e cenários de estresse</h2>
+                <p className="text-[#B9B4AE] leading-relaxed max-w-3xl">
+                  Após validar o direcionamento estratégico, utilizei o Cursor integrado ao MCP do Figma e ao Storybook para construir telas próximas do produto real. Desenhei comportamentos em cenários extremos, como grandes volumes de dados, indisponibilidade e estados de erro.
+                </p>
+              </div>
+              {/* As imagens usam a largura toda da tela */}
+              <div className="w-screen relative left-1/2 -translate-x-1/2 px-4 md:px-12">
               <div className="max-w-8xl mx-auto space-y-6">
                 {/* Card Superior Cursor */}
                 <div className="max-w-5xl mx-auto overflow-hidden mb-8 transition-transform duration-500 hover:scale-[1.01]">
@@ -622,6 +620,7 @@ export const DashboardAdmissaoContent = () => {
                   </div>
                 </div>
               </div>
+              </div>
             </div>
           </div>
 
@@ -641,6 +640,13 @@ export const DashboardAdmissaoContent = () => {
                   <img src={m.logo} alt="" className="h-4 self-start mt-auto pt-6 box-content" />
                 </div>
               ))}
+            </div>
+
+            {/* Fluxo de construção com IA: Figma → AI Studio → Figma → Cursor (MCP do Design System) → GitHub → time de dev */}
+            <div className="not-prose mt-16">
+              <h3 className="font-serif text-xl font-bold text-[#241510] mb-2">Do Figma ao código com IA</h3>
+              <p className="text-[15px] text-[#6F625B] leading-relaxed mb-6 max-w-3xl">A IA encurtou a distância entre design e código: um protótipo rápido no Google AI Studio para validar a ideia, ajustes no Figma e o Cursor conectado ao MCP do Design System para gerar telas reais, que seguiram pelo GitHub direto para o time de desenvolvimento.</p>
+              <AiWorkflowDiagram />
             </div>
           </div>
 
@@ -669,7 +675,7 @@ export const DashboardAdmissaoContent = () => {
           <div className="mb-32">
             <h2 id="minha-atuacao-simplificado" className="font-serif text-3xl font-bold text-[#241510] mb-4">Discovery, prototipação e handoff, ponta a ponta</h2>
             <p className="text-[#7D7169] leading-relaxed mb-8">
-              Atuei como Product Designer do time de Analytics, conduzindo o projeto do Discovery ao handoff.
+              Atuei como Staff Product Designer do time de Analytics, conduzindo o projeto do Discovery ao handoff.
             </p>
 
             <AtuacaoInfo

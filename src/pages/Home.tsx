@@ -45,22 +45,10 @@ const caseMotions: Record<string, typeof DevolutivaThumbMotion> = {
 // Anel branco + sombra suave; no hover só a capa interna (.card-cover) cresce — ver index.css
 const cardFrame = 'card-interactive';
 
+// Outros trabalhos e artigos: só o tempo de leitura abaixo do título
 function ProjectMeta({ project, tagColor }: { project: ProjectData; tagColor: string }) {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <p className={`text-[13px] font-medium line-clamp-1 ${tagColor}`}>
-        {project.tag}
-      </p>
-      {project.readingTime && (
-        <span className="flex items-center gap-2">
-          <span className="w-1 h-1 rounded-full bg-current opacity-40" />
-          <span className="text-[13px] opacity-80 whitespace-nowrap">
-            {project.readingTime}
-          </span>
-        </span>
-      )}
-    </div>
-  );
+  if (!project.readingTime) return null;
+  return <p className={`text-[13px] whitespace-nowrap ${tagColor}`}>{project.readingTime}</p>;
 }
 
 // Case: card largo, fundo pintado com a cor predominante da thumbnail, título à esquerda e imagem à direita
@@ -99,11 +87,13 @@ function CaseCard({ project }: { project: ProjectData; key?: string }) {
         </div>
       )}
       <div className={`relative z-10 ${thumbBg ? 'row-start-1 md:col-start-1 md:self-end p-6 pb-5 md:pl-10 md:pb-10 xl:pl-12 xl:pb-12 md:pr-4' : ''} ${textColor}`}>
-        <p className={`text-[15px] font-medium mb-2.5 ${tagColor}`}>{project.tag}</p>
+        {/* Tempo de leitura em cima, título e a descrição curta do case embaixo */}
+        {/* Tempo de leitura discreto (menor e mais leve) para destacar título e descrição */}
+        {project.readingTime && <p className={`text-[13px] font-normal mb-2 opacity-80 ${tagColor}`}>{project.readingTime}</p>}
         <h3 className="font-sans text-[30px] xl:text-[38px] font-semibold tracking-tight leading-[1.08] mb-2.5">
           {project.title}
         </h3>
-        {project.readingTime && <p className="text-[15px] opacity-80">{project.readingTime}</p>}
+        <p className="text-[16px] font-medium opacity-90">{project.tag}</p>
       </div>
     </Link>
   );

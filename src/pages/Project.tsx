@@ -230,7 +230,7 @@ export default function Project() {
             <Button variant="ghost" size="sm" className="group text-muted-foreground hover:text-primary hover:bg-transparent -ml-3" asChild>
               <Link to="/" state={{ restoreScroll: true }}>
                 <ArrowLeftIcon className="w-4 h-4 mr-1.5 transition-transform group-hover:-translate-x-1" />
-                Voltar para o início
+                Voltar
               </Link>
             </Button>
           </div>

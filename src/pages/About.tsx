@@ -18,7 +18,7 @@ const career = [
   },
   {
     company: 'Tract Co',
-    period: '2019 – 2021',
+    period: '2016 – 2021',
     roles: [
       { title: 'Product Designer', period: '2019 – 2021', desc: 'Pesquisa, prototipação e evolução de produtos digitais para diferentes clientes e startups.' },
       { title: 'Graphic & Brand Designer', period: '2016 – 2019', desc: 'Projetos de branding, identidade visual, interfaces web e sites institucionais.' },
@@ -164,7 +164,7 @@ export default function About() {
 
               <SectionTitle icon={Palette}>Como cheguei ao Design</SectionTitle>
               <P>
-                Minha primeira oportunidade veio em uma agência de publicidade, onde descobri que queria seguir carreira em Design. Me formei pela FOA em 2018 e, após alguns anos atuando em agências, fiz a transição para Produto em 2020.
+                Minha primeira oportunidade veio em uma agência de publicidade, onde descobri que queria seguir carreira em Design. Me formei pela UniFOA em 2018 e, depois de alguns anos atuando em agências, fiz a transição para Produto em 2019.
               </P>
               <P>
                 Foi nesse momento que encontrei o tipo de desafio que mais me motiva: entender pessoas, resolver problemas complexos e transformar descobertas em produtos que geram impacto.

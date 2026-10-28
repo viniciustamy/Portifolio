@@ -5,6 +5,7 @@ import {
   ListOrdered, Maximize2, MessageSquare, MessageSquareText, MessagesSquare, Repeat, Settings, Sparkles,
   ThumbsUp, TrendingUp, Underline, UserCheck, X,
 } from 'lucide-react';
+import { Callout } from './Callout';
 
 /*
  * Motion do fluxo "Devolutiva com Gupy IA": as telas são recriadas em código num palco de 1366×1550px
@@ -256,7 +257,21 @@ function Toolbar() {
   );
 }
 
-export function Stage({ fields, activeField, pressed, showLogo = true }: { fields: Record<FieldKey, string>; activeField: FieldKey | null; pressed: 'ai' | 'apply' | null; showLogo?: boolean }) {
+// Competências do relatório individual, com um trecho dos comentários dos avaliadores
+const COMPETENCIES = [
+  ['Comunicação clara', 'Explica decisões com clareza e adapta a linguagem para cada público.'],
+  ['Colaboração', 'Compartilha conhecimento e puxa o time junto nas entregas mais críticas.'],
+  ['Foco no cliente', 'Traz a dor do cliente para as discussões e prioriza o que gera valor.'],
+  ['Pensamento analítico', 'Usa dados para sustentar decisões, mas às vezes demora para concluir.'],
+  ['Autonomia', 'Resolve problemas sem esperar direcionamento e sabe quando pedir ajuda.'],
+  ['Organização e planejamento', 'Cumpre prazos, mas pode antecipar riscos com mais frequência.'],
+  ['Aprendizado contínuo', 'Busca feedback e aplica rápido o que aprende nas próximas entregas.'],
+  ['Inovação', 'Propõe alternativas novas para processos que o time já dava como certos.'],
+  ['Dono do resultado', 'Assume os erros, corrige rápido e acompanha o impacto do que entrega.'],
+];
+
+// highlight: destaca a ajuda da IA ou o relatório do colaborador ao lado (motion da solução final)
+export function Stage({ fields, activeField, pressed, showLogo = true, highlight = null }: { fields: Record<FieldKey, string>; activeField: FieldKey | null; pressed: 'ai' | 'apply' | null; showLogo?: boolean; highlight?: 'ai' | 'report' | null }) {
   const railIcons = [
     { Icon: Home, y: 141 }, { Icon: UserCheck, y: 279, badge: true }, { Icon: TrendingUp, y: 349 },
     { Icon: ClipboardList, y: 417 }, { Icon: MessageSquare, y: 486, active: true }, { Icon: Repeat, y: 626 },
@@ -303,6 +318,7 @@ export function Stage({ fields, activeField, pressed, showLogo = true }: { field
       {/* Card do formulário */}
       <div className="absolute bg-white rounded-[20px]" style={{ left: 124, top: 360, width: 585, height: 1144 }}>
         <div className="absolute" style={{ left: 24, top: 24, right: 24 }}>
+          <Callout show={highlight === 'ai'} text="A Gupy IA lê o relatório e sugere a conclusão" place="top" inset={-12} />
           <div className="flex items-center gap-2">
             <span className="text-[17px] font-medium">Devolutiva com Gupy IA</span>
             <span className="ml-3 flex items-center gap-1 text-[13px] font-semibold text-white rounded-md px-2" style={{ height: 24, background: C.blue }}>
@@ -357,6 +373,7 @@ export function Stage({ fields, activeField, pressed, showLogo = true }: { field
 
       {/* Coluna do relatório */}
       <div className="absolute" style={{ left: 741, top: 72, right: 0, bottom: 0, background: C.side }}>
+        <Callout show={highlight === 'report'} text="Todo o histórico do colaborador ao lado" place="top" inset={14} />
         <span className="absolute flex items-center gap-2 text-[14.5px] font-medium" style={{ left: 35, top: 22, color: C.blue }}>
           <Maximize2 size={14} /> Expandir
         </span>
@@ -364,7 +381,7 @@ export function Stage({ fields, activeField, pressed, showLogo = true }: { field
           <div className="absolute" style={{ left: 24, right: 24, top: 26 }}>
             <div className="flex justify-between text-[15px]">
               <span className="font-medium">Relatório individual</span>
-              <span>Ciclo: <b>4 TRI 2023</b></span>
+              <span>Ciclo: <b>2025.1</b></span>
             </div>
             <div className="flex items-center gap-4 mt-7">
               <span className="rounded-full" style={{ width: 56, height: 56, background: 'linear-gradient(135deg,#5B3A2E,#B98B74)' }} />
@@ -379,14 +396,14 @@ export function Stage({ fields, activeField, pressed, showLogo = true }: { field
             </div>
             <p className="text-[12px] mt-6" style={{ color: C.sub }}>Avaliações com escala qualitativa</p>
             <div className="mt-4 rounded-xl border" style={{ borderColor: C.line }}>
-              {['Juntos somos mais forte', 'Ser referência', 'Ser referência', 'Ser referência', 'Ser referência', 'Ser referência', 'Ser referência', 'Ser referência', 'Ser referência'].map((t, i) => (
+              {COMPETENCIES.map(([t, comment], i) => (
                 <div key={i} className="flex items-center gap-4 px-4 border-b last:border-b-0" style={{ height: 100, borderColor: C.line }}>
                   <div className="flex-1 min-w-0">
                     <p className="flex items-center gap-2 text-[14px] font-medium">
                       {t} <MessageSquareText size={14} color={C.blue} fill={C.blue} stroke="#fff" /> <span className="text-[12px]">5</span>
                     </p>
                     <p className="text-[12.5px] leading-[1.6] mt-1.5 line-clamp-2" style={{ color: C.sub }}>
-                      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab.
+                      {comment}
                     </p>
                   </div>
                   <ChevronDown size={20} />

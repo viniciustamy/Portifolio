@@ -7,7 +7,7 @@ import { C, FIELDS, FieldKey, TEXT, emptyFields, typeText, wait } from './Devolu
  * Versão thumb do motion da Devolutiva (card do case na Home): só o card da devolutiva sobre o
  * fundo verde da thumbnail. Roda devagar e apenas enquanto `active` (card em foco):
  * cursor clica em "Visualizar conclusão da IA" → a modal flutua por cima e escreve a conclusão →
- * "Aplicar" fecha a modal → o card rola enquanto os campos são preenchidos → cursor clica em
+ * "Aplicar" fecha a modal → o card inteiro sobe enquanto os campos são preenchidos → cursor clica em
  * "Continuar e revisar" e tudo recomeça. Ao perder o foco, volta ao estado inicial (igual à thumbnail).
  */
 
@@ -38,12 +38,16 @@ export function DevolutivaThumbMotion({ active }: { active: boolean }) {
   const [activeField, setActiveField] = useState<FieldKey | null>(null);
   const [scroll, setScroll] = useState(0);
 
-  // A resposta da IA rola junto com o texto, como num chat
-  const answerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = answerRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [modalText]);
+  // Conversa da modal: quando a resposta cresce além da área, as mensagens sobem e a de cima sai, como num chat
+  const chatRef = useRef<HTMLDivElement>(null);
+  const chatInnerRef = useRef<HTMLDivElement>(null);
+  const [chatShift, setChatShift] = useState(0);
+  useLayoutEffect(() => {
+    const box = chatRef.current;
+    const inner = chatInnerRef.current;
+    if (!box || !inner) { setChatShift(0); return; }
+    setChatShift(Math.max(0, inner.offsetHeight - box.clientHeight));
+  }, [modalText, loading, modalOpen]);
 
   const scale = size.w / THUMB_W;
   const stageH = scale ? size.h / scale : 0;
@@ -99,13 +103,15 @@ export function DevolutivaThumbMotion({ active }: { active: boolean }) {
       setPressed(null);
     };
 
-    // Quanto o conteúdo do card pode rolar até mostrar o rodapé com os botões
-    const maxScroll = () => {
+    // Quanto o card inteiro precisa subir para o rodapé com os botões chegar à base do palco
+    const stageHeight = () => {
       const wrap = wrapRef.current;
+      return wrap ? wrap.clientHeight / (wrap.clientWidth / THUMB_W) : 0;
+    };
+    const maxScroll = () => {
       const content = contentRef.current;
-      if (!wrap || !content) return 0;
-      const visible = wrap.clientHeight / (wrap.clientWidth / THUMB_W) - CARD_TOP;
-      return Math.max(0, content.offsetHeight - visible);
+      if (!content) return 0;
+      return Math.max(0, CARD_TOP + content.offsetHeight - stageHeight());
     };
 
     const run = async () => {
@@ -137,11 +143,11 @@ export function DevolutivaThumbMotion({ active }: { active: boolean }) {
         setCursor(c => ({ ...c, visible: false }));
         await wait(600, token);
 
-        // 4. O card rola para cima enquanto cada campo é preenchido
+        // 4. O card inteiro sobe (e vaza pelo topo) enquanto cada campo é preenchido
         for (let i = 0; i < FIELDS.length; i++) {
           const f = FIELDS[i];
           const top = fieldRefs.current[i]?.offsetTop ?? 0;
-          setScroll(Math.min(maxScroll(), Math.max(0, top - 20)));
+          setScroll(Math.min(maxScroll(), Math.max(0, CARD_TOP + top - 30)));
           await wait(1400, token);
           setActiveField(f.key);
           await typeText(TEXT[f.key], 2400, s => setFields(v => ({ ...v, [f.key]: s })), token);
@@ -168,25 +174,23 @@ export function DevolutivaThumbMotion({ active }: { active: boolean }) {
   const modalDone = !loading && modalText.conclusao.length === TEXT.conclusao.length;
 
   return (
-    <div ref={wrapRef} className="absolute inset-0 overflow-hidden select-none" aria-hidden="true">
+    // Sem overflow-hidden: o card sobe e vaza até a borda de cima do card da Home, que é quem recorta
+    <div ref={wrapRef} className="absolute inset-0 select-none" aria-hidden="true">
       {scale > 0 && (
         <div
           ref={stageRef}
           className="absolute left-0 top-0 origin-top-left font-sans"
           style={{ width: THUMB_W, height: stageH, transform: `scale(${scale})`, color: C.ink }}
         >
-          {/* Card da devolutiva — sai pela borda de baixo, como na thumbnail */}
-          <div
+          {/* Card da devolutiva — sai pela borda de baixo, como na thumbnail; ao preencher, sobe inteiro */}
+          <motion.div
             className="absolute bg-white rounded-t-[18px] overflow-hidden"
-            style={{ left: 70, right: 40, top: CARD_TOP, bottom: 0, boxShadow: '0 18px 40px rgb(0 0 0 / .18)' }}
+            style={{ left: 70, right: 40, top: CARD_TOP, boxShadow: '0 18px 40px rgb(0 0 0 / .18)' }}
+            initial={false}
+            animate={{ y: -scroll }}
+            transition={{ duration: 1.3, ease }}
           >
-            <motion.div
-              ref={contentRef}
-              className="relative px-[22px] pt-[22px] pb-6"
-              initial={false}
-              animate={{ y: -scroll }}
-              transition={{ duration: 1.3, ease }}
-            >
+            <div ref={contentRef} className="relative px-[22px] pt-[22px] pb-6">
               <div className="flex items-center gap-2">
                 <span className="text-[16px] font-medium">Devolutiva com Gupy IA</span>
                 <span className="ml-2 flex items-center gap-1 text-[11.5px] font-semibold text-white rounded-md px-1.5" style={{ height: 21, background: C.blue }}>
@@ -250,8 +254,8 @@ export function DevolutivaThumbMotion({ active }: { active: boolean }) {
                   Continuar e revisar
                 </motion.span>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
 
           {/* Modal flutuante por cima do card */}
           <AnimatePresence>
@@ -269,34 +273,33 @@ export function DevolutivaThumbMotion({ active }: { active: boolean }) {
                   <span className="text-[16px] font-semibold">Gupy IA</span>
                   <X size={18} />
                 </div>
-                <div className="px-5 pt-4">
-                  <p className="rounded-xl px-3.5 py-3 text-[12.5px] leading-[1.45]" style={{ background: C.page }}>{TEXT.intro}</p>
-                  <div
-                    ref={answerRef}
-                    className="mt-3 rounded-xl px-3.5 py-3 text-[12px] leading-[1.5] overflow-hidden"
-                    style={{ background: C.page, height: Math.max(80, modalH - 214) }}
-                  >
-                    {loading ? (
-                      <div className="flex flex-col gap-2.5">
-                        <span className="flex items-center gap-1.5 text-[12px]" style={{ color: C.sub }}>
-                          {[0, 1, 2].map(i => (
-                            <motion.span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: C.blue }} animate={{ opacity: [0.25, 1, 0.25] }} transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.15 }} />
+                {/* Conversa: ancorada embaixo da área quando passa do tamanho, empurrando a mensagem de cima */}
+                <div ref={chatRef} className="absolute overflow-hidden" style={{ left: 20, right: 20, top: 66, bottom: 66 }}>
+                  <motion.div ref={chatInnerRef} className="flex flex-col gap-3" initial={false} animate={{ y: -chatShift }} transition={{ duration: 0.35, ease: 'easeOut' }}>
+                    <p className="rounded-xl px-3.5 py-3 text-[12.5px] leading-[1.45]" style={{ background: C.page }}>{TEXT.intro}</p>
+                    <div className="rounded-xl px-3.5 py-3 text-[12px] leading-[1.5]" style={{ background: C.page }}>
+                      {loading ? (
+                        <div className="flex flex-col gap-2.5">
+                          <span className="flex items-center gap-1.5 text-[12px]" style={{ color: C.sub }}>
+                            {[0, 1, 2].map(i => (
+                              <motion.span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: C.blue }} animate={{ opacity: [0.25, 1, 0.25] }} transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.15 }} />
+                            ))}
+                            <span className="ml-1">Analisando o relatório individual…</span>
+                          </span>
+                          {[90, 76, 84, 58].map((w, i) => (
+                            <motion.span key={i} className="h-2.5 rounded-full" style={{ width: `${w}%`, background: '#E2E4E8' }} animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.08 }} />
                           ))}
-                          <span className="ml-1">Analisando o relatório individual…</span>
-                        </span>
-                        {[90, 76, 84, 58].map((w, i) => (
-                          <motion.span key={i} className="h-2.5 rounded-full" style={{ width: `${w}%`, background: '#E2E4E8' }} animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.08 }} />
-                        ))}
-                      </div>
-                    ) : (
-                      ([['fortes', 'Pontos fortes:'], ['melhoria', 'Pontos de melhoria:'], ['conclusao', 'Conclusão geral:']] as [FieldKey, string][]).map(([k, title]) => modalText[k] && (
-                        <p key={k} className="mb-2.5">
-                          <b className="block">{title}</b>
-                          {modalText[k]}
-                        </p>
-                      ))
-                    )}
-                  </div>
+                        </div>
+                      ) : (
+                        ([['fortes', 'Pontos fortes:'], ['melhoria', 'Pontos de melhoria:'], ['conclusao', 'Conclusão geral:']] as [FieldKey, string][]).map(([k, title]) => modalText[k] && (
+                          <p key={k} className="mb-2.5 last:mb-0">
+                            <b className="block">{title}</b>
+                            {modalText[k]}
+                          </p>
+                        ))
+                      )}
+                    </div>
+                  </motion.div>
                 </div>
                 <motion.span
                   ref={applyRef}
