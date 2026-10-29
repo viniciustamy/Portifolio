@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Briefcase, Heart, MapPin, Palette, Wrench, Lightbulb, Instagram, Linkedin, ArrowLeft } from 'lucide-react';
-import perfilImg from '../assets/images/perfil 2.jpg';
+import { PhotoCarousel } from '../components/PhotoCarousel';
 import { motion } from 'motion/react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -89,11 +89,7 @@ export default function About() {
               <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               Voltar
             </Link>
-            <img
-              src={perfilImg}
-              alt="Vinicius Tamy"
-              className="w-full aspect-[4/5] md:aspect-auto md:h-[calc(100vh-4rem)] object-cover rounded-2xl"
-            />
+            <PhotoCarousel className="w-full aspect-[4/5] md:aspect-auto md:h-[calc(100vh-4rem)] rounded-2xl" />
           </motion.div>
 
           <div>

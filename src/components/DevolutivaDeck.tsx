@@ -23,7 +23,7 @@ import dashHandoffImg from '../assets/images/Deck/dashboard-cursor.png';
 import kbaDiscoveryImg from '../assets/images/KBA/KBA-Discovery.png';
 import adminAiStudioImg from '../assets/images/Deck/admin-ai-studio.png';
 import adminCursorImg from '../assets/images/Deck/admin-cursor.png';
-import perfilImg from '../assets/images/perfil 2.jpg';
+import { PhotoCarousel } from './PhotoCarousel';
 
 /*
  * Apresentação do case Devolutiva em slides (16:9), aberta pelo botão "Apresentar case" da página.
@@ -70,8 +70,14 @@ const Reveal = ({ children, i = 0, className = '', style }: { children: any; i?:
   </motion.div>
 );
 
-// stacked: ícone em cima do texto; onLight: ícone em fundo branco e descrição menor (slide sobre mim)
+// stacked: ícone em cima do texto; onLight: ícone sem círculo ao lado do título e linhas mais curtas (slide sobre mim)
 function Point({ Icon, title, text, dark = false, stacked = false, onLight = false }: { Icon: any; title: string; text: string; dark?: boolean; stacked?: boolean; onLight?: boolean; key?: string }) {
+  if (onLight) return (
+    <div>
+      <p className="flex items-center gap-2.5 text-[16px] font-semibold m-0" style={{ color: C.ink }}><Icon size={20} style={{ color: C.accent }} />{title}</p>
+      <p className="text-[16px] leading-[1.5] mt-1.5 m-0 max-w-[480px]" style={{ color: C.sub }}>{text}</p>
+    </div>
+  );
   return (
     <div className={stacked ? 'flex flex-col items-start gap-4' : 'flex items-start gap-4'}>
       <span className="flex items-center justify-center w-11 h-11 rounded-full shrink-0" style={{ background: dark ? 'rgb(255 255 255 / .08)' : onLight ? '#fff' : C.cream, color: dark ? '#E0A889' : C.accent, boxShadow: onLight ? '0 1px 3px rgb(36 21 16 / .1)' : 'none' }}><Icon size={20} /></span>
@@ -88,7 +94,7 @@ function Point({ Icon, title, text, dark = false, stacked = false, onLight = fal
 const SobreMim = () => (
   <Slide className="justify-center" style={{ background: '#F0EDE8' }}>
     <div className="grid grid-cols-[520px_1fr] gap-24 items-center">
-      <Reveal><img src={perfilImg} alt="Vinicius Tamy" className="w-full h-[700px] object-cover rounded-[28px]" /></Reveal>
+      <Reveal><PhotoCarousel className="w-full h-[700px] rounded-[28px]" /></Reveal>
       <div>
         <Reveal i={1}><Title size={64}>Olá, eu sou o Tamy</Title></Reveal>
         <Reveal i={2}><p className="font-serif text-[24px] font-bold leading-tight tracking-tight mt-4 m-0" style={{ color: C.soft }}>Designer sênior de produtos, problemas e IA.</p></Reveal>
