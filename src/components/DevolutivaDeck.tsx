@@ -16,6 +16,7 @@ import { FerramentasMotion, HistoricoMotion, VisibilidadeMotion } from './Proble
 import { MapaZoomMotion, ZoomTour, type TourStep } from './MapaZoomMotion';
 import { DashboardThumbMotion } from './DashboardThumbMotion';
 import { MindiThumbMotion } from './MindiThumbMotion';
+import { User as PersonIcon } from '@phosphor-icons/react';
 import { VersoesPrototipoMotion } from './VersoesPrototipoMotion';
 import { AiWorkflowDiagram } from './AiWorkflowDiagram';
 import dashDiscoveryImg from '../assets/images/Admin/discovery.png';
@@ -374,18 +375,28 @@ const Teste = () => (
       <div className="flex flex-col justify-center pl-[120px] pr-14 py-[72px]">
         <Reveal i={1}><Title size={40}>Teste de usabilidade com 12 participantes que vivem o processo</Title></Reveal>
         <Reveal i={2}><Lede className="text-[16px]">Aplicamos o teste com 12 participantes entre RH, gestores e lideranças, que navegaram por um protótipo com as jornadas de ponta a ponta.</Lede></Reveal>
-        {/* Lado a lado; cada ponto com o próprio ícone: check no que funcionou, exclamação nas melhorias */}
+        {/* Lado a lado, por perfil; cada ponto com o próprio ícone: check no que funcionou, exclamação nas melhorias */}
         <div className="grid grid-cols-2 gap-4 mt-8">
           {[
-            { title: 'O que funcionou', Icon: CheckCircle, color: '#2E7D4F', bg: '#EEF6F0', items: ['Painel lateral centralizou as informações da conversa', 'Consolidação automática reduziu retrabalho manual', 'Fluxo simples, sem precisar de treinamento', 'Exportação em PDF valorizada para registro'] },
-            { title: 'Oportunidades de melhoria', Icon: AlertCircle, color: '#A26D26', bg: '#FAF4EA', items: ['Confusão entre avaliação e devolutiva', 'Rótulos pouco claros na navegação', 'Faltavam filtros e indicadores para RH e gestores', 'Dúvidas sobre anotações privadas e colapsáveis'] },
+            { title: 'O que funcionou', Icon: CheckCircle, color: '#2E7D4F', bg: '#EEF6F0', items: [
+              { who: 'RH', text: 'Controle do ciclo: define início e fim e vê quem fez e quem falta' },
+              { who: 'Gestor', text: 'Painel lateral com tudo sobre o colaborador no ciclo' },
+              { who: 'Colaborador', text: 'Devolutiva salva na plataforma e pronta para baixar' },
+            ] },
+            { title: 'Oportunidades de melhoria', Icon: AlertCircle, color: '#A26D26', bg: '#FAF4EA', items: [
+              { who: 'RH', text: 'Faltavam filtros e recortes' },
+              { who: 'RH', text: 'Autonomia para fazer a devolutiva no lugar do gestor' },
+              { who: 'Gestor', text: 'Rótulos confusos sobre o que escrever em cada campo' },
+              { who: 'Gestor', text: 'Dúvidas sobre o que o colaborador consegue ver' },
+            ] },
           ].map((col, i) => (
             <Reveal key={col.title} i={3 + i} className="rounded-[20px] px-6 py-5" style={{ background: col.bg }}>
               <p className="font-serif text-[16px] font-bold m-0 mb-4" style={{ color: col.color }}>{col.title}</p>
-              <ul className="flex flex-col gap-3 m-0 p-0 list-none">
+              <ul className="flex flex-col gap-4 m-0 p-0 list-none">
                 {col.items.map(item => (
-                  <li key={item} className="flex gap-2.5 text-[14px] leading-snug" style={{ color: '#4F4440' }}>
-                    <col.Icon size={16} className="shrink-0 mt-[1px]" style={{ color: col.color }} />{item}
+                  <li key={item.text} className="flex gap-2.5 text-[14px] leading-snug" style={{ color: '#4F4440' }}>
+                    <col.Icon size={16} className="shrink-0 mt-[1px]" style={{ color: col.color }} />
+                    <span><b className="block text-[12px] font-semibold uppercase tracking-wide mb-0.5" style={{ color: col.color }}>{item.who}</b>{item.text}</span>
                   </li>
                 ))}
               </ul>
@@ -444,7 +455,7 @@ const Solucao = () => (
   <Slide className="items-center" style={{ paddingTop: 52, paddingBottom: 24 }}>
     <Reveal i={1} className="text-center"><Title>O ciclo completo, dentro da plataforma</Title></Reveal>
     <Reveal i={2} className="text-center"><Lede className="text-[20px] mt-3">Cada perfil com funcionalidades próprias, com as informações conectadas em uma única jornada.</Lede></Reveal>
-    <Reveal i={3} className="mt-2 w-[920px]"><DevolutivaLaptopMotion showDesc={false} /></Reveal>
+    <Reveal i={3} className="mt-2 w-[1080px]"><DevolutivaLaptopMotion showDesc={false} /></Reveal>
   </Slide>
 );
 
@@ -478,35 +489,80 @@ const Resultados = () => (
   </Slide>
 );
 
+// Os três números da IA: quantos gestores usaram, quanto editaram o texto e a nota do resultado
+function IaStat({ title, note, children }: { title: string; note: string; children: any }) {
+  return (
+    <div className="rounded-[20px] px-7 py-6" style={{ border: `1.5px solid ${C.line}` }}>
+      <p className="text-[20px] font-bold m-0" style={{ color: C.ink }}>{title}</p>
+      <div className="mt-3">{children}</div>
+      <p className="text-[14px] mt-2.5 m-0" style={{ color: C.sub }}>{note}</p>
+    </div>
+  );
+}
+
+const PEOPLE = 12;
+const USED = 8; // ~2/3
+
+// Metade branca com os números da IA e metade creme com as falas; os títulos começam na mesma altura
 const IaApoio = () => (
-  <Slide>
-    <div className="grid grid-cols-2 gap-20 h-full">
-      <div className="flex flex-col justify-center">
-        <Reveal i={1}><Title size={48}>A IA como apoio, não como autora</Title></Reveal>
-        <Reveal i={2}><Lede>Cerca de 2/3 dos gestores abriram a conclusão gerada pela IA. Desses, só ~10% enviaram o texto sem editar: a devolutiva continua sendo do gestor. Os relatos de texto formal demais orientaram os ajustes de tom, e a adesão cresceu a cada versão.</Lede></Reveal>
-        <Reveal i={3} className="mt-10">
-          <div className="flex h-5 rounded-full overflow-hidden">
-            <motion.span style={{ background: C.accent }} initial={{ width: 0 }} animate={{ width: '10%' }} transition={{ duration: 0.8, delay: 0.7, ease }} />
-            <span className="flex-1" style={{ background: '#E7D3C8' }} />
-          </div>
-          <div className="flex gap-8 mt-4 text-[16px]" style={{ color: C.sub }}>
-            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: C.accent }} /> ~10% enviaram sem editar</span>
-            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: '#E7D3C8' }} /> ~90% adaptaram ou reescreveram</span>
-          </div>
+  <Slide style={{ padding: 0 }}>
+    <div className="grid grid-cols-2 h-full">
+      <div className="flex flex-col gap-8 px-[96px] pt-[112px]">
+        <Reveal i={1}><Title size={40}>Uso do agente de IA pelos gestores</Title></Reveal>
+        <div className="flex flex-col gap-4">
+        <Reveal i={2}>
+          <IaStat title="Gestores que usaram a IA" note="Em média, 2 de cada 3 gestores abriram a conclusão gerada pela IA">
+            <div className="flex gap-1.5">
+              {Array.from({ length: PEOPLE }, (_, i) => (
+                <motion.span key={i} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.6 + i * 0.05 }} style={{ color: i < USED ? C.accent : '#E7D3C8' }}>
+                  <PersonIcon size={34} weight="fill" />
+                </motion.span>
+              ))}
+            </div>
+          </IaStat>
+        </Reveal>
+        <Reveal i={3}>
+          <IaStat title="Como usaram o texto da IA" note="A devolutiva continua sendo do gestor: quase todos adaptaram o texto">
+            <div className="flex h-5 rounded-full overflow-hidden">
+              <motion.span style={{ background: C.accent }} initial={{ width: 0 }} animate={{ width: '10%' }} transition={{ duration: 0.8, delay: 0.9, ease }} />
+              <span className="flex-1" style={{ background: '#E7D3C8' }} />
+            </div>
+            <div className="flex gap-8 mt-3 text-[14px]" style={{ color: C.sub }}>
+              <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: C.accent }} /> ~10% enviaram sem editar</span>
+              <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: '#E7D3C8' }} /> ~90% adaptaram o texto</span>
+            </div>
+          </IaStat>
+        </Reveal>
+        <Reveal i={4}>
+          <IaStat title="Satisfação com o resultado da IA" note="Começou perto de 3: o tom ainda era formal demais, e foi ajustado nas versões seguintes">
+            <div className="flex items-center gap-4">
+              <div className="flex gap-1.5">
+                {[1, 2, 3, 4, 5].map(n => (
+                  <motion.span key={n} className="block w-14 h-5 rounded-full" style={{ background: n <= 3 ? C.accent : '#E7D3C8' }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 1.1 + n * 0.08 }} />
+                ))}
+              </div>
+              <span className="font-serif text-[24px] font-bold" style={{ color: C.ink }}>~3<span className="text-[16px] font-sans font-semibold" style={{ color: C.sub }}> / 5</span></span>
+            </div>
+          </IaStat>
         </Reveal>
       </div>
-      <div className="flex flex-col justify-center gap-5">
-        <Reveal i={3}><p className="text-[20px] font-bold m-0" style={{ color: C.ink }}>O que os usuários disseram</p></Reveal>
-        {[
-          { quote: 'Agora eu consigo saber quem cobrar. Eu não tinha essa informação antes, posso ir direto na pessoa.', who: 'RH de cliente' },
-          { quote: 'Eu demorava duas semanas para fazer as devolutivas. Na última avaliação, consegui fazer em poucos dias, de 3 a 4 dias.', who: 'Gestor de cliente' },
-          { quote: 'É muito bom ter um material padronizado, que eu não tinha antes.', who: 'Colaborador' },
-        ].map((q, i) => (
-          <Reveal key={q.quote} i={4 + i} className="rounded-[20px] px-8 py-6" style={{ background: C.cream }}>
-            <p className="font-serif text-[20px] font-semibold leading-snug m-0" style={{ color: C.ink }}>“{q.quote}”</p>
-            <p className="text-[14px] mt-2 m-0" style={{ color: C.sub }}>{q.who}</p>
-          </Reveal>
-        ))}
+
+      </div>
+
+      <div className="flex flex-col gap-8 px-[96px] pt-[112px]" style={{ background: C.cream }}>
+        <Reveal i={1}><Title size={40}>O que os usuários disseram</Title></Reveal>
+        <div className="flex flex-col gap-14 mt-6">
+          {[
+            { quote: 'Agora eu consigo saber quem cobrar. Eu não tinha essa informação antes, posso ir direto na pessoa.', who: 'RH de cliente' },
+            { quote: 'Eu demorava duas semanas para fazer as devolutivas. Na última avaliação, consegui fazer em poucos dias, de 3 a 4 dias.', who: 'Gestor de cliente' },
+            { quote: 'É muito bom ter um material padronizado, que eu não tinha antes.', who: 'Colaborador' },
+          ].map((q, i) => (
+            <Reveal key={q.quote} i={2 + i} className="pl-6" style={{ borderLeft: `3px solid ${C.accent}` }}>
+              <p className="font-serif text-[24px] font-semibold leading-snug m-0" style={{ color: C.ink }}>“{q.quote}”</p>
+              <p className="text-[14px] mt-3 m-0" style={{ color: C.sub }}>{q.who}</p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </div>
   </Slide>
@@ -595,7 +651,7 @@ function EvolucaoCard({ c, last, filled }: { c: EvolucaoItem; last: boolean; fil
 // Dois blocos: o que mudaria no produto (Hotjar, entrevistas e roadmap) e no processo (IA no desenvolvimento)
 const EVOLUCAO: { label: string; desc: string; items: EvolucaoItem[] }[] = [
   {
-    label: 'No produto', desc: 'Baseado no Hotjar, nas entrevistas e no que já estava previsto no roadmap.',
+    label: 'Evoluções no produto', desc: 'Com os dados colhidos após o lançamento, validaria melhorias que já estavam no radar e outras que a IA ajudaria a viabilizar.',
     items: [
       { Icon: Layers, title: 'Novas fontes', text: 'Feedbacks, comitês e outros sinais.' },
       { Icon: SlidersHorizontal, title: 'Recortes do RH', text: 'Áreas, setores e responsáveis.' },
@@ -604,7 +660,7 @@ const EVOLUCAO: { label: string; desc: string; items: EvolucaoItem[] }[] = [
     ],
   },
   {
-    label: 'No processo', desc: 'IA de contexto fechado no desenvolvimento do produto.',
+    label: 'Mais IA durante o processo', desc: 'Traria mais agentes para me apoiar em etapas do desenvolvimento, não só como agente dentro do produto.',
     items: [
       { Icon: ScanSearch, title: 'IA para síntese', text: 'Conversar com a massa de pesquisas para entender e destacar os problemas.', cases: ['dashSintese', 'kbaSintese'] },
       { Icon: Lightbulb, title: 'Mais ideias via vibe code', text: 'Explorar mais alternativas em protótipos de código.', cases: ['dashVibe', 'adminVibe'] },
@@ -615,7 +671,7 @@ const EVOLUCAO: { label: string; desc: string; items: EvolucaoItem[] }[] = [
 
 const Evolucao = () => (
   <Slide className="justify-center">
-    <Reveal i={1}><Title size={48}>Evoluções e melhorias que eu faria hoje no projeto</Title></Reveal>
+    <Reveal i={1}><Title size={48}>Melhorias que eu faria hoje no projeto</Title></Reveal>
     <div className="flex flex-col gap-8 mt-12">
       {EVOLUCAO.map((b, bi) => (
         <div key={b.label} className="grid grid-cols-[240px_1fr] gap-8 items-stretch">

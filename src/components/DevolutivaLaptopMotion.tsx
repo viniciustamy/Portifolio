@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Stage as FormStage, TEXT, wait } from './DevolutivaIaMotion';
 import { ReportScreen, RhScreen } from './DevolutivaSolucaoMotion';
@@ -31,6 +31,17 @@ export function DevolutivaLaptopMotion({ showDesc = true }: { showDesc?: boolean
   const [runKey, setRunKey] = useState(0); // muda no clique para recomeçar o loop da jornada escolhida
   const tabRef = useRef(0);
   tabRef.current = tab;
+  // Bloco branco do toggle: medido nos botões (offsetLeft/Width não mudam com o scale da apresentação)
+  // para deslizar igual na troca automática e no clique
+  const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [pill, setPill] = useState({ x: 0, w: 0 });
+  useLayoutEffect(() => {
+    const measure = () => { const b = btnRefs.current[tab]; if (b) setPill({ x: b.offsetLeft, w: b.offsetWidth }); };
+    measure();
+    document.fonts?.ready.then(measure);
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [tab]);
 
   useEffect(() => {
     if (!inView || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
@@ -75,8 +86,10 @@ export function DevolutivaLaptopMotion({ showDesc = true }: { showDesc?: boolean
     <div className="flex flex-col items-center mt-4 md:mt-6">
       {/* Toggle group das jornadas */}
       <div role="tablist" aria-label="Jornadas da devolutiva" className="relative inline-flex rounded-full bg-[#F0EDE8] p-1 font-sans">
+        {pill.w > 0 && <motion.span className="absolute top-1 bottom-1 left-0 rounded-full bg-white" style={{ boxShadow: '0 1px 3px rgb(36 21 16 / .12)' }} initial={false} animate={{ x: pill.x, width: pill.w }} transition={{ duration: 0.35, ease }} />}
         {JOURNEYS.map((j, i) => (
           <button
+            ref={el => { btnRefs.current[i] = el; }}
             key={j.label}
             role="tab"
             aria-selected={tab === i}
@@ -84,7 +97,6 @@ export function DevolutivaLaptopMotion({ showDesc = true }: { showDesc?: boolean
             className="relative px-4 md:px-5 py-1.5 text-[13px] md:text-[14px] font-semibold rounded-full transition-colors cursor-pointer"
             style={{ color: tab === i ? '#241510' : '#6F625B' }}
           >
-            {tab === i && <motion.span layoutId="devolutiva-journey" className="absolute inset-0 rounded-full bg-white" style={{ boxShadow: '0 1px 3px rgb(36 21 16 / .12)' }} transition={{ duration: 0.35, ease }} />}
             <span className="relative">{j.label}</span>
           </button>
         ))}
@@ -106,7 +118,7 @@ export function DevolutivaLaptopMotion({ showDesc = true }: { showDesc?: boolean
         </AnimatePresence>
       </div>}
 
-      <div className="w-full">
+      <div className={showDesc ? 'w-full' : 'w-full mt-6'}>
         <LaptopMockup
           viewRef={viewRef}
           width={width}
