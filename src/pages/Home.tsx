@@ -256,10 +256,10 @@ export default function Home() {
 
         <div className="mt-6 lg:mt-[3vh] lg:flex-1">
           <p className="text-[#6F625B] text-[15px] leading-[1.55]">
-            Sou designer há 12 anos, os últimos seis dedicados a produtos digitais. Gosto de projetar produtos end to end, transformando problemas complexos em soluções simples e centradas em quem usa.
+            Sou designer há 12 anos, os últimos seis dedicados a produtos digitais. Projeto produtos de forma end to end, transformando problemas complexos em soluções centradas em quem usa.
           </p>
           <p className="text-[#6F625B] text-[15px] leading-[1.55] mt-3">
-            Trabalho de forma AI-first: uso a IA para acelerar pesquisas, explorar ideias, prototipar e entregar funcionalidades com mais velocidade e qualidade, sem perder o olhar humano que guia cada decisão.
+            Atuando de forma AI-first para acelerar pesquisas, explorar ideias, prototipar e entregar funcionalidades com mais velocidade e qualidade, sem perder o olhar humano que guia cada decisão.
           </p>
           <Link
             to="/sobre-mim"
