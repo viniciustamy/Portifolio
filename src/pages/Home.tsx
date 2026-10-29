@@ -152,7 +152,7 @@ function SectionTitle({ title, description }: { title: string; description?: str
 }
 
 export default function Home() {
-  useDocumentTitle('Início');
+  useDocumentTitle();
   const { projects } = useProjects();
   const cases = projects.slice(0, 5);
   const works = projects.slice(5, 9);
