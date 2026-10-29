@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Bold, Italic, Link2, List, ListOrdered, Sparkles, Underline, X } from 'lucide-react';
+import { Bold, Italic, Link2, List, ListOrdered, Underline, X } from 'lucide-react';
 import { C, FIELDS, FieldKey, TEXT, emptyFields, typeText, wait } from './DevolutivaIaMotion';
 
 /*
@@ -194,7 +194,7 @@ export function DevolutivaThumbMotion({ active }: { active: boolean }) {
               <div className="flex items-center gap-2">
                 <span className="text-[16px] font-medium">Devolutiva com Gupy IA</span>
                 <span className="ml-2 flex items-center gap-1 text-[11.5px] font-semibold text-white rounded-md px-1.5" style={{ height: 21, background: C.blue }}>
-                  <Sparkles size={10} /> Beta
+                  Beta
                 </span>
               </div>
               <p className="text-[13px] leading-[1.45] mt-3" style={{ color: C.sub }}>

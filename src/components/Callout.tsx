@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { Sparkles } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
 
 /*
  * Destaque usado nas telas da Devolutiva: anel verde em volta de um bloco e um balão branco com
@@ -46,7 +46,7 @@ export function Callout({
             exit={{ opacity: 0, x }}
             transition={{ duration: 0.4, delay: 0.15, ease: grow }}
           >
-            <Sparkles size={20} color={GREEN} className="shrink-0" />
+            <Lightbulb size={20} color={GREEN} className="shrink-0" />
             {text}
             {/* Pontinha do balão, apontando para o anel */}
             <span

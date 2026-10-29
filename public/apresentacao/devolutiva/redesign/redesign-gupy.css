@@ -1,0 +1,390 @@
+/*
+ * Camada final da demo "como eu faria hoje": reproduz o design system da época (telas reais da
+ * Devolutiva na Gupy) com ajustes leves de consistência e conforto. As melhorias da proposta
+ * continuam: filtros e área no RH, OKRs e feedbacks do ciclo para o gestor, recomendações para o
+ * colaborador, IA com rastreabilidade.
+ * Tokens das telas: fundo #F3F4F6, cards brancos (raio 20), verde-azulado #0E8270 nas ações,
+ * azul #1A66DB em links e na Gupy IA, status marrom/azul/verde, fonte Inter.
+ */
+
+:root{
+  --primary:#0E8270;--primary-dark:#0B6D5E;--primary-soft:#D5F3EE;
+  --ink:#1F2328;--muted:#4B5058;--soft:#6B7079;--line:#E3E5E8;--canvas:#F3F4F6;--field:#ECEDEF;
+  --blue:#1A66DB;--pending:#9A6A0B;--waiting:#2F7FC1;--sent:#2E8B2E;
+}
+html body{font-family:Inter,system-ui,sans-serif!important;background:var(--canvas)!important;color:var(--ink)!important;font-size:14px;-webkit-font-smoothing:antialiased}
+html body *{font-family:inherit}
+
+/* ---------- Moldura: menu de ícones + barra do topo ---------- */
+html body .gupy-rail{position:fixed!important;inset:0 auto 0 0!important;width:92px!important;padding:24px 0!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:24px!important;background:#fff!important;border:0!important;box-shadow:4px 0 16px rgb(15 23 42 / .05)!important;z-index:30!important}
+html body .rail-logo{display:flex;align-items:flex-start;font-size:30px;font-weight:800;line-height:1;color:var(--ink)!important;letter-spacing:-1px;margin-bottom:40px;text-decoration:none}
+html body .rail-logo span{font-size:13px;margin-left:1px;color:var(--ink)}
+html body .rail-item{position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;color:var(--ink)}
+html body .rail-item svg{width:24px;height:24px;fill:currentColor}
+html body .rail-item.is-active{background:var(--primary-soft);color:#0B5E52}
+html body .rail-item b{position:absolute;top:2px;right:0;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #fff}
+html body .rail-gap{margin-top:56px}
+
+html body .gupy-topbar{position:sticky!important;top:0!important;z-index:20!important;margin-left:92px!important;height:72px!important;padding:0 32px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;background:#fff!important;border:0!important;box-shadow:0 4px 16px rgb(15 23 42 / .04)!important}
+html body .gupy-topbar .return-case{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--blue)!important;text-decoration:none;position:static!important;transform:none!important}
+html body .topbar-actions{display:flex;align-items:center;gap:24px}
+html body .topbar-actions svg{width:24px;height:24px;fill:var(--ink)}
+html body .topbar-avatar{width:42px;height:42px;border-radius:999px;object-fit:cover;box-shadow:0 0 0 2px #fff,0 2px 6px rgb(0 0 0 / .18)}
+
+/* Seletor de visão da demo, centralizado no topo */
+html body .gupy-rail nav{position:fixed!important;top:16px!important;left:calc(50% + 46px)!important;transform:translateX(-50%)!important;z-index:40!important;display:flex!important;align-items:center!important;gap:2px!important;height:40px!important;margin:0!important;padding:4px!important;background:var(--field)!important;border:0!important;border-radius:999px!important}
+html body .gupy-rail nav a{display:flex!important;align-items:center!important;height:32px!important;margin:0!important;padding:0 18px!important;border:0!important;border-radius:999px!important;background:transparent!important;color:var(--muted)!important;font-size:13px!important;font-weight:500!important;line-height:1!important;white-space:nowrap!important;text-decoration:none!important;box-shadow:none!important}
+html body .gupy-rail nav a::before,html body .gupy-rail nav a::after{display:none!important}
+html body .gupy-rail nav a.active{background:#fff!important;color:var(--primary)!important;font-weight:600!important;box-shadow:0 1px 3px rgb(15 23 42 / .1)!important}
+
+html body main#app{margin-left:92px!important;max-width:none!important;padding:32px 32px 80px!important;background:transparent!important}
+
+/* ---------- Títulos e voltar ---------- */
+html body .heading{margin-bottom:28px!important;align-items:flex-start!important}
+html body .heading h1{font-size:32px!important;font-weight:500!important;letter-spacing:-.4px!important;line-height:1.25!important;color:var(--ink)!important;display:flex;align-items:center;gap:12px}
+html body .heading p{font-size:15px!important;color:var(--muted)!important;margin:10px 0 0!important}
+html body .page-back-row{position:absolute!important;width:auto!important;margin:0!important;padding:0!important}
+html body .page-back-row + .heading,html body .page-back-row + * > .heading:first-child{padding-left:60px!important}
+html body .page-back,html body .editor-back,html body .collaborator-report .back-button{width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;border:2px solid var(--primary)!important;border-radius:999px!important;background:transparent!important;color:var(--primary)!important;font-size:0!important}
+html body .page-back svg,html body .editor-back svg,html body .collaborator-report .back-button svg{width:20px!important;height:20px!important;color:var(--primary)!important}
+html body .editor-compose{position:relative}
+html body .editor-compose .editor-back{position:absolute!important;left:32px;top:32px}
+html body .editor-compose > .heading{padding-left:60px!important;min-height:44px;align-items:center!important}
+html body .collaborator-report > .heading{position:relative;padding-left:60px!important}
+html body .collaborator-report > .heading .back-button{position:absolute!important;left:0;top:-4px}
+
+/* ---------- Cards, listas e linhas ---------- */
+html body .card,html body .rh-content,html body .manager-team-table{background:#fff!important;border:0!important;border-radius:20px!important;box-shadow:none!important}
+html body .rh-content{padding:24px!important}
+html body .feedback-list{display:flex!important;flex-direction:column!important;gap:16px!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+html body .feedback-row{display:grid!important;grid-template-columns:1.25fr 1.25fr 1fr 1.2fr auto 24px!important;align-items:center!important;gap:24px!important;padding:24px!important;background:#fff!important;border:0!important;border-radius:16px!important;box-shadow:none!important;color:var(--ink)!important;text-decoration:none!important;transition:box-shadow .2s}
+html body .feedback-row:hover{box-shadow:0 4px 16px rgb(15 23 42 / .08)!important}
+html body .feedback-row>.feedback-name,html body .feedback-row>.feedback-field{grid-column:auto!important}
+html body .feedback-row .feedback-name{font-size:16px!important;font-weight:600!important;color:var(--ink)!important}
+html body .feedback-row .feedback-name::before{content:'Nome';display:block;font-size:12px;font-weight:400;color:var(--muted);margin-bottom:8px}
+html body .feedback-field{display:block!important}
+html body .feedback-field>svg{display:none!important}
+html body .feedback-field .sr-only{position:static!important;width:auto!important;height:auto!important;clip:auto!important;overflow:visible!important;white-space:nowrap!important;display:block!important;margin:0 0 8px!important;font-size:12px!important;color:var(--muted)!important}
+html body .feedback-field strong{font-size:14px!important;font-weight:600!important;color:var(--ink)!important}
+html body .feedback-field .who{display:flex!important;align-items:center!important;gap:10px!important}
+html body .feedback-field .who .avatar{width:32px!important;height:32px!important}
+html body .feedback-status .sr-only{visibility:hidden}
+html body .row-chevron{color:var(--ink)!important;font-size:0!important;display:flex;justify-content:flex-end}
+html body .row-chevron svg{width:20px;height:20px}
+
+/* ---------- Status (chips) como nas telas ---------- */
+html body .chip,html body .badge.chip,html body .cycle-status.chip{padding:4px 8px!important;min-height:0!important;border-radius:6px!important;font-size:13px!important;font-weight:600!important;gap:6px!important;line-height:1.3!important}
+html body .chip-warning,html body .badge.chip-warning{background:#F6ECD6!important;color:#5C4106!important}
+html body .chip-warning .lucide-icon{color:var(--pending)!important}
+html body .chip-info,html body .badge.chip-info{background:#E1ECF8!important;color:#1D4C7C!important}
+html body .chip-info .lucide-icon{color:var(--waiting)!important}
+html body .chip-success,html body .badge.chip-success,html body .cycle-status.chip-success{background:#E3F1E3!important;color:#1D5F1D!important}
+html body .chip-success .lucide-icon{color:var(--sent)!important}
+html body .chip-neutral,html body .cycle-status.chip-neutral{background:var(--field)!important;color:var(--muted)!important}
+
+/* ---------- Botões ---------- */
+html body button,html body .button{font-weight:600!important;border-radius:999px!important}
+html body button.primary,html body .primary,html body a.primary{background:var(--primary)!important;border:2px solid var(--primary)!important;color:#fff!important;box-shadow:0 2px 6px rgb(14 130 112 / .3)!important}
+html body button.primary:hover,html body .primary:hover{background:var(--primary-dark)!important;border-color:var(--primary-dark)!important}
+html body button.tertiary{color:var(--blue)!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+html body a{color:var(--blue)}
+
+/* ---------- RH: informações, filtros e tabela de líderes ---------- */
+html body .compact-meta{display:flex!important;flex-wrap:wrap!important;gap:12px 28px!important;align-items:center!important;padding:0 0 24px!important;margin:0 0 24px!important;border-bottom:1px solid var(--line)!important;font-size:14px!important;color:var(--muted)!important}
+html body .compact-meta span{display:inline-flex!important;align-items:center!important;gap:8px!important}
+html body .compact-meta strong{font-weight:600!important;color:var(--ink)!important}
+html body .compact-meta button.tertiary strong{color:var(--blue)!important;font-weight:500!important}
+html body .compact-meta .meta-divider{display:none!important}
+html body .rh-toolbar{display:flex!important;flex-wrap:wrap!important;gap:16px!important;align-items:center!important;margin:0 0 20px!important}
+html body .rh-filter{display:inline-flex!important;align-items:center!important;gap:8px!important;height:40px!important;padding:0 16px!important;border:1px solid var(--line)!important;border-radius:999px!important;background:#fff!important;color:var(--ink)!important;font-size:13px!important;font-weight:500!important;box-shadow:none!important}
+html body .rh-filter b{font-weight:600!important;color:var(--muted)!important}
+html body .rh-filter.pending i{background:var(--pending)!important}
+html body .rh-filter.waiting i{background:var(--waiting)!important}
+html body .rh-filter.sent i{background:var(--sent)!important}
+html body .rh-filter[aria-pressed="true"]{background:var(--primary-soft)!important;border-color:transparent!important;color:#0B5E52!important}
+html body .rh-area-filter,html body .rh-search{height:48px!important;padding:0 18px!important;border:0!important;border-radius:999px!important;background:var(--field)!important;display:flex!important;align-items:center!important;gap:10px!important}
+html body .rh-area-filter{border-radius:10px!important}
+html body .rh-area-filter span{font-size:13px!important;color:var(--muted)!important}
+html body .rh-area-filter select,html body .rh-search input{font-size:15px!important;color:var(--ink)!important;background-color:transparent!important}
+html body .table-wrap{border:1px solid var(--line)!important;border-radius:12px!important;overflow:hidden!important;background:#fff!important;box-shadow:none!important}
+html body .manager-team-table{padding:0!important}
+html body table{border-collapse:collapse!important}
+html body th{font-size:14px!important;font-weight:500!important;color:var(--ink)!important;text-transform:none!important;letter-spacing:0!important;padding:12px 16px!important;border-bottom:1px solid var(--line)!important;background:#fff!important}
+html body td{padding:14px 16px!important;border-bottom:1px solid var(--line)!important;font-size:14px!important;vertical-align:middle!important}
+html body tr:last-child td{border-bottom:0!important}
+html body td .who strong{font-size:16px!important;font-weight:500!important;color:var(--ink)!important}
+html body td .who small{font-size:13px!important;color:var(--muted)!important}
+html body td .avatar,html body .who .avatar{width:40px!important;height:40px!important;border-radius:999px!important;object-fit:cover}
+html body .leader-team-count{display:inline-flex!important;align-items:center!important;gap:8px!important;padding:6px 14px!important;border-radius:999px!important;background:var(--field)!important;font-weight:600!important;color:var(--ink)!important}
+html body .leader-team-row td{background:#F7F8F9!important}
+html body .progress{height:8px!important;border-radius:999px!important;overflow:hidden!important;background:var(--field)!important}
+html body .progress span:nth-child(1){background:var(--pending)!important}
+html body .progress span:nth-child(2){background:var(--waiting)!important}
+html body .progress span:nth-child(3){background:var(--sent)!important}
+html body .progress-labels{font-size:12.5px!important;color:var(--muted)!important;margin-bottom:6px!important}
+html body .table-footer{margin-top:14px!important;font-size:13px!important;color:var(--muted)!important}
+
+/* ---------- Gestor: conclusão com Gupy IA + relatório ao lado ---------- */
+html body .editor-page{gap:0!important;margin:-32px -32px -80px!important;min-height:calc(100vh - 72px)!important}
+html body .editor-compose{padding:32px!important}
+html body .editor-page .report-preview{background:#E4E6EA!important;border-radius:0!important;padding:24px 32px 48px!important}
+html body .editor-page .report-preview .expand{color:var(--blue)!important;font-size:14px!important;font-weight:500!important}
+html body .editor-compose form.card{padding:24px!important}
+html body .editor-compose .ai{background:transparent!important;border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;padding:0 0 24px!important;margin:0 0 24px!important}
+html body .editor-compose .ai-title h3{font-size:17px!important;font-weight:500!important}
+html body .editor-compose .ai-title svg{color:var(--blue)!important}
+html body .ai-beta{background:var(--blue)!important;color:#fff!important;border-radius:6px!important;padding:2px 8px!important;font-size:12px!important;font-weight:600!important}
+html body .editor-compose .ai p{color:var(--muted)!important;font-size:14px!important;line-height:1.55!important}
+html body .editor-compose .ai .primary{background:var(--blue)!important;border-color:var(--blue)!important;box-shadow:0 2px 6px rgb(26 102 219 / .3)!important}
+html body .field label{font-size:14px!important;font-weight:500!important;color:var(--ink)!important}
+html body .field textarea,html body textarea{background:var(--field)!important;border:0!important;border-radius:10px!important;padding:14px 16px!important;font-size:15px!important;line-height:1.55!important;color:var(--ink)!important}
+html body .field textarea:focus,html body textarea:focus{outline:2px solid #BFE3DC!important}
+
+/* ---------- Relatório individual ---------- */
+html body .report{padding:28px!important}
+html body .report-top-row .who strong{font-size:20px!important;font-weight:500!important}
+html body .report-top-row .who small{font-size:15px!important;color:var(--muted)!important}
+html body .report-top-row .who .avatar{width:64px!important;height:64px!important;flex-basis:64px!important}
+html body .section-head h3{font-size:17px!important;font-weight:500!important;letter-spacing:0!important}
+html body .section-head .section-description{font-size:13px!important;color:var(--muted)!important}
+html body .competencies-list{border:1px solid var(--line)!important;border-radius:12px!important;overflow:hidden!important}
+html body .competency{border-bottom:1px solid var(--line)!important;padding:16px!important}
+html body .competency:last-child{border-bottom:0!important}
+html body .collaborator-tabs{border-bottom:1px solid var(--line)!important;gap:24px!important;margin-bottom:24px!important}
+html body .collaborator-tab{border:0!important;background:transparent!important;color:var(--muted)!important;font-weight:500!important;border-radius:0!important;padding:10px 0!important;box-shadow:none!important}
+html body .collaborator-tab[aria-selected="true"]{color:var(--primary)!important;font-weight:600!important}
+html body .collaborator-tab[aria-selected="true"]::after{background:var(--primary)!important}
+html body .tab-badge{background:var(--blue)!important;color:#fff!important;border-radius:6px!important}
+
+@media (max-width:900px){
+  html body .gupy-rail{display:none!important}
+  html body .gupy-topbar,html body main#app{margin-left:0!important}
+  html body .gupy-rail nav{display:flex!important;left:50%!important}
+  html body .feedback-row{grid-template-columns:1fr 1fr!important}
+}
+
+/* Ajustes finos */
+html body button.tertiary.page-back,html body button.tertiary.editor-back,html body .collaborator-report button.tertiary.back-button{border:2px solid var(--primary)!important;color:var(--primary)!important}
+html body .feedback-row{grid-template-columns:1.6fr 1.2fr 1fr 1.3fr auto 24px!important}
+html body .feedback-row .feedback-name{white-space:nowrap}
+html body .rh-toolbar-controls{flex:1!important;display:flex!important;gap:12px!important;justify-content:flex-end!important;min-width:420px}
+html body .rh-search{flex:1!important;max-width:420px}
+html body .rh-search input{width:100%!important}
+html body .rh-area-filter select,html body .rh-toolbar .rh-area-filter select{width:160px!important}
+html body .collaborator-report > .heading .actions{position:static!important}
+html body .collaborator-report > .heading .back-button{top:0!important}
+html body .feedback-field .who .avatar{display:block!important}
+html body .collaborator-report > .heading{align-items:center!important}
+html body .collaborator-report > .heading .back-button{top:50%!important;transform:translateY(-50%)!important}
+
+/* ===== Rodada 2: alinhamentos, voltar em texto, ícones nas linhas ===== */
+html body .gupy-rail{padding-top:48px!important}
+
+/* Título da página alinhado com a borda dos cards */
+html body .collaborator-list-page .heading{padding-left:0!important;padding-right:0!important;margin-bottom:24px!important}
+
+/* Linhas das listas: ícone + valor numa linha só, como no estilo anterior */
+html body .feedback-row{grid-template-columns:minmax(220px,1.5fr) minmax(150px,1fr) minmax(190px,1.3fr) minmax(150px,1fr) 110px 20px!important;gap:20px!important;padding:22px 24px!important}
+html body .feedback-row .feedback-name::before{content:none!important}
+html body .feedback-field{display:flex!important;align-items:center!important;gap:10px!important;min-width:0}
+html body .feedback-field>svg{display:block!important;width:18px!important;height:18px!important;flex:none;color:var(--soft)!important}
+html body .feedback-field .sr-only{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;margin:-1px!important;white-space:nowrap!important}
+html body .feedback-field strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html body .feedback-field .who span{display:flex;flex-direction:column;line-height:1.3}
+html body .feedback-status{justify-content:flex-end!important}
+
+/* Voltar: link de texto acima do título, em todas as telas */
+html body .page-back-row{position:static!important;display:block!important;margin:0 0 12px!important}
+html body .page-back-row + .heading,html body .page-back-row + * > .heading:first-child,html body .editor-compose > .heading,html body .collaborator-report > .heading{padding-left:0!important}
+html body .page-back,html body .editor-back,html body .collaborator-report .back-button,
+html body button.tertiary.page-back,html body button.tertiary.editor-back,html body .collaborator-report button.tertiary.back-button{width:auto!important;height:auto!important;min-width:0!important;padding:4px 0!important;display:inline-flex!important;align-items:center!important;gap:6px!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--primary)!important;font-size:0!important;box-shadow:none!important;position:static!important;transform:none!important}
+html body .page-back::after,html body .editor-back::after,html body .collaborator-report .back-button::after{content:'Voltar';font-size:14px;font-weight:600}
+html body .page-back svg,html body .editor-back svg,html body .collaborator-report .back-button svg{width:18px!important;height:18px!important}
+html body .editor-compose .editor-back{margin-bottom:12px!important}
+html body .collaborator-report > .heading{position:relative!important;padding-top:40px!important;align-items:flex-end!important}
+html body .collaborator-report > .heading .back-button{position:absolute!important;left:0!important;top:0!important}
+
+/* Foco só com teclado (sem a caixa no clique) */
+html body button:focus:not(:focus-visible),html body a:focus:not(:focus-visible){outline:none!important;box-shadow:inherit}
+html body .collaborator-tab:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}
+
+/* RH: informações do ciclo no cinza, embaixo do título; só a tabela no card */
+html body .rh-content{background:transparent!important;padding:0!important;border-radius:0!important}
+html body .compact-meta{border-bottom:0!important;padding:0!important;margin:-12px 0 28px!important}
+html body .rh-content .table-wrap,html body .manager-team-table{background:#fff!important;border:0!important;border-radius:20px!important}
+
+/* Filtros com a mesma altura e contraste no selecionado */
+html body .rh-filter,html body .rh-area-filter,html body .rh-search{height:44px!important;box-sizing:border-box!important}
+html body .rh-filter b{min-width:24px;height:22px;padding:0 7px;border-radius:999px;background:var(--field)!important;color:var(--muted)!important;display:inline-flex;align-items:center;justify-content:center;font-size:12px!important}
+html body .rh-filter[aria-pressed="true"]{background:var(--primary)!important;border-color:var(--primary)!important;color:#fff!important}
+html body .rh-filter[aria-pressed="true"] b{background:rgb(255 255 255 / .22)!important;color:#fff!important}
+html body .rh-filter[aria-pressed="true"] i{box-shadow:0 0 0 2px #fff}
+html body .rh-filter:focus:not(:focus-visible){outline:none!important}
+html body .rh-area-filter{border-radius:999px!important}
+
+/* Gestor: conclusão + relatório até a borda direita */
+html body .editor-page{width:auto!important;max-width:none!important;margin:-32px -32px -80px!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+html body .editor-compose{padding:24px 32px 32px!important}
+
+/* Relatório: cabeçalho encostado nas bordas do card, sem padding sobrando */
+html body .report{padding:0!important;overflow:hidden!important}
+html body .report-top-row{padding:24px!important;margin:0!important;background:#fff!important;border-bottom:1px solid var(--line)!important;border-radius:0!important}
+html body .report-body{padding:24px!important}
+
+/* Títulos dos cards com o mesmo peso */
+html body .leader-conclusion-card>.section-head h3,html body .comments-section>h2,html body .collaborator-report .card>.section-head h3{font-size:20px!important;font-weight:600!important;letter-spacing:-.2px!important;color:var(--ink)!important;margin:0 0 8px!important}
+html body .comments-section>p{font-size:14px!important;color:var(--muted)!important}
+html body .collaborator-report > .heading .actions button.tertiary.back-button{position:absolute!important;left:0!important;top:0!important}
+
+/* ===== Rodada 3: voltar neutro e alinhado, modais, cards do editor, competências ===== */
+
+/* Voltar alinhado com o conteúdo centralizado de cada página, em cor neutra */
+html body .page-back-row{width:100%!important;max-width:1100px!important;margin:0 auto 12px!important}
+html body .page-back-row:has(+ .manager-reference){max-width:1106px!important}
+html body .page-back,html body .editor-back,html body .collaborator-report .back-button,
+html body button.tertiary.page-back,html body button.tertiary.editor-back,html body .collaborator-report button.tertiary.back-button{color:var(--muted)!important}
+html body .page-back:hover,html body .editor-back:hover,html body .collaborator-report .back-button:hover{color:var(--ink)!important}
+html body .page-back svg,html body .editor-back svg,html body .collaborator-report .back-button svg{color:currentColor!important;margin-left:-3px}
+
+/* Modais: cabeçalho e rodapé fixos, fechar alinhado ao título, fundo escurecido */
+html body dialog#modal{padding:0!important;border:0!important;border-radius:20px!important;width:min(720px,92vw)!important;max-width:720px!important;max-height:86vh!important;overflow:hidden!important;box-shadow:0 24px 64px rgb(15 23 42 / .22)!important}
+html body dialog#modal::backdrop{background:rgb(15 23 42 / .45)!important}
+html body dialog#modal #modal-body{max-height:86vh!important;overflow-y:auto!important;overscroll-behavior:contain;padding:0 28px!important}
+html body dialog#modal #modal-body h2:first-child,html body dialog#modal #modal-body > div:first-child > h2:first-child{position:sticky!important;top:0!important;z-index:3!important;margin:0 -28px 20px!important;padding:24px 76px 18px 28px!important;background:#fff!important;border-bottom:1px solid var(--line)!important;font-size:20px!important;font-weight:600!important;line-height:1.35!important;color:var(--ink)!important}
+html body dialog#modal #modal-body .actions{position:sticky!important;bottom:0!important;z-index:3!important;display:flex!important;justify-content:flex-end!important;align-items:center!important;gap:12px!important;margin:24px -28px 0!important;padding:16px 28px!important;background:#fff!important;border-top:1px solid var(--line)!important}
+html body dialog#modal #modal-body > div:first-child > :last-child:not(.actions),html body dialog#modal #modal-body .ai-result-panel > p:last-child{padding-bottom:20px!important}
+html body dialog#modal > .modal-close{position:absolute!important;top:20px!important;right:20px!important;z-index:4!important;width:36px!important;height:36px!important;padding:0!important;display:grid!important;place-items:center!important;border:0!important;border-radius:999px!important;background:transparent!important;color:var(--muted)!important;box-shadow:none!important}
+html body dialog#modal > .modal-close:hover{background:var(--field)!important;color:var(--ink)!important}
+html body dialog#modal .compact-meta{margin:0 0 16px!important}
+
+/* Editor do gestor: assistente, guia e campos em cards separados; botões no fundo cinza */
+html body .editor-compose form.card{background:transparent!important;padding:0!important;border-radius:0!important}
+html body .editor-compose .ai{background:#fff!important;border:0!important;border-radius:20px!important;padding:24px!important;margin:0 0 16px!important}
+html body .editor-compose .editor-guide{background:#fff!important;border:0!important;border-radius:20px!important;margin:0!important;overflow:hidden}
+html body .editor-compose .editor-guide summary{padding:18px 24px!important;background:transparent!important;min-height:0!important}
+html body .editor-compose .editor-guide[open]{background:#fff!important}
+html body .editor-compose .editor-guide > .conclusion-text{padding:0 24px 20px!important;background:transparent!important;border:0!important}
+html body .editor-compose .editor-guide > .conclusion-text p{padding:0!important;margin:0 0 12px!important;font-size:14px!important;line-height:1.55!important;color:var(--muted)!important}
+html body .editor-compose .editor-guide > .conclusion-text p strong{color:var(--ink)!important}
+html body .editor-compose .field{background:#fff!important;margin:0!important;padding:20px 24px 0!important}
+html body .editor-compose .editor-guide + .field{margin-top:16px!important;border-radius:20px 20px 0 0!important;padding-top:24px!important}
+html body .editor-compose .field:has(+ .actions){border-radius:0 0 20px 20px!important;padding-bottom:24px!important}
+html body .editor-compose form > .actions{background:transparent!important;border:0!important;padding:0!important;margin:20px 0 0!important;display:flex!important;justify-content:flex-end!important;align-items:center!important;gap:12px!important}
+
+/* Competências: aberto e fechado no mesmo fundo, com o conteúdo alinhado ao título */
+html body .competency{padding:0!important;background:#fff!important}
+html body .competency summary{padding:16px 20px!important;background:transparent!important;min-height:0!important}
+html body .competency summary:hover{background:#F7F8F9!important}
+html body .competency[open]{background:#F7F8F9!important}
+html body .competency[open] summary{border-bottom:0!important}
+html body .competency[open] > p,html body .competency[open] > div:not(summary){padding:0 20px 14px!important;margin:0!important;background:transparent!important;font-size:14px!important;line-height:1.55!important;color:var(--muted)!important}
+html body .competency[open] > p:first-of-type{padding-top:0!important}
+html body .competency[open] > :last-child{padding-bottom:20px!important}
+html body .competency-icon{background:var(--primary-soft)!important;color:#0B5E52!important}
+
+/* Relatório: card com contorno e cabeçalho em cinza claro */
+html body .report{border:1px solid var(--line)!important}
+html body .report-top-row{background:#F7F8F9!important}
+
+/* ===== Rodada 4: ordem do relatório, collapses, tabelas, filtros, e-mail ===== */
+
+/* Fundo do produto um pouco mais claro */
+:root{--canvas:#F7F8FA}
+html body{background:var(--canvas)!important}
+
+/* Relatório: título e subtítulo → avaliações (collapses) → gráficos, em todas as seções */
+html body .report-body,html body .report-body > section{display:flex!important;flex-direction:column!important}
+html body .report-body > .section-head,html body .report-body > section > .section-head{order:1}
+html body .report-body > .competencies-list,html body .report-body > section > .competencies-list{order:2}
+html body .report-body > .chart-block,html body .report-body > section > .chart-block{order:3;margin-top:24px!important}
+html body .report-body > section{order:4}
+html body .report-body > .section-head,html body .report-body > section > .section-head{margin-bottom:16px!important}
+/* Sem divisórias entre Competências, Performance, OKRs e Feedbacks; só espaço */
+html body .report-body > section,html body .performance-section,html body .okrs-section,html body .cycle-feedbacks-section{border-top:0!important;border-bottom:0!important;padding-top:0!important;margin-top:40px!important;box-shadow:none!important}
+html body .report-body > section::before,html body .report-body > section::after{display:none!important}
+html body .report-body hr{display:none!important}
+
+/* Collapse: cabeçalho sempre branco; aberto, só o conteúdo fica cinza, com divisória */
+html body .competency,html body .competency[open]{background:#fff!important}
+html body .competency summary:hover{background:#FAFBFC!important}
+html body .competency[open] > :not(summary){background:#F7F8F9!important;margin:0!important}
+html body .competency[open] > summary + *{border-top:1px solid var(--line)!important;padding-top:16px!important}
+html body .competency[open] > :last-child{padding-bottom:18px!important}
+/* O guia fica dentro do próprio card: conteúdo branco, com respiro em cima */
+html body .editor-compose .editor-guide[open] > .conclusion-text{background:#fff!important;border-top:1px solid var(--line)!important;padding:20px 24px 8px!important}
+html body .guide-item{margin:0 0 16px!important}
+html body .guide-item strong{display:flex!important;align-items:center;gap:8px;margin-bottom:4px;font-size:14px;font-weight:600;color:var(--ink)!important}
+html body .guide-pts{font-size:11.5px;font-weight:600;color:#1D4C7C;background:#E1ECF8;border-radius:6px;padding:1px 6px}
+
+/* Tabelas: raio menor, contorno e cabeçalho em cinza */
+html body .table-wrap,html body .rh-content .table-wrap,html body .manager-team-table{border:1px solid var(--line)!important;border-radius:12px!important;overflow:hidden!important;background:#fff!important}
+html body .table-wrap th{background:#F1F2F4!important;font-size:13px!important;font-weight:600!important;color:var(--muted)!important}
+html body .table-wrap tbody tr td{transition:background-color .15s}
+html body .table-wrap tbody tr:hover td{background:#FAFBFC!important}
+/* Hover no botão de e-mail não acende a linha junto */
+html body .table-wrap tbody tr:has(button:hover) td,html body .table-wrap tbody tr:has(a:hover) td{background:#fff!important}
+html body .leader-email{width:36px!important;height:36px!important;padding:0!important;display:inline-grid!important;place-items:center!important;border-radius:999px!important;color:var(--muted)!important}
+html body .leader-email:hover{background:var(--field)!important;color:var(--ink)!important}
+/* Gestor: a linha inteira abre a pessoa */
+html body .manager-team-table tbody tr{cursor:pointer}
+
+/* Busca e área com mais contraste no fundo claro; popover próprio para a área */
+html body .rh-area-filter,html body .rh-search{background:#fff!important;box-shadow:inset 0 0 0 1px var(--line)!important}
+html body .rh-search:focus-within,html body .rh-area-filter:focus-within{box-shadow:inset 0 0 0 1.5px var(--primary)!important;outline:none!important}
+html body .rh-area-filter{position:relative!important;cursor:pointer}
+html body .rh-area-filter select{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important}
+html body .area-trigger{display:flex;align-items:center;gap:10px;min-width:150px;justify-content:space-between;border:0!important;background:transparent!important;padding:0!important;font-size:14px!important;font-weight:600!important;color:var(--ink)!important;box-shadow:none!important;cursor:pointer}
+html body .area-trigger svg{width:16px;height:16px;color:var(--muted);transition:transform .15s}
+html body .rh-area-filter.is-open .area-trigger svg{transform:rotate(180deg)}
+html body .area-popover{position:absolute;top:calc(100% + 8px);right:0;z-index:50;min-width:220px;padding:6px;background:#fff;border-radius:14px;box-shadow:0 0 0 1px var(--line),0 16px 40px rgb(15 23 42 / .14);display:none}
+html body .rh-area-filter.is-open .area-popover{display:block}
+html body .area-option{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 12px!important;border:0!important;border-radius:10px!important;background:transparent!important;color:var(--ink)!important;font-size:14px!important;font-weight:500!important;text-align:left;box-shadow:none!important;cursor:pointer}
+html body .area-option:hover{background:var(--field)!important}
+html body .area-option[aria-selected="true"]{color:var(--primary)!important;font-weight:600!important}
+html body .area-option[aria-selected="true"]::after{content:'✓';font-weight:700}
+
+/* E-mail de lembrete */
+html body .email-to{display:flex;align-items:center;gap:16px;padding:0 0 16px;border-bottom:1px solid var(--line);margin-bottom:16px}
+html body .email-to > span{font-size:13px;color:var(--muted);width:72px}
+html body .email-to .who strong{display:block;font-size:15px}
+html body .email-to .who small{font-size:13px;color:var(--muted)}
+html body .email-field{display:block!important;margin:0 0 16px!important;font-size:13px!important;font-weight:600!important;color:var(--muted)!important}
+html body .email-field input,html body .email-field textarea{display:block;width:100%;margin-top:6px;box-sizing:border-box;background:var(--field)!important;border:0!important;border-radius:10px!important;padding:12px 14px!important;font-size:14.5px!important;font-weight:400!important;line-height:1.55!important;color:var(--ink)!important;resize:vertical}
+html body .email-note{font-size:13px!important;margin:0!important}
+
+/* ===== Rodada 5: barra do case separada do produto ===== */
+/* Barra do case, na identidade do portfólio: voltar, troca de visão (mesmo toggle do case) e aviso */
+html body .case-bar{position:fixed;inset:0 0 auto 0;height:56px;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#fff;border-bottom:1px solid #E2DCD4;font-family:Inter,system-ui,sans-serif}
+html body .case-bar .return-case{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#6F625B!important;text-decoration:none;position:static!important;transform:none!important}
+html body .case-bar .return-case:hover{color:#241510!important}
+html body .case-bar-label{font-size:13px;font-weight:600;color:#9E4322}
+html body .gupy-rail nav{top:8px!important;left:50%!important;transform:translateX(-50%)!important;z-index:70!important;height:auto!important;padding:4px!important;gap:0!important;background:#F0EDE8!important;border-radius:999px!important;box-shadow:none!important}
+html body .gupy-rail nav a{height:auto!important;padding:6px 20px!important;font-size:14px!important;font-weight:600!important;line-height:20px!important;color:#6F625B!important;border-radius:999px!important}
+html body .gupy-rail nav a.active{background:#fff!important;color:#241510!important;font-weight:600!important;box-shadow:0 1px 3px rgb(36 21 16 / .12)!important}
+
+/* Produto abaixo da barra do case, com o header mais baixo */
+html body{padding-top:56px!important}
+html body .gupy-rail{top:56px!important;padding-top:28px!important;gap:20px!important}
+html body .gupy-topbar{top:56px!important;height:60px!important;padding:0 28px!important}
+html body .topbar-actions{gap:20px!important}
+html body .topbar-actions svg{width:22px!important;height:22px!important}
+html body .topbar-avatar{width:36px!important;height:36px!important}
+html body .rail-gap{margin-top:40px!important}
+html body .editor-page{min-height:calc(100vh - 116px)!important}
+html body .editor-compose,html body .editor-page .report-preview{height:calc(100vh - 116px)!important}
+/* O menu fica numa camada acima da barra do case para o seletor de visão aparecer nela */
+html body .gupy-rail{z-index:65!important}
+/* Toggle com altura fixa e centralizado na barra do case, em qualquer largura de tela */
+html body .gupy-rail nav{top:28px!important;transform:translate(-50%,-50%)!important;height:40px!important;padding:4px!important;box-sizing:border-box!important;align-items:stretch!important}
+html body .gupy-rail nav a{height:32px!important;min-height:0!important;padding:0 18px!important;margin:0!important;display:flex!important;align-items:center!important;font-size:14px!important;line-height:1!important;box-sizing:border-box!important}
+/* Barra do case no marrom escuro do portfólio, para não se confundir com o produto simulado */
+html body .case-bar{background:#2E211B!important;border-bottom:0!important}
+html body .case-bar .return-case{color:#C9BDB4!important}
+html body .case-bar .return-case:hover{color:#fff!important}
+html body .case-bar-label{color:#E0A889!important}
+html body .gupy-rail nav{background:rgb(255 255 255 / .1)!important}
+html body .gupy-rail nav a{color:#C9BDB4!important}
+html body .gupy-rail nav a:hover{color:#fff!important}
+html body .gupy-rail nav a.active{background:#fff!important;color:#241510!important}
+/* Títulos das páginas com um pouco mais de peso */
+html body .heading h1{font-weight:600!important}

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Devolutivas · Performance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="redesign.css">
+  <link rel="stylesheet" href="redesign-modern.css">
+  <link rel="stylesheet" href="redesign-gupy.css?v=13">
+</head>
+<body>
+  <!-- Barra do case (fora do produto): voltar, troca de visão e o aviso de que é uma proposta -->
+  <div class="case-bar">
+    <a class="return-case" href="/project/devolutiva?slide=evolucao"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/></svg>Voltar ao case</a>
+    <span class="case-bar-label">Proposta · como eu faria hoje</span>
+  </div>
+  <!-- Menu de ícones da plataforma (Material, preenchidos), com Devolutivas ativo -->
+  <aside class="app-sidebar gupy-rail">
+    <span class="rail-item" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span>
+    <span class="rail-item rail-gap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 17l3-2.94c-.39-.04-.68-.06-1-.06-2.67 0-8 1.34-8 4v2h9l-3-3zm2-5c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm4.47 8.5L12 17l1.4-1.41 2.07 2.08 5.13-5.17 1.4 1.41-6.53 6.59z"/></svg><b>12</b></span>
+    <span class="rail-item" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg></span>
+    <span class="rail-item" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.4c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z"/></svg></span>
+    <span class="rail-item is-active" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg></span>
+    <span class="rail-item rail-gap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg></span>
+    <span class="rail-item" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg></span>
+    <span class="rail-item" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg></span>
+    <span class="rail-item" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zM2 16h8v-2H2v2zm19.5-4.5L23 13l-6.99 7-4.51-4.5L13 14l3.01 3 5.49-5.5z"/></svg></span>
+    <!-- Troca de visão da demo (o script marca o link ativo) -->
+    <nav aria-label="Visões de devolutivas"><a href="#rh">Visão RH</a><a href="#gestor">Visão gestor</a><a href="#colaborador">Visão colaborador</a></nav>
+  </aside>
+  <header class="app-header gupy-topbar">
+    <span></span>
+    <div class="topbar-actions">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.48.48 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
+      <img class="topbar-avatar" src="../pessoas/p44.jpg" alt="">
+    </div>
+  </header>
+  <main id="app"></main>
+  <dialog id="modal"><div id="modal-body"></div><button type="button" class="modal-close" aria-label="Fechar" title="Fechar" onclick="this.closest('dialog').close()"><svg class="lucide-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></dialog>
+  <div id="toast" role="status"></div>
+  <script src="vendor/echarts.min.js"></script>
+  <script src="redesign.js"></script>
+  <script src="redesign-charts.js"></script>
+  <script>
+    // Clicar fora da modal (no fundo escurecido) fecha
+    document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+
+    // Ajustes de interação que o visual pede, aplicados a cada tela renderizada
+    (() => {
+      const app = document.getElementById('app');
+      const chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+
+      // Filtro de área: popover próprio no lugar da lista nativa do navegador (o select continua sendo a fonte do valor)
+      const enhanceArea = label => {
+        if (label.dataset.enhanced) return;
+        label.dataset.enhanced = '1';
+        const select = label.querySelector('select');
+        const trigger = document.createElement('button');
+        trigger.type = 'button';
+        trigger.className = 'area-trigger';
+        const pop = document.createElement('div');
+        pop.className = 'area-popover';
+        pop.setAttribute('role', 'listbox');
+        const sync = () => { trigger.innerHTML = `<span>${select.options[select.selectedIndex].text}</span>${chevron}`; };
+        [...select.options].forEach((opt, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'area-option';
+          b.textContent = opt.text;
+          b.addEventListener('click', e => {
+            e.stopPropagation();
+            select.selectedIndex = i;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            select.dispatchEvent(new Event('input', { bubbles: true }));
+            pop.querySelectorAll('.area-option').forEach((o, j) => o.setAttribute('aria-selected', j === i));
+            label.classList.remove('is-open');
+            sync();
+          });
+          b.setAttribute('aria-selected', i === select.selectedIndex);
+          pop.appendChild(b);
+        });
+        label.addEventListener('click', e => { e.preventDefault(); label.classList.toggle('is-open'); });
+        select.after(trigger, pop);
+        sync();
+      };
+      document.addEventListener('click', e => {
+        document.querySelectorAll('.rh-area-filter.is-open').forEach(l => { if (!l.contains(e.target)) l.classList.remove('is-open'); });
+      });
+
+      // Tabela do gestor: clicar em qualquer parte da linha abre a ação da pessoa
+      app.addEventListener('click', e => {
+        const row = e.target.closest('.manager-team-table tbody tr');
+        if (!row || e.target.closest('a,button')) return;
+        row.querySelector('td.end a, td.end button')?.click();
+      });
+
+      const enhance = () => {
+        app.querySelectorAll('.rh-area-filter').forEach(enhanceArea);
+        app.querySelectorAll('input[type="search"], .rh-search input, #team-search, #search').forEach(i => i.setAttribute('autocomplete', 'off'));
+      };
+      new MutationObserver(enhance).observe(app, { childList: true, subtree: true });
+      enhance();
+    })();
+  </script>
+</body>
+</html>

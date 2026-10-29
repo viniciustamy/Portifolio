@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Sparkles,
+  Zap,
   BookOpen,
   Shield,
   Code,
@@ -84,7 +84,7 @@ export const KbaSenhaContent = () => {
               : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
-            <Sparkles size={16} />
+            <Zap size={16} />
             Simplificado
           </button>
           <button

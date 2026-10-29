@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Puzzle, FileSpreadsheet, Headphones, AlertTriangle, Plug, Brain, Sparkles, BookOpen, ArrowRight } from 'lucide-react';
+import { Puzzle, FileSpreadsheet, Headphones, AlertTriangle, Plug, Brain, Zap, BookOpen, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { AnimatedNumber } from '../components/AnimatedNumber';
 import { AdminEcossistemaMotion } from '../components/AdminEcossistemaMotion';
@@ -1117,7 +1117,7 @@ export const AdminGlobalDocsContent = () => {
               : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
-            <Sparkles size={16} />
+            <Zap size={16} />
             Simplificado
           </button>
           <button

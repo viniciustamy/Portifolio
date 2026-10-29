@@ -22,7 +22,8 @@ const NO_CURSOR = { x: 0, y: 0, visible: false, down: false };
 const filledFields = { fortes: TEXT.fortes, melhoria: TEXT.melhoria, conclusao: TEXT.conclusao };
 const FORM_H = 1550;
 
-export function DevolutivaLaptopMotion() {
+// showDesc: frase de cada visão entre o toggle e o notebook (a apresentação esconde)
+export function DevolutivaLaptopMotion({ showDesc = true }: { showDesc?: boolean } = {}) {
   const { viewRef, width, inView } = useLaptopViewport();
   const screenRef = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState(0);
@@ -90,7 +91,7 @@ export function DevolutivaLaptopMotion() {
       </div>
 
       {/* O que é cada página */}
-      <div className="relative h-12 md:h-7 w-full max-w-[820px] mt-3 mb-1">
+      {showDesc && <div className="relative h-12 md:h-7 w-full max-w-[820px] mt-3 mb-1">
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
             key={tab}
@@ -103,7 +104,7 @@ export function DevolutivaLaptopMotion() {
             {JOURNEYS[tab].desc}
           </motion.p>
         </AnimatePresence>
-      </div>
+      </div>}
 
       <div className="w-full">
         <LaptopMockup

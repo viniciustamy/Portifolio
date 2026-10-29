@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowLeft, Bell, Bold, ChevronDown, ClipboardList, Home, Info, Italic, Link2, List, ListChecks,
-  ListOrdered, Maximize2, MessageSquare, MessageSquareText, MessagesSquare, Repeat, Settings, Sparkles,
+  ListOrdered, Maximize2, MessageSquare, MessageSquareText, MessagesSquare, Repeat, Settings, Bot,
   ThumbsUp, TrendingUp, Underline, UserCheck, X,
 } from 'lucide-react';
 import { Callout } from './Callout';
@@ -70,7 +70,8 @@ export const emptyFields: Record<FieldKey, string> = { fortes: '', melhoria: '',
 const AI_BUTTON: Point = { x: 256, y: 559 };
 const APPLY_BUTTON: Point = { x: 1034, y: 688 };
 
-export function DevolutivaIaMotion() {
+// viewH: altura visível do palco (padrão 800); maior deixa a janela mais alta, como na apresentação
+export function DevolutivaIaMotion({ viewH: VH = VIEW_H }: { viewH?: number } = {}) {
   const viewRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [inView, setInView] = useState(false);
@@ -181,16 +182,17 @@ export function DevolutivaIaMotion() {
   // Câmera: centraliza (cx, cy) do palco na janela, com o zoom pedido
   const base = width / STAGE_W;
   const s = base * cam.zoom;
-  const viewH = width * (VIEW_H / STAGE_W);
+  const viewH = width * (VH / STAGE_W);
   const tx = width / 2 - cam.cx * s;
-  const ty = viewH / 2 - cam.cy * s;
+  // Não deixa a câmera sair do palco na vertical (importa quando a janela é mais alta que 800)
+  const ty = Math.min(0, Math.max(viewH - STAGE_H * s, viewH / 2 - cam.cy * s));
   const ease = [0.65, 0, 0.35, 1] as const;
 
   return (
     <div
       ref={viewRef}
       className="relative w-full overflow-hidden rounded-2xl bg-[#DEE0E4] select-none"
-      style={{ aspectRatio: `${STAGE_W} / ${VIEW_H}` }}
+      style={{ aspectRatio: `${STAGE_W} / ${VH}` }}
       aria-label="Animação do fluxo: o gestor gera a conclusão com a Gupy IA e aplica nos campos da devolutiva"
       role="img"
     >
@@ -243,7 +245,7 @@ export function DevolutivaIaMotion() {
 function AiIcon({ size = 22, color = C.blue }: { size?: number; color?: string }) {
   return (
     <span className="relative inline-flex items-center justify-center rounded-full shrink-0" style={{ width: size, height: size, border: `2px solid ${color}` }}>
-      <Sparkles size={size * 0.55} color={color} strokeWidth={2.4} />
+      <Bot size={size * 0.55} color={color} strokeWidth={2.4} />
     </span>
   );
 }
@@ -322,7 +324,7 @@ export function Stage({ fields, activeField, pressed, showLogo = true, highlight
           <div className="flex items-center gap-2">
             <span className="text-[17px] font-medium">Devolutiva com Gupy IA</span>
             <span className="ml-3 flex items-center gap-1 text-[13px] font-semibold text-white rounded-md px-2" style={{ height: 24, background: C.blue }}>
-              <Sparkles size={12} /> Beta
+              Beta
             </span>
           </div>
           <p className="text-[14.5px] leading-[1.4] mt-4" style={{ color: C.sub }}>

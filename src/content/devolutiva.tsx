@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { CountUpText } from '../components/CountUpText';
 import {
-  Sparkles,
+  Zap,
   BookOpen,
   Flag,
   Pencil,
@@ -72,7 +72,7 @@ export const DevolutivaContent = () => {
               : 'text-[#6F625B] hover:text-[#241510]'
               }`}
           >
-            <Sparkles size={16} />
+            <Zap size={16} />
             Simplificado
           </button>
           <button
@@ -353,14 +353,11 @@ export const DevolutivaContent = () => {
             </div>
 
             {/* Vozes de quem usa */}
-            <h3 className="not-prose font-serif text-xl font-bold text-[#241510] mt-16 mb-2">O que os usuários disseram</h3>
-            <p className="not-prose text-[15px] text-[#6F625B] leading-relaxed mb-5 max-w-3xl">
-              Nas entrevistas depois do lançamento, gestores relataram terminar em 3 a 4 dias as devolutivas que antes levavam de uma a quatro semanas.
-            </p>
+            <h3 className="not-prose font-serif text-xl font-bold text-[#241510] mt-16 mb-5">O que os usuários disseram</h3>
             <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
                 { quote: 'Agora eu consigo saber quem cobrar. Eu não tinha essa informação antes, posso ir direto na pessoa.', who: 'RH de cliente' },
-                { quote: 'Tinha um gestor que levava duas semanas para fazer as devolutivas. Hoje ele termina em poucos dias.', who: 'RH de cliente' },
+                { quote: 'Eu demorava duas semanas para fazer as devolutivas. Na última avaliação, consegui fazer em poucos dias, de 3 a 4 dias.', who: 'Gestor de cliente' },
                 { quote: 'É muito bom ter um material padronizado, que eu não tinha antes.', who: 'Colaborador' },
               ].map(q => (
                 <figure key={q.quote} className="bg-[#F6EAE3] rounded-2xl p-7">

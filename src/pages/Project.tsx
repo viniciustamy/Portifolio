@@ -1,6 +1,7 @@
-import React, { Suspense, useEffect, useState, useCallback } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
-import { ArrowLeft as ArrowLeftIcon } from 'lucide-react';
+import React, { Suspense, lazy, useEffect, useState, useCallback } from 'react';
+import { Link, useParams, useLocation, useSearchParams } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
+import { ArrowLeft as ArrowLeftIcon, Presentation } from 'lucide-react';
 import { useProjects } from '../context/ProjectsContext';
 import { motion } from 'motion/react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
@@ -23,6 +24,11 @@ const LAPTOP_HEROES: Record<string, () => any> = {
   'kba-senha': KbaHeroMotion,
 };
 
+// Cases com apresentação em slides (carregada só ao abrir)
+const DECKS: Record<string, React.LazyExoticComponent<(p: { onClose: () => void; startAt?: string | null }) => any>> = {
+  devolutiva: lazy(() => import('../components/DevolutivaDeck')),
+};
+
 export default function Project() {
   const { id } = useParams();
   const { hash } = useLocation();
@@ -36,8 +42,17 @@ export default function Project() {
   const nextProject = published[published.findIndex(p => p.id === id) + 1] || published[0];
 
   const [sections, setSections] = useState<{ id: string; text: string }[]>([]);
-  // Scroll assistido entre as seções do case
-  useAssistedPageScroll(!!project);
+  // Apresentação em slides; ?slide=<id> abre direto num slide (volta da demo da nova versão)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const Deck = id ? DECKS[id] : undefined;
+  const deckStart = searchParams.get('slide');
+  const [isDeckOpen, setIsDeckOpen] = useState(() => !!deckStart);
+  const closeDeck = useCallback(() => {
+    setIsDeckOpen(false);
+    if (searchParams.has('slide')) setSearchParams({}, { replace: true });
+  }, [searchParams, setSearchParams]);
+  // Scroll assistido entre as seções do case (desligado com a apresentação aberta)
+  useAssistedPageScroll(!!project && !isDeckOpen);
   const [isSimplified, setIsSimplified] = useState(false);
 
   // Use the new Scroll Spy hook
@@ -228,13 +243,19 @@ export default function Project() {
         {/* Main Content Area */}
         <div className="flex-1 min-w-0 w-full max-w-[950px] order-2 xl:order-1">
           {/* Breadcrumb back navigation link */}
-          <div className="mb-8">
+          <div className="mb-8 flex items-center justify-between gap-4">
             <Button variant="ghost" size="sm" className="group text-muted-foreground hover:text-primary hover:bg-transparent -ml-3" asChild>
               <Link to="/" state={{ restoreScroll: true }}>
                 <ArrowLeftIcon className="w-4 h-4 mr-1.5 transition-transform group-hover:-translate-x-1" />
                 Voltar
               </Link>
             </Button>
+            {Deck && (
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary hover:bg-transparent -mr-3" onClick={() => setIsDeckOpen(true)}>
+                <Presentation className="w-4 h-4 mr-1.5" />
+                Apresentar case
+              </Button>
+            )}
           </div>
 
           {/* Title & Subtitle Header */}
@@ -392,6 +413,11 @@ export default function Project() {
         )}
       </div>
 
+      {Deck && (
+        <Suspense fallback={null}>
+          <AnimatePresence>{isDeckOpen && <Deck key="deck" onClose={closeDeck} startAt={deckStart} />}</AnimatePresence>
+        </Suspense>
+      )}
     </div>
   );
 }

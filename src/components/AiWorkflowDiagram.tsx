@@ -10,7 +10,6 @@ import cursorLogo from '../assets/images/Logos IA/Cursor.png';
  * entrar na tela e o desenho fica parado.
  */
 
-const W = 1040;
 const H = 460;
 const TILE = 96;
 const ROW = 300; // linha principal
@@ -18,15 +17,34 @@ const TOP = 96; // ramo do AI Studio
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-// Centro de cada etapa
-const N = {
-  figma: { x: 110, y: ROW },
-  studio: { x: 330, y: TOP },
-  cursor: { x: 520, y: ROW },
-  github: { x: 730, y: ROW },
-  team: { x: 930, y: ROW },
-};
 const half = TILE / 2;
+
+// Centro de cada etapa: o padrão é o dos cases; o largo (apresentação) espaça mais as etapas na horizontal
+const LAYOUTS = {
+  normal: { W: 1040, x: { figma: 110, studio: 330, cursor: 520, github: 730, team: 930 } },
+  wide: { W: 1360, x: { figma: 120, studio: 420, cursor: 700, github: 980, team: 1240 } },
+};
+
+function layout(kind: keyof typeof LAYOUTS) {
+  const { W, x } = LAYOUTS[kind];
+  const N = {
+    figma: { x: x.figma, y: ROW },
+    studio: { x: x.studio, y: TOP },
+    cursor: { x: x.cursor, y: ROW },
+    github: { x: x.github, y: ROW },
+    team: { x: x.team, y: ROW },
+  };
+  const mid = (a: number, b: number) => (a + b) / 2;
+  // Setas tracejadas (caminho em L/U, com rótulo) — na ordem em que aparecem
+  const ARROWS = [
+    { d: `M ${N.figma.x} ${ROW - half - 8} V ${TOP} H ${N.studio.x - half - 10}`, label: 'protótipo rápido', lx: mid(N.figma.x, N.studio.x), ly: TOP - 32 },
+    { d: `M ${N.studio.x} ${TOP + half + 62} V ${ROW - 70} H ${N.figma.x + 28} V ${ROW - half - 10}`, label: 'volta para ajustes', lx: mid(N.figma.x, N.studio.x), ly: ROW - 96 },
+    { d: `M ${N.figma.x + half + 10} ${ROW} H ${N.cursor.x - half - 12}`, label: 'via MCP do Design System', lx: mid(N.figma.x, N.cursor.x), ly: ROW + 22 },
+    { d: `M ${N.cursor.x + half + 10} ${ROW} H ${N.github.x - half - 12}`, label: 'push do código', lx: mid(N.cursor.x, N.github.x), ly: ROW + 22 },
+    { d: `M ${N.github.x + half + 10} ${ROW} H ${N.team.x - half - 12}`, label: 'handoff', lx: mid(N.github.x, N.team.x), ly: ROW + 22 },
+  ];
+  return { W, N, ARROWS };
+}
 
 function FigmaLogo() {
   return (
@@ -56,20 +74,12 @@ const STEPS = [
   { key: 'team', title: 'Time de desenvolvimento', sub: 'Produto em produção', icon: <span className="text-[50px] leading-none">🧑‍💻</span> },
 ] as const;
 
-// Setas tracejadas (caminho em L/U, com rótulo) — na ordem em que aparecem
-const ARROWS = [
-  { d: `M ${N.figma.x} ${ROW - half - 8} V ${TOP} H ${N.studio.x - half - 10}`, label: 'protótipo rápido', lx: 218, ly: TOP - 32 },
-  { d: `M ${N.studio.x} ${TOP + half + 62} V ${ROW - 70} H ${N.figma.x + 28} V ${ROW - half - 10}`, label: 'volta para ajustes', lx: 222, ly: ROW - 96 },
-  { d: `M ${N.figma.x + half + 10} ${ROW} H ${N.cursor.x - half - 12}`, label: 'via MCP do Design System', lx: (N.figma.x + N.cursor.x) / 2, ly: ROW + 22 },
-  { d: `M ${N.cursor.x + half + 10} ${ROW} H ${N.github.x - half - 12}`, label: 'push do código', lx: (N.cursor.x + N.github.x) / 2, ly: ROW + 22 },
-  { d: `M ${N.github.x + half + 10} ${ROW} H ${N.team.x - half - 12}`, label: 'handoff', lx: (N.github.x + N.team.x) / 2, ly: ROW + 22 },
-];
-
 // Ordem de entrada: etapa, seta, etapa...
 const ORDER: [string, number][] = [['figma', 0], ['arrow', 0], ['studio', 1], ['arrow', 1], ['arrow', 2], ['cursor', 2], ['arrow', 3], ['github', 3], ['arrow', 4], ['team', 4]];
 const delayOf = (kind: string, i: number) => ORDER.findIndex(([k, n]) => k === kind && n === i) * 0.28;
 
-export function AiWorkflowDiagram() {
+export function AiWorkflowDiagram({ wide = false }: { wide?: boolean }) {
+  const { W, N, ARROWS } = layout(wide ? 'wide' : 'normal');
   const viewRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [on, setOn] = useState(false);

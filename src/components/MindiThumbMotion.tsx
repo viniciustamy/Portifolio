@@ -89,7 +89,7 @@ function StatusBar({ scrolled }: { scrolled: boolean }) {
   return (
     <div className="absolute inset-x-0 top-0 z-30 pointer-events-none" style={{ height: SAFE_TOP }}>
       {/* Vidro fosco do topo, como o header do app ao rolar */}
-      <motion.span className="absolute inset-0 backdrop-blur-md rounded-t-[52px]" initial={false} animate={{ opacity: scrolled ? 1 : 0 }} transition={{ duration: 0.4 }} style={{ background: "rgb(9 9 11 / .82)", borderBottom: "0.5px solid rgb(255 255 255 / .06)" }} />
+      <motion.span className="absolute inset-x-px top-px bottom-0 backdrop-blur-md rounded-t-[51px]" initial={false} animate={{ opacity: scrolled ? 1 : 0 }} transition={{ duration: 0.4 }} style={{ background: "rgb(9 9 11 / .82)", borderBottom: "0.5px solid rgb(255 255 255 / .06)", clipPath: "inset(0 round 51px 51px 0 0)" }} />
       <span className="absolute left-1/2 -translate-x-1/2 rounded-full bg-black" style={{ top: 11, width: 122, height: 35 }} />
       <span className="absolute text-[16px] font-semibold" style={{ left: 50, top: 18, fontFamily: '-apple-system, "SF Pro Text", "Inter", sans-serif' }}>9:41</span>
       <span className="absolute flex items-center gap-[6px]" style={{ right: 28, top: 21 }}>
@@ -336,7 +336,9 @@ const SCREENS: Record<Tab, () => any> = { home: HomeScreen, explore: ExploreScre
 const ORDER: Tab[] = ['home', 'explore', 'list', 'history'];
 const SCROLL: Record<Tab, number> = { home: 430, explore: 300, list: 420, history: 380 };
 
-export function MindiThumbMotion({ active }: { active: boolean }) {
+// stageW maior deixa o celular menor (mostra mais tela); phoneTop sobe ou desce o celular;
+// showNav=false esconde o menu de baixo fixo na borda da área (usado na apresentação)
+export function MindiThumbMotion({ active, stageW = STAGE_W, phoneTop = PHONE_TOP, showNav = true }: { active: boolean; stageW?: number; phoneTop?: number; showNav?: boolean }) {
   const wrapRef = useRef<HTMLDivElement>(null);
 
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -344,9 +346,9 @@ export function MindiThumbMotion({ active }: { active: boolean }) {
   const [scroll, setScroll] = useState(0);
   const [pressed, setPressed] = useState<Tab | null>(null);
 
-  const scale = size.w / STAGE_W;
+  const scale = size.w / stageW;
   const stageH = scale ? size.h / scale : 0;
-  const phoneLeft = (STAGE_W - PHONE_W) / 2;
+  const phoneLeft = (stageW - PHONE_W) / 2;
 
   useLayoutEffect(() => {
     const el = wrapRef.current;
@@ -396,11 +398,11 @@ export function MindiThumbMotion({ active }: { active: boolean }) {
   return (
     <div ref={wrapRef} className="absolute inset-0 select-none" aria-hidden="true">
       {scale > 0 && (
-        <div className="absolute left-0 top-0 origin-top-left" style={{ width: STAGE_W, height: stageH, transform: `scale(${scale})`, color: C.text, fontFamily: '"DM Sans", "Inter", sans-serif' }}>
+        <div className="absolute left-0 top-0 origin-top-left" style={{ width: stageW, height: stageH, transform: `scale(${scale})`, color: C.text, fontFamily: '"DM Sans", "Inter", sans-serif' }}>
           {/* Celular — sai pela borda de baixo */}
           <div
             className="absolute overflow-hidden rounded-t-[52px]"
-            style={{ left: phoneLeft, top: PHONE_TOP, width: PHONE_W, bottom: -40, background: C.bg, boxShadow: '0 0 0 10px #050506, 0 0 0 12px #3A3A40, 0 0 0 13px rgb(255 255 255 / .12), 0 30px 60px rgb(0 0 0 / .5)' }}
+            style={{ left: phoneLeft, top: phoneTop, width: PHONE_W, bottom: -40, background: C.bg, boxShadow: '0 0 0 10px #050506, 0 0 0 12px #3A3A40, 0 0 0 13px rgb(255 255 255 / .12), 0 30px 60px rgb(0 0 0 / .5)' }}
           >
             <StatusBar scrolled={scroll > 0} />
             {/* Conteúdo da aba, rolando */}
@@ -413,7 +415,7 @@ export function MindiThumbMotion({ active }: { active: boolean }) {
             </AnimatePresence>
 
             {/* Menu de baixo, fixo na tela visível do celular */}
-            <div className="absolute inset-x-0 flex items-center justify-around px-2 backdrop-blur-md" style={{ top: Math.max(0, stageH - PHONE_TOP - NAV_H), height: NAV_H, background: 'rgb(9 9 11 / .8)', borderTop: '0.5px solid rgb(255 255 255 / .08)' }}>
+            {showNav && <div className="absolute inset-x-0 flex items-center justify-around px-2 backdrop-blur-md" style={{ top: Math.max(0, stageH - phoneTop - NAV_H), height: NAV_H, background: 'rgb(9 9 11 / .8)', borderTop: '0.5px solid rgb(255 255 255 / .08)' }}>
               {TABS.map(({ id, label, Icon }) => {
                 const on = id === tab;
                 return (
@@ -423,7 +425,7 @@ export function MindiThumbMotion({ active }: { active: boolean }) {
                   </motion.span>
                 );
               })}
-            </div>
+            </div>}
           </div>
         </div>
       )}
