@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ChevronRight, CircleCheck, Headphones, Home, Info, Lock, MoreVertical, TriangleAlert, Wifi } from 'lucide-react';
 import { typeText, wait } from './DevolutivaIaMotion';
+import { IPhoneFrame } from './IPhoneFrame';
 
 /*
  * Thumb animada do case "Recuperação de senha self-service (KBA)": o fluxo recriado num celular
@@ -12,7 +13,7 @@ import { typeText, wait } from './DevolutivaIaMotion';
 
 const STAGE_W = 700;
 const PHONE_W = 375;
-const PHONE_TOP = 20; // espaço para a moldura de 8px do celular não ser cortada em cima
+const PHONE_TOP = 20; // espaço para a moldura do iPhone não ser cortada em cima
 
 // Confetes da tela de sucesso: tons de azul que sobem de trás da parte de baixo do celular
 const CONFETTI_COLORS = ['#CFE1FF', '#9EC3FF', '#6FA6FF', '#3D86FF', '#0B4FC9', '#0A3DB0'];
@@ -303,16 +304,18 @@ export function KbaThumbMotion({ active }: { active: boolean }) {
             )}
           </AnimatePresence>
 
-          {/* Celular — sai pela borda de baixo */}
-          <div
-            ref={phoneRef}
-            className="absolute bg-white overflow-hidden rounded-t-[34px]"
-            style={{ left: phoneLeft, top: PHONE_TOP, width: PHONE_W, bottom: -40, boxShadow: '0 0 0 8px #0E1116, 0 30px 60px rgb(0 0 0 / .35)' }}
-          >
-            {/* Barra de status + navegador */}
+          {/* Celular na moldura real do iPhone 17 — sai pela borda de baixo */}
+          <IPhoneFrame ref={phoneRef} left={phoneLeft} top={PHONE_TOP} width={PHONE_W}>
+            {/* Barra de status do iPhone (em volta da Dynamic Island da moldura) + navegador */}
             <div style={{ background: C.chrome }} className="text-white">
-              <div className="flex justify-end items-center gap-1.5 px-5 text-[12px]" style={{ height: 26 }}>
-                <Wifi size={13} /> <span className="w-3 h-3" style={{ background: 'linear-gradient(45deg, transparent 50%, #fff 50%)' }} /> 12:30
+              <div className="relative" style={{ height: 54 }}>
+                <span className="absolute text-[16px] font-semibold" style={{ left: 50, top: 18 }}>9:41</span>
+                <span className="absolute flex items-center gap-1.5" style={{ right: 30, top: 20 }}>
+                  <Wifi size={15} strokeWidth={2.6} />
+                  <span className="relative block rounded-[4px]" style={{ width: 25, height: 12, border: '1px solid rgb(255 255 255 / .45)' }}>
+                    <span className="absolute rounded-[2px] bg-white" style={{ left: 1.5, top: 1.5, bottom: 1.5, width: 17 }} />
+                  </span>
+                </span>
               </div>
               <div className="flex items-center gap-3 px-3" style={{ height: 48 }}>
                 <Home size={18} />
@@ -351,7 +354,7 @@ export function KbaThumbMotion({ active }: { active: boolean }) {
                 />
               )}
             </AnimatePresence>
-          </div>
+          </IPhoneFrame>
         </div>
       )}
     </div>

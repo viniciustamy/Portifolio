@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { IPhoneFrame, screenHeight } from './IPhoneFrame';
 import { AnimatePresence, motion } from 'motion/react';
 import { Bookmark, ChevronRight, Filter, Search, Star, User } from 'lucide-react';
 import { BookmarkSimple, ChatCircleDots, Compass, FilmStrip, House, type Icon } from '@phosphor-icons/react';
@@ -84,13 +85,12 @@ function Logo() {
   );
 }
 
-// Barra de status do iPhone, com a Dynamic Island no meio
+// Barra de status do iPhone (a Dynamic Island vem da moldura)
 function StatusBar({ scrolled }: { scrolled: boolean }) {
   return (
     <div className="absolute inset-x-0 top-0 z-30 pointer-events-none" style={{ height: SAFE_TOP }}>
       {/* Vidro fosco do topo, como o header do app ao rolar */}
-      <motion.span className="absolute inset-x-px top-px bottom-0 backdrop-blur-md rounded-t-[51px]" initial={false} animate={{ opacity: scrolled ? 1 : 0 }} transition={{ duration: 0.4 }} style={{ background: "rgb(9 9 11 / .82)", borderBottom: "0.5px solid rgb(255 255 255 / .06)", clipPath: "inset(0 round 51px 51px 0 0)" }} />
-      <span className="absolute left-1/2 -translate-x-1/2 rounded-full bg-black" style={{ top: 11, width: 122, height: 35 }} />
+      <motion.span className="absolute inset-x-px top-px bottom-0 backdrop-blur-md rounded-t-[59px]" initial={false} animate={{ opacity: scrolled ? 1 : 0 }} transition={{ duration: 0.4 }} style={{ background: "rgb(9 9 11 / .82)", borderBottom: "0.5px solid rgb(255 255 255 / .06)", clipPath: "inset(0 round 59px 59px 0 0)" }} />
       <span className="absolute text-[16px] font-semibold" style={{ left: 50, top: 18, fontFamily: '-apple-system, "SF Pro Text", "Inter", sans-serif' }}>9:41</span>
       <span className="absolute flex items-center gap-[6px]" style={{ right: 28, top: 21 }}>
         <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1" /><rect x="5" y="5.5" width="3" height="6.5" rx="1" /><rect x="10" y="3" width="3" height="9" rx="1" /><rect x="15" y="0" width="3" height="12" rx="1" /></svg>
@@ -399,11 +399,8 @@ export function MindiThumbMotion({ active, stageW = STAGE_W, phoneTop = PHONE_TO
     <div ref={wrapRef} className="absolute inset-0 select-none" aria-hidden="true">
       {scale > 0 && (
         <div className="absolute left-0 top-0 origin-top-left" style={{ width: stageW, height: stageH, transform: `scale(${scale})`, color: C.text, fontFamily: '"DM Sans", "Inter", sans-serif' }}>
-          {/* Celular — sai pela borda de baixo */}
-          <div
-            className="absolute overflow-hidden rounded-t-[52px]"
-            style={{ left: phoneLeft, top: phoneTop, width: PHONE_W, bottom: -40, background: C.bg, boxShadow: '0 0 0 10px #050506, 0 0 0 12px #3A3A40, 0 0 0 13px rgb(255 255 255 / .12), 0 30px 60px rgb(0 0 0 / .5)' }}
-          >
+          {/* Celular na moldura real do iPhone 17 — sai pela borda de baixo */}
+          <IPhoneFrame left={phoneLeft} top={phoneTop} width={PHONE_W} background={C.bg}>
             <StatusBar scrolled={scroll > 0} />
             {/* Conteúdo da aba, rolando */}
             <AnimatePresence mode="wait" initial={false}>
@@ -414,8 +411,8 @@ export function MindiThumbMotion({ active, stageW = STAGE_W, phoneTop = PHONE_TO
               </motion.div>
             </AnimatePresence>
 
-            {/* Menu de baixo, fixo na tela visível do celular */}
-            {showNav && <div className="absolute inset-x-0 flex items-center justify-around px-2 backdrop-blur-md" style={{ top: Math.max(0, stageH - phoneTop - NAV_H), height: NAV_H, background: 'rgb(9 9 11 / .8)', borderTop: '0.5px solid rgb(255 255 255 / .08)' }}>
+            {/* Menu de baixo, na base da tela do iPhone (com a área do indicador de início); só aparece se a base couber no card */}
+            {showNav && <div className="absolute inset-x-0 flex items-center justify-around px-2 backdrop-blur-md" style={{ top: screenHeight(PHONE_W) - NAV_H - 22, height: NAV_H + 22, paddingBottom: 22, background: 'rgb(9 9 11 / .8)', borderTop: '0.5px solid rgb(255 255 255 / .08)' }}>
               {TABS.map(({ id, label, Icon }) => {
                 const on = id === tab;
                 return (
@@ -426,7 +423,7 @@ export function MindiThumbMotion({ active, stageW = STAGE_W, phoneTop = PHONE_TO
                 );
               })}
             </div>}
-          </div>
+          </IPhoneFrame>
         </div>
       )}
     </div>

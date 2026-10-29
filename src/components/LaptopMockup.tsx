@@ -1,29 +1,39 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { ChevronLeft, ChevronRight, Lock, RotateCw, X } from 'lucide-react';
+import macbookImg from '../assets/images/Mockups/macbook.webp';
 
 /*
- * Mockup de notebook com navegador, usado nos heros dos cases. Desenhado num palco de 1500px e
+ * Mockup de notebook com navegador, usado nos heros dos cases: a foto real do MacBook (PNG de
+ * 2000 × 1300 com a tela transparente) por cima do navegador. Desenhado num palco de 1500px e
  * escalado para a largura disponível. A página fica em px de desenho (APP_W × APP_H) e o cursor
  * em coordenadas do palco (use `stagePoint` para converter um elemento da página).
  */
 
 export const STAGE_W = 1500;
-export const SCREEN_LEFT = 50;
-const SCREEN_W = 1400;
-export const BEZEL = 24;
+// Foto do MacBook no palco: escala de 2000 → 1500 e corte do espaço vazio acima da tampa
+const IMG_K = STAGE_W / 2000;
+const IMG_TOP = -77;
+const IMG_H = 1300 * IMG_K;
+// Tela no PNG: x 234, y 153, 1532 × 994, cantos de ~20px; o notch cobre os ~22px de cima no meio
+export const SCREEN_LEFT = 234 * IMG_K;
+const SCREEN_TOP = 153 * IMG_K + IMG_TOP;
+const SCREEN_W = 1532 * IMG_K;
+const SCREEN_H = 994 * IMG_K;
+const SCREEN_R = 20 * IMG_K;
+// A tela invade um pouco a moldura: a borda do PNG é suavizada e deixaria um filete do fundo aparecendo
+const BLEED = 4;
+export const BEZEL = 0;
+const MENU_H = 24; // barra de menus do macOS, na altura do notch
 export const TABS_H = 44;
 const URL_H = 40;
-const VIEW_W = SCREEN_W - BEZEL * 2; // 1352
-const SCREEN_RATIO = 9 / 16; // área da página em 16:9
-const VIEW_H = Math.round(VIEW_W * SCREEN_RATIO); // 761
+const VIEW_W = SCREEN_W;
+const VIEW_H = SCREEN_H - MENU_H - TABS_H - URL_H;
 export const APP_W = 1366; // largura em que as telas foram desenhadas
 const APP_SCALE = VIEW_W / APP_W;
 export const APP_H = VIEW_H / APP_SCALE; // altura visível das telas, em px de desenho
-const SCREEN_H = BEZEL + TABS_H + URL_H + VIEW_H + 30;
-const BASE_H = 46;
-const SHADOW_H = 70; // espaço para a sombra de contato no chão
-export const STAGE_H = 20 + SCREEN_H + BASE_H + SHADOW_H;
+const BASE_BOTTOM = 1278 * IMG_K + IMG_TOP; // pés do notebook
+export const STAGE_H = Math.ceil(BASE_BOTTOM + 4);
 export const TAB_W = 260;
 
 const ease = [0.65, 0, 0.35, 1] as const;
@@ -32,8 +42,8 @@ export type Cursor = { x: number; y: number; visible: boolean; down: boolean };
 
 // Centro da aba `i` em coordenadas do palco
 export const tabCenter = (i: number) => ({
-  x: SCREEN_LEFT + BEZEL + 14 + i * (TAB_W + 6) + TAB_W / 2,
-  y: 20 + BEZEL + TABS_H / 2 + 2,
+  x: SCREEN_LEFT + 84 + i * (TAB_W + 6) + TAB_W / 2,
+  y: SCREEN_TOP + MENU_H + TABS_H / 2 + 2,
 });
 
 // Centro de um elemento da página em coordenadas do palco
@@ -63,7 +73,7 @@ export function useLaptopViewport(threshold = 0.3) {
 }
 
 export function LaptopMockup({
-  viewRef, width, stageRef, screenRef, tabs, activeTab, cursor, label, pageBg = "#fff", ratio = SCREEN_RATIO, showTabs = true, children,
+  viewRef, width, stageRef, screenRef, tabs, activeTab, cursor, label, pageBg = "#fff", showTabs = true, children,
 }: {
   viewRef: any;
   width: number;
@@ -74,69 +84,55 @@ export function LaptopMockup({
   cursor: Cursor;
   label: string;
   pageBg?: string; // fundo sob a página (evita filete branco nas bordas ao escalar)
-  ratio?: number; // altura/largura da área da página (padrão 16:9)
   showTabs?: boolean; // false: só os botões da janela, sem abas (a troca de tela vem de fora)
   children: any;
 }) {
   const s = width / STAGE_W;
-  // Medidas que dependem da proporção da tela
-  const viewH = Math.round(VIEW_W * ratio);
-  const screenH = BEZEL + TABS_H + URL_H + viewH + 30;
-  const stageH = 20 + screenH + BASE_H + SHADOW_H;
-  const appH = viewH / APP_SCALE;
   return (
-    <div ref={viewRef} className="relative w-full select-none" style={{ aspectRatio: `${STAGE_W} / ${stageH}` }} role="img" aria-label={label}>
+    <div ref={viewRef} className="relative w-full select-none" style={{ aspectRatio: `${STAGE_W} / ${STAGE_H}` }} role="img" aria-label={label}>
       {width > 0 && (
-        <div ref={stageRef} className="absolute left-0 top-0 origin-top-left font-sans" style={{ width: STAGE_W, height: stageH, transform: `scale(${s})` }}>
-          {/* Tela do notebook */}
-          <div className="absolute rounded-[28px]" style={{ left: SCREEN_LEFT, top: 20, width: SCREEN_W, height: screenH, background: '#0E1116', boxShadow: 'inset 0 0 0 2px #2A2F36' }}>
-            <span className="absolute left-1/2 -translate-x-1/2 rounded-full" style={{ top: 9, width: 8, height: 8, background: '#2E343C' }} />
-
-            {/* Navegador */}
-            <div className="absolute overflow-hidden rounded-[8px]" style={{ background: pageBg, left: BEZEL, top: BEZEL, width: VIEW_W, height: TABS_H + URL_H + viewH }}>
-              <div className="flex items-end gap-1.5 px-3.5" style={{ height: TABS_H, background: '#DEE1E6' }}>
-                <span className="flex gap-2 mr-3 mb-[15px]">
-                  {['#FF5F57', '#FEBC2E', '#28C840'].map(c => <span key={c} className="w-3 h-3 rounded-full" style={{ background: c }} />)}
-                </span>
-                {showTabs && tabs.map((t, i) => (
-                  <span
-                    key={t.title}
-                    className="relative flex items-center justify-between gap-2 px-4 text-[13px] rounded-t-[10px] transition-colors duration-200"
-                    style={{ width: TAB_W, height: 36, background: activeTab === i ? '#fff' : 'transparent', color: activeTab === i ? '#1F2328' : '#4B5058' }}
-                  >
-                    <span className="flex items-center gap-2 truncate">
-                      <span className="w-4 h-4 rounded-full shrink-0 flex items-center justify-center text-[9px] font-black text-white" style={{ background: '#0E8270' }}>G</span>
-                      <span className="truncate">{t.title}</span>
-                    </span>
-                    <X size={13} className="shrink-0 opacity-60" />
+        <div ref={stageRef} className="absolute left-0 top-0 origin-top-left font-sans" style={{ width: STAGE_W, height: STAGE_H, transform: `scale(${s})` }}>
+          {/* Tela: barra de menus do macOS + navegador, recortados nos cantos da tela do PNG */}
+          <div className="absolute overflow-hidden" style={{ left: SCREEN_LEFT - BLEED, top: SCREEN_TOP - BLEED, width: SCREEN_W + BLEED * 2, height: SCREEN_H + BLEED * 2, borderRadius: SCREEN_R + BLEED, background: pageBg, padding: BLEED, paddingTop: 0 }}>
+            <div className="flex items-end justify-between pb-[5px] text-[11px] font-medium text-white/90" style={{ height: MENU_H + BLEED, margin: `0 -${BLEED}px`, paddingLeft: 16 + BLEED, paddingRight: 16 + BLEED, background: '#141416' }}>
+              <span className="flex items-center gap-4"><span className="font-semibold">Chrome</span><span>Arquivo</span><span>Editar</span><span>Visualizar</span></span>
+              <span>qua. 10:50</span>
+            </div>
+            <div className="flex items-end gap-1.5" style={{ height: TABS_H, background: '#DEE1E6', margin: `0 -${BLEED}px`, paddingLeft: 14 + BLEED, paddingRight: 14 + BLEED }}>
+              <span className="flex gap-2 mr-3 mb-[15px]">
+                {['#FF5F57', '#FEBC2E', '#28C840'].map(c => <span key={c} className="w-3 h-3 rounded-full" style={{ background: c }} />)}
+              </span>
+              {showTabs && tabs.map((t, i) => (
+                <span
+                  key={t.title}
+                  className="relative flex items-center justify-between gap-2 px-4 text-[13px] rounded-t-[10px] transition-colors duration-200"
+                  style={{ width: TAB_W, height: 36, background: activeTab === i ? '#fff' : 'transparent', color: activeTab === i ? '#1F2328' : '#4B5058' }}
+                >
+                  <span className="flex items-center gap-2 truncate">
+                    <span className="w-4 h-4 rounded-full shrink-0 flex items-center justify-center text-[9px] font-black text-white" style={{ background: '#0E8270' }}>G</span>
+                    <span className="truncate">{t.title}</span>
                   </span>
-                ))}
-              </div>
-              <div className="flex items-center gap-4 px-4 border-b bg-white" style={{ height: URL_H, borderColor: '#E3E5E8' }}>
-                <span className="flex gap-3 text-[#5F6368]"><ChevronLeft size={18} /><ChevronRight size={18} /><RotateCw size={16} /></span>
-                <span className="flex-1 flex items-center gap-2 rounded-full px-4 text-[13px] text-[#3C4043]" style={{ height: 28, background: '#F1F3F4' }}>
-                  <Lock size={12} /> {tabs[activeTab]?.url}
+                  <X size={13} className="shrink-0 opacity-60" />
                 </span>
-              </div>
+              ))}
+            </div>
+            <div className="flex items-center gap-4 border-b bg-white" style={{ height: URL_H, borderColor: '#E3E5E8', margin: `0 -${BLEED}px`, paddingLeft: 16 + BLEED, paddingRight: 16 + BLEED }}>
+              <span className="flex gap-3 text-[#5F6368]"><ChevronLeft size={18} /><ChevronRight size={18} /><RotateCw size={16} /></span>
+              <span className="flex-1 flex items-center gap-2 rounded-full px-4 text-[13px] text-[#3C4043]" style={{ height: 28, background: '#F1F3F4' }}>
+                <Lock size={12} /> {tabs[activeTab]?.url}
+              </span>
+            </div>
 
-              {/* Página */}
-              <div className="relative overflow-hidden" style={{ width: VIEW_W, height: viewH }}>
-                <div ref={screenRef} className="absolute left-0 top-0 origin-top-left" style={{ width: APP_W, height: appH, transform: `scale(${APP_SCALE})` }}>
-                  {children}
-                </div>
+            {/* Página */}
+            <div className="relative overflow-hidden" style={{ width: VIEW_W, height: VIEW_H }}>
+              <div ref={screenRef} className="absolute left-0 top-0 origin-top-left" style={{ width: APP_W, height: APP_H, transform: `scale(${APP_SCALE})` }}>
+                {children}
               </div>
             </div>
           </div>
 
-          {/* Sombra no chão: uma mancha larga e suave + uma faixa escura de contato colada à base */}
-          <span className="absolute rounded-[50%]" style={{ left: 40, right: 40, top: 20 + screenH + BASE_H - 26, height: 64, background: 'radial-gradient(closest-side, rgb(20 22 26 / .30), rgb(20 22 26 / 0))', filter: 'blur(6px)' }} />
-          <span className="absolute rounded-[50%]" style={{ left: 120, right: 120, top: 20 + screenH + BASE_H - 12, height: 20, background: 'radial-gradient(closest-side, rgb(20 22 26 / .45), rgb(20 22 26 / 0))', filter: 'blur(2px)' }} />
-
-          {/* Base do notebook */}
-          <div className="absolute" style={{ left: 0, top: 20 + screenH - 4, width: STAGE_W, height: BASE_H }}>
-            <div className="absolute inset-0 rounded-b-[26px]" style={{ background: 'linear-gradient(#ECEEF1 0%, #D3D7DC 55%, #AEB3BA 100%)', boxShadow: 'inset 0 -2px 0 rgb(0 0 0 / .08)' }} />
-            <span className="absolute left-1/2 -translate-x-1/2 top-0 rounded-b-[12px]" style={{ width: 220, height: 14, background: '#C9CDD3' }} />
-          </div>
+          {/* Foto do MacBook por cima (a tela dela é transparente) */}
+          <img src={macbookImg} alt="" draggable={false} className="absolute max-w-none pointer-events-none" style={{ left: 0, top: IMG_TOP, width: STAGE_W, height: IMG_H }} />
 
           {/* Cursor */}
           <motion.div
