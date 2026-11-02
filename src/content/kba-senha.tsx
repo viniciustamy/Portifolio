@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CountUpText } from '../components/CountUpText';
 import {
   Zap,
   BookOpen,
@@ -108,10 +109,11 @@ export const KbaSenhaContent = () => {
             <p className={LEAD}>
               Entre os contatos mais frequentes com o suporte estavam candidatos que não recebiam o e-mail de redefinição, tinham perdido acesso ao e-mail cadastrado ou não conseguiam concluir o processo.
             </p>
-            <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                ['Centenas de tickets', 'nos últimos 90 dias, só nesse fluxo.'],
-                ['Milhares de reais', 'por mês em atendimento desse tipo de chamado.'],
+                ['~1 em cada 4', 'tickets de candidatos era sobre recuperação de senha. Acesso como um todo chegava a ~50%.'],
+                ['24 a 48 horas', 'úteis de espera pelo suporte para voltar a acessar a conta.'],
+                ['Milhares de reais', 'por ano em atendimento manual desse tipo de chamado.'],
               ].map(([value, label]) => (
                 <div key={value} className="border border-[#E2DCD4] rounded-2xl p-7">
                   <p className="font-serif text-[32px] font-bold text-[#241510] leading-tight">{value}</p>
@@ -119,7 +121,7 @@ export const KbaSenhaContent = () => {
                 </div>
               ))}
             </div>
-            <p className="not-prose text-[13px] text-[#8A7F78] mt-4">Tínhamos o valor exato desse impacto, mas optei por não divulgá-lo neste case.</p>
+            <p className="not-prose text-[13px] text-[#8A7F78] mt-4">Tínhamos o valor exato do custo, mas optei por não divulgá-lo neste case.</p>
           </div>
 
           {/* Desafio */}
@@ -263,28 +265,38 @@ export const KbaSenhaContent = () => {
           {/* Rollout */}
           <div className="mb-32">
             <h2 id="rollout" className={H2}>Resultados da liberação gradual</h2>
-            <p className={LEAD}>Liberamos para 5% da base para acompanhar o comportamento em produção antes de expandir. Em uma semana, observamos:</p>
-            <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-4">
-              {['Candidatos recuperando a conta pelo novo fluxo, 100% self-service.', 'Nenhum erro relevante no rollout inicial.'].map(item => (
-                <div key={item} className="border border-[#E2DCD4] rounded-2xl p-7">
-                  <Check size={24} className="text-[#2E7D4F]" strokeWidth={2.5} />
-                  <p className="text-[16px] text-[#241510] font-medium leading-relaxed mt-4">{item}</p>
+            <p className={LEAD}>Por ser um fluxo sensível de autenticação, liberamos para só 5% da base e acompanhamos os primeiros 30 dias em produção antes de expandir.</p>
+            <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { dim: 'Sucesso na tarefa', value: '~70%', label: 'de quem clicou em recuperar a conta concluiu sozinho, sem passar pelo suporte' },
+                { dim: 'Eficiência', value: '1 a 2 min', label: 'para recuperar o acesso, contra 24 a 48 horas úteis esperando o suporte' },
+                { dim: 'Segurança', value: 'Zero', label: 'incidentes de fraude ou invasão no período acompanhado' },
+              ].map(m => (
+                <div key={m.dim} className="border border-[#E2DCD4] rounded-2xl p-6">
+                  <span className="text-[13px] text-[#9E4322]">{m.dim}</span>
+                  <p className="font-serif text-[30px] font-bold text-[#241510] leading-tight tracking-tight mt-1"><CountUpText text={m.value} /></p>
+                  <p className="text-[14px] text-[#6F625B] leading-snug mt-2">{m.label}</p>
                 </div>
               ))}
             </div>
+            <p className="not-prose text-[15px] text-[#6F625B] leading-relaxed mt-6 max-w-3xl">
+              Os outros ~30% desistiram ou abriram um ticket, por não reconhecerem ou não lembrarem das informações pedidas. O suporte seguiu como último recurso, e esse grupo mostra onde o KBA precisa de mais dados para ficar mais forte.
+            </p>
           </div>
 
           {/* Impacto */}
           <div className="mb-16">
             <h2 id="impacto" className={H2}>De ticket manual a funcionalidade de produto</h2>
+            <p className={LEAD}>Antes, alguém do suporte recebia cada ticket e trocava o e-mail da conta na mão. Agora o candidato faz isso sozinho, em poucos minutos.</p>
             <p className="not-prose border-l-2 border-[#9E4322] pl-6 text-[17px] text-[#4F4440] leading-relaxed mb-10">
               Um processo que dependia inteiramente do suporte virou uma funcionalidade self-service, com uma base escalável para evoluir a estratégia de autenticação do produto.
             </p>
             <ol className="not-prose divide-y divide-[#E2DCD4]">
               {[
-                'Redução esperada no volume de tickets de recuperação de acesso.',
-                'Menor custo operacional com atendimento manual.',
-                'Fundação para evoluir a estratégia de autenticação.',
+                'Meta de reduzir em ~70% os tickets de recuperação de senha com o fluxo liberado para toda a base, pela taxa de sucesso do rollout.',
+                'Menos custo e menos trabalho manual para o time de Customer Hero, que estava sobrecarregado com esses chamados. A entrega foi comemorada pelo time.',
+                'Candidatos voltando a usar a plataforma nos dias seguintes à recuperação, para buscar vagas e acompanhar processos.',
+                'Peça da estratégia de autenticação, no momento em que a Gupy unificava o login de todos os produtos do ecossistema.',
               ].map((item, i) => (
                 <li key={item} className="flex gap-4 py-4">
                   <span className="text-[15px] font-semibold text-[#9E4322] tabular-nums pt-px">{String(i + 1).padStart(2, '0')}</span>
@@ -292,6 +304,20 @@ export const KbaSenhaContent = () => {
                 </li>
               ))}
             </ol>
+
+            {/* Como cheguei nesses números */}
+            <details className="not-prose mt-8 border-t border-[#E2DCD4] pt-5 group">
+              <summary className="cursor-pointer text-[14px] font-semibold text-[#241510] list-none flex items-center gap-2">
+                Como cheguei nesses números <span className="text-[#9E4322] transition-transform group-open:rotate-90">›</span>
+              </summary>
+              <ul className="mt-4 space-y-2.5 text-[14px] text-[#6F625B] leading-relaxed max-w-3xl">
+                <li><b className="text-[#4F4440]">Volume de tickets:</b> base de tickets do Suporte, analisada com Produto. Os percentuais são aproximados.</li>
+                <li><b className="text-[#4F4440]">Rollout:</b> eventos do fluxo no Google Analytics nos 30 dias depois da liberação para 5% da base. O sucesso conta sobre quem clicou em recuperar a conta.</li>
+                <li><b className="text-[#4F4440]">Tempo:</b> duração do fluxo medida nos eventos, comparada ao prazo de atendimento do suporte.</li>
+                <li><b className="text-[#4F4440]">Redução de ~70%:</b> projeção, não medição. Com só 5% da base, a queda nos tickets ainda não era visível; a meta parte da taxa de sucesso do rollout e de amostras dos tickets.</li>
+                <li><b className="text-[#4F4440]">Satisfação:</b> não aplicamos CES nem CSAT. Num fluxo curto e operacional, tomamos a taxa de sucesso e o tempo de recuperação como sinal da experiência.</li>
+              </ul>
+            </details>
           </div>
         </>
       ) : (
@@ -301,7 +327,7 @@ export const KbaSenhaContent = () => {
             A recuperação de acesso era um dos principais motivos de contato com o suporte da plataforma. Entre os casos mais recorrentes estavam candidatos que não recebiam o e-mail de redefinição de senha, haviam perdido acesso ao e-mail cadastrado ou encontravam dificuldades para concluir o processo.
           </p>
           <p className="mb-6 leading-relaxed">
-            Nos últimos 90 dias, esse fluxo gerava cerca de milhares tickets por mês. Considerando um custo médio entre R$ 2,50 e R$ 3,00 por atendimento deste tipo de problema, isso representava um impacto milheres de reais por ano apenas para resolver um problema que poderia ser automatizado. <i> *Nós tinhamos os números concretos mas preferir não trazer no post.</i>
+            Cerca de metade dos tickets de candidatos era sobre acesso, e só a recuperação de senha respondia por ~1 em cada 4. Com um custo médio entre R$ 2,50 e R$ 3,00 por atendimento, isso representava milhares de reais por ano para resolver um problema que poderia ser automatizado, além de 24 a 48 horas úteis de espera para o candidato. <i>Tínhamos os números concretos, mas preferi não trazê-los no case.</i>
           </p>
           <p className="mb-8 leading-relaxed">
             Mais do que reduzir custos, havia uma oportunidade clara de melhorar a experiência dos candidatos, permitindo que recuperassem suas contas de forma rápida, segura e totalmente independente do suporte.
@@ -465,16 +491,16 @@ export const KbaSenhaContent = () => {
             Por se tratar de um fluxo sensível de autenticação, optamos por um rollout gradual, liberando inicialmente a funcionalidade para 5% da base de usuários. Essa estratégia permitiu acompanhar o comportamento da solução em produção, validar as regras implementadas e identificar rapidamente qualquer comportamento inesperado antes da expansão para toda a base.
           </p>
           <p className="mb-6 leading-relaxed">
-            Já nos primeiros dias de operação observamos resultados positivos:
+            Nos primeiros 30 dias de operação:
           </p>
           <ul className="list-disc pl-5 mb-8 space-y-2">
-            <li>candidatos recuperando suas contas com sucesso pelo novo fluxo;</li>
-            <li>ausência de erros relevantes durante o rollout inicial;</li>
-            <li>usuários resolvendo o problema de forma totalmente self-service, sem necessidade de contato com o suporte.</li>
+            <li>~70% de quem clicou em recuperar a conta concluiu sozinho, sem contato com o suporte; os outros ~30% desistiram ou recorreram ao ticket;</li>
+            <li>recuperação em 1 a 2 minutos, contra 24 a 48 horas úteis pelo suporte;</li>
+            <li>nenhum incidente de segurança no período.</li>
           </ul>
 
           <p className="mb-6 leading-relaxed">
-            Eu saí do projeto logo após o rollout. Com isso, não tenho dados tão relevantes em relação ao desempenho da funcionalidade no ar. O que eu consegui colher foi esse feedback positivo da primeira semana de uso.
+            Saí do projeto antes da expansão para toda a base. Com 5% da base, a queda no volume de tickets ainda não era visível; a expectativa, pela taxa de sucesso do rollout, era reduzir em ~70% os tickets de recuperação de senha.
           </p>
 
           <h2 id="impacto" className="text-2xl font-bold mb-4">Impacto</h2>
@@ -488,7 +514,7 @@ export const KbaSenhaContent = () => {
             Com a nova solução, os próprios usuários passaram a recuperar suas contas de forma rápida, segura e totalmente independente do suporte.
           </p>
           <p className="mb-6 leading-relaxed">
-            A iniciativa vai reduzir significativamente o volume de tickets relacionados à recuperação de acesso, diminuiu o custo operacional associado ao atendimento e reduziu o tempo necessário para que candidatos voltassem a utilizar a plataforma.
+            A iniciativa desafogou o time de Customer Hero, que fazia essas trocas de e-mail manualmente, diminuiu o custo operacional do atendimento e reduziu de dias para minutos o tempo para os candidatos voltarem a usar a plataforma.
           </p>
           <p className="mb-8 leading-relaxed">
             Mais do que resolver um problema pontual, o projeto estabeleceu uma base sólida para a evolução da estratégia de autenticação do produto. A escolha pelo Knowledge-Based Authentication (KBA) permitiu criar uma solução escalável, capaz de incorporar novos mecanismos de validação conforme a plataforma evolui, mantendo o equilíbrio entre segurança, experiência do usuário e viabilidade técnica.

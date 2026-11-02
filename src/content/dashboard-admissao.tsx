@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CountUpText } from '../components/CountUpText';
 import {
   Zap,
   BookOpen,
@@ -29,10 +30,6 @@ import dash19 from '../assets/images/Dash/Dash-19.png';
 import dash20 from '../assets/images/Dash/Dash-20.png';
 import principalHandoff from '../assets/images/Admin/Seção Handoff/Pincipal.png';
 import logoCursorHandoff from '../assets/images/Admin/Seção Handoff/logocursorcompleta.png';
-import dash18Handoff from '../assets/images/Admin/Seção Handoff/Dash-18 1.png';
-import dash19Handoff from '../assets/images/Admin/Seção Handoff/Dash-19 2.png';
-import dash20Handoff from '../assets/images/Admin/Seção Handoff/Dash-20 1.png';
-import Estresse from '../assets/images/Admin/Seção Handoff/Estresse.png';
 import contextoImg from '../assets/images/Admin/contexto.png';
 import discoveryImg from '../assets/images/Admin/discovery.png';
 import onepageImg from '../assets/images/Admin/onepage.png';
@@ -56,6 +53,8 @@ import LogoGoogleIA from '../assets/images/google ia.png';
 import logocursor from '../assets/images/logocursor.png';
 import { AtuacaoInfo } from '../components/AtuacaoInfo';
 import { DashboardTesteMotion } from '../components/DashboardTesteMotion';
+import { DashboardHandoffMotion } from '../components/DashboardLaptopMotion';
+import { DashboardStressMotion } from '../components/DashboardStressMotion';
 import { AiWorkflowDiagram } from '../components/AiWorkflowDiagram';
 import { VersoesPrototipoMotion } from '../components/VersoesPrototipoMotion';
 
@@ -242,6 +241,19 @@ export const DashboardAdmissaoContent = () => {
               Além da necessidade técnica de migrar para uma nova biblioteca de componentes, havia a oportunidade de repensar a experiência inteira. Analisando anos de solicitações de clientes, feedbacks de Customer Success e demandas internas, o problema real não era falta de gráficos: era o desalinhamento entre o dashboard e a rotina operacional do RH.
             </p>
 
+            <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+              {[
+                ['200 a 300', 'empresas clientes usavam o módulo de Admissão, somando cerca de 40 mil admissões por ano.'],
+                ['~20%', 'delas usavam de fato o dashboard. Muitas nem sabiam que ele existia e montavam controles paralelos.'],
+                ['50 a 60', 'reclamações e pedidos formais sobre o dashboard, acumulados ao longo de anos.'],
+              ].map(([value, label]) => (
+                <div key={value} className="border border-[#E2DCD4] rounded-2xl p-7">
+                  <p className="font-serif text-[32px] font-bold text-[#241510] leading-tight"><CountUpText text={value} /></p>
+                  <p className="text-[15px] text-[#6F625B] leading-relaxed mt-2">{label}</p>
+                </div>
+              ))}
+            </div>
+
             <img
               src={contextoImg}
               alt="Print do Dashboard anterior defasado"
@@ -279,7 +291,7 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 4: Discovery */}
           <div className="mb-32">
-            <h2 id="discovery" className="font-serif text-3xl font-bold text-[#241510] mb-4">Centenas de registros, uma direção clara</h2>
+            <h2 id="discovery" className="font-serif text-3xl font-bold text-[#241510] mb-4">Anos de pedidos, uma direção clara</h2>
             <p className="text-[#7D7169] leading-relaxed mb-6">
               Consolidei solicitações históricas de clientes, feedbacks de Customer Success, demandas do time de Produto e a evolução do Dashboard de Recrutamento. Com apoio do NotebookLM, organizei esse volume, identifiquei padrões recorrentes e transformei informação dispersa em prioridade.
             </p>
@@ -565,58 +577,40 @@ export const DashboardAdmissaoContent = () => {
                   />
                 </div>
 
-                {/* Grid Inferior */}
-                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 -mt-20 relative z-10">
-                  <div className="relative group transition-all duration-300 hover:z-30 hover:-translate-y-4 hover:scale-[1.04] cursor-pointer">
-                    <img src={dash18Handoff} alt="" className="w-full h-auto rounded-lg shadow-xl group-hover:shadow-2xl transition-all duration-300 border border-white/5" />
-                  </div>
-
-                  <div className="relative group transition-all duration-300 hover:z-30 hover:-translate-y-4 hover:scale-[1.04] cursor-pointer">
-                    <img src={dash19Handoff} alt="" className="w-full h-auto rounded-lg shadow-xl group-hover:shadow-2xl transition-all duration-300 border border-white/5" />
-                  </div>
-
-                  <div className="relative group transition-all duration-300 hover:z-30 hover:-translate-y-4 hover:scale-[1.04] cursor-pointer">
-                    <img src={dash20Handoff} alt="" className="w-full h-auto rounded-lg shadow-xl group-hover:shadow-2xl transition-all duration-300 border border-white/5" />
-                  </div>
+                {/* Notebook com as telas codadas, navegando entre as abas, por cima do print do Cursor */}
+                <div className="max-w-6xl mx-auto -mt-28 relative z-10">
+                  <DashboardHandoffMotion />
                 </div>
 
-                {/* Grid de 2 Cards: Cenários (Estresse) e Animações/Transições (Vídeo) */}
-                <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-6 pt-6">
-                  {/* Card 1: Cenários */}
-                  <div className="bg-[#232427] p-6 md:p-8 flex flex-col justify-between border border-white/5 rounded-2xl">
-                    <div className="mb-6 overflow-hidden p-4 flex items-center justify-center min-h-[220px]">
-                      <img
-                        src={Estresse}
-                        alt="Cenários de Estresse"
-                        className="max-h-[220px] w-auto object-contain rounded-lg"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-sans font-medium text-white text-base mb-2">Cenários</h3>
-                      <p className="text-[#A1A1AA] text-sm leading-relaxed">
-                        Mecânimos criado direto no cursor para estressar a quantidade de informações na página.
-                      </p>
-                    </div>
-                  </div>
+                {/* Cenários de estresse: motion do botão de teste trocando o volume de dados */}
+                <div className="max-w-5xl mx-auto pt-24">
+                  <h3 className="font-serif text-2xl font-bold text-white mb-3">Cenários de estresse</h3>
+                  <p className="text-[#B9B4AE] leading-relaxed max-w-3xl mb-10">
+                    Com a tela em código, criei um botão de teste que troca o volume de dados: sem dados, poucos dados, uso médio e uso extremo. Assim eu entendia a capacidade de cada gráfico, dos empty states aos números de milhões, e entregava esses estados prontos para a engenharia. Esse nível de teste só ficou viável projetando as interfaces com IA.
+                  </p>
+                  <DashboardStressMotion />
+                </div>
 
-                  {/* Card 2: Animações e Transições */}
-                  <div className="bg-[#232427] p-6 md:p-8 flex flex-col justify-between border border-white/5 rounded-2xl">
-                    <div className="mb-6 overflow-hidden rounded-md bg-[#18191B] flex items-center justify-center min-h-[220px]">
-                      <video
-                        src={dash22}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-auto max-h-[240px] object-cover rounded-lg"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-sans font-medium text-white text-base mb-2">Animações e transições</h3>
-                      <p className="text-[#A1A1AA] text-sm leading-relaxed">
-                        Com o cursor conseguimos alem de implementar toda uma lib nova em minutos, foi possivel desenhar animações e transições nos gráficos e páginas
-                      </p>
-                    </div>
+                {/* Ganhos de ter as telas em código */}
+                <div className="max-w-5xl mx-auto pt-24">
+                  <h3 className="font-serif text-2xl font-bold text-white mb-3">O que ganhamos com o handoff via Cursor</h3>
+                  <p className="text-[#B9B4AE] leading-relaxed max-w-3xl mb-10">
+                    Entregar as telas já em código, construídas com o Cursor e os componentes reais do Design System, mudou o que a engenharia recebia:
+                  </p>
+                  <div>
+                    <ul className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+                      {[
+                        { title: 'Mais de 40 gráficos redesenhados', text: 'Os antigos e os novos, com mais exatidão, consistência e coerência entre eles, usando a nova biblioteca de componentes.' },
+                        { title: 'Gráficos testados de verdade', text: 'Cada gráfico funcionando com dados, para validar a leitura e o comportamento antes do desenvolvimento.' },
+                        { title: 'Mais interatividade', text: 'Animações e transições nos gráficos e na troca de páginas, desenhadas e entregues já em código.' },
+                      ].map((g, i) => (
+                        <li key={g.title} className="border-t border-white/15 pt-5">
+                          <span className="text-[15px] font-semibold text-[#E08A66] tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                          <p className="text-white text-[17px] font-medium mt-3">{g.title}</p>
+                          <p className="text-[#A1A1AA] text-[15px] leading-relaxed mt-2">{g.text}</p>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -652,23 +646,41 @@ export const DashboardAdmissaoContent = () => {
 
           {/* Seção 13: Resultados */}
           <div className="mb-32">
-            <h2 id="resultados" className="font-serif text-3xl font-bold text-[#241510] mb-4">Direcionamento estratégico validado</h2>
+            <h2 id="resultados" className="font-serif text-3xl font-bold text-[#241510] mb-4">Direcionamento validado com quem usa</h2>
             <p className="text-[#7D7169] leading-relaxed mb-8">
-              As melhorias seguiram para rollout antes de eu sair do projeto, e a evolução é acompanhada pelo time.
+              Saí do projeto no começo do rollout. Os resultados vêm dos testes com clientes e da primeira pesquisa de satisfação, não de uso em escala.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose">
-              <div className="rounded-2xl border border-[#E2DCD4] p-6">
-                <p className="text-[15px] leading-relaxed text-[#4F4440]">
-                  <strong className="font-semibold text-[#241510]">Nova direção estratégica:</strong> sair de indicadores históricos para uma visão operacional validada com clientes.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-[#E2DCD4] p-6">
-                <p className="text-[15px] leading-relaxed text-[#4F4440]">
-                  <strong className="font-semibold text-[#241510]">Funcionalidades validadas:</strong> todos os novos gráficos e recursos foram aprovados pelos usuários antes do rollout.
-                </p>
-              </div>
+            <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { dim: 'Validação', value: '6', label: 'clientes estratégicos aprovaram os novos gráficos e recursos antes do rollout' },
+                { dim: 'Satisfação', value: '4,3', label: 'de média, de 1 a 5, com os novos gráficos e visualizações' },
+                { dim: 'Uso', value: 'Por janela', label: 'a visão por janela de admissão foi o que mais fez o dashboard valer a pena no dia a dia' },
+              ].map(m => (
+                <div key={m.dim} className="border border-[#E2DCD4] rounded-2xl p-6">
+                  <span className="text-[13px] text-[#9E4322]">{m.dim}</span>
+                  <p className="font-serif text-[30px] font-bold text-[#241510] leading-tight tracking-tight mt-1"><CountUpText text={m.value} /></p>
+                  <p className="text-[14px] text-[#6F625B] leading-snug mt-2">{m.label}</p>
+                </div>
+              ))}
             </div>
+
+            <p className="not-prose text-[15px] text-[#6F625B] leading-relaxed mt-6 max-w-3xl">
+              O maior desafio continuou sendo a mudança de hábito: boa parte das empresas já tinha adotado controles paralelos. Começamos pelos clientes que pediram para ver as novidades, e quem passou a usar disse que encontrou ali informações que não tinha antes.
+            </p>
+
+            {/* Como cheguei nesses números */}
+            <details className="not-prose mt-8 border-t border-[#E2DCD4] pt-5 group">
+              <summary className="cursor-pointer text-[14px] font-semibold text-[#241510] list-none flex items-center gap-2">
+                Como cheguei nesses números <span className="text-[#9E4322] transition-transform group-open:rotate-90">›</span>
+              </summary>
+              <ul className="mt-4 space-y-2.5 text-[14px] text-[#6F625B] leading-relaxed max-w-3xl">
+                <li><b className="text-[#4F4440]">Clientes e admissões:</b> estimativa da base com o módulo na época. O total anual parte da média por empresa relatada nas entrevistas: de poucas admissões por mês nas menores a ~200 nas maiores, com picos de até 500 em períodos curtos, como o fim do ano.</li>
+                <li><b className="text-[#4F4440]">Uso do dashboard antigo:</b> taxa de uso nos dados internos da plataforma e no Google Analytics.</li>
+                <li><b className="text-[#4F4440]">Reclamações:</b> tickets, pedidos e reclamações formais consolidados no Discovery.</li>
+                <li><b className="text-[#4F4440]">Satisfação:</b> pesquisa no produto depois da liberação, acompanhada com o time de CS.</li>
+              </ul>
+            </details>
           </div>
 
           {/* Minha Atuação */}
@@ -729,7 +741,7 @@ export const DashboardAdmissaoContent = () => {
             <li>evolução do Dashboard de Recrutamento.</li>
           </ul>
           <p className="mb-6 leading-relaxed">
-            Com apoio do NotebookLM, organizei centenas de registros, identifiquei padrões recorrentes e transformei informações dispersas em prioridades claras para o projeto.
+            Com apoio do NotebookLM, organizei anos de tickets, pedidos e reclamações, identifiquei padrões recorrentes e transformei informações dispersas em prioridades claras para o projeto.
           </p>
           <p className="mb-8 leading-relaxed">
             A análise mostrou que muitos pedidos já haviam sido resolvidos de forma manual em ferramentas paralelas, enquanto as necessidades realmente estratégicas permaneciam sem solução.
@@ -988,8 +1000,11 @@ export const DashboardAdmissaoContent = () => {
             <li>redução significativa do tempo de prototipação;</li>
             <li>handoff robusto para engenharia.</li>
           </ul>
+          <p className="mb-6 leading-relaxed">
+            Saí do projeto no começo do rollout, por isso não acompanhei o uso em escala. Até onde medimos, a pesquisa de satisfação com os novos gráficos e visualizações teve média de 4,3, e a visão por janela de admissão foi o recurso que mais validou o uso do dashboard.
+          </p>
           <p className="mb-8 leading-relaxed">
-            Embora eu não tenha acompanhado o rollout final, a estratégia foi validada pelos principais stakeholders e serviu como base para a evolução do roadmap.
+            O maior desafio seguiu sendo a mudança de hábito, já que muitas empresas tinham adotado controles paralelos. A estratégia foi validada pelos principais stakeholders e serviu como base para a evolução do roadmap.
           </p>
 
           <h2 id="reflexao" className="text-2xl font-bold mb-4">Reflexão</h2>

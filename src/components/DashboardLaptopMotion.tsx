@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, animate, motion } from 'motion/react';
 import {
   BarChart3, CalendarDays, Check, ChevronDown, ClipboardList, Clock, Info, LayoutGrid, ListFilter, LogOut,
-  Menu, Puzzle, Settings, SlidersHorizontal, TrendingUp, Users, Briefcase,
+  Menu, MoreVertical, Puzzle, Settings, SlidersHorizontal, TrendingUp, Users, Briefcase,
 } from 'lucide-react';
 import { wait } from './DevolutivaIaMotion';
 import { APP_W, Cursor, LaptopMockup, stagePoint, useLaptopViewport } from './LaptopMockup';
@@ -11,12 +11,15 @@ import { APP_W, Cursor, LaptopMockup, stagePoint, useLaptopViewport } from './La
  * Hero do case "Redesenhando o Dashboard de Admissão": a tela "Analisar dados" (aba Resumo) dentro
  * do notebook. Os números contam, as barras do funil crescem e o cursor alterna a visualização do
  * funil entre Linha, Funil e Barras. Roda em loop enquanto está visível.
+ *
+ * DashboardHandoffMotion (seção de handoff): a mesma tela, com o cursor navegando entre as abas
+ * Resumo, Volume das admissões e Minhas análises.
  */
 
-const C = { ink: '#1F2328', sub: '#4B5058', muted: '#8A8F98', line: '#E3E5E8', page: '#F5F6F8', blue: '#1A66DB', navy: '#141B2D' };
+export const C = { ink: '#1F2328', sub: '#4B5058', muted: '#8A8F98', line: '#E3E5E8', page: '#F5F6F8', blue: '#1A66DB', navy: '#141B2D' };
 
 // Degradê do funil: azul nas primeiras etapas, verde nas últimas
-const COLORS = ['#3D6BF2', '#4775E8', '#4E81D6', '#5089C2', '#4F8FAE', '#4F9696', '#559D83', '#5FA46F'];
+export const COLORS = ['#3D6BF2', '#4775E8', '#4E81D6', '#5089C2', '#4F8FAE', '#4F9696', '#559D83', '#5FA46F'];
 const FUNNEL = [
   { label: 'Admissão não iniciada', v: 100 },
   { label: 'Convite enviado', v: 98 },
@@ -117,8 +120,193 @@ function FunnelView() {
   );
 }
 
+const TABS = ['Resumo', 'Volume das admissões', 'Eficiência operacional', 'Documentos', 'Diversidade', 'Minhas análises'];
+const TAB_VOLUME = 1;
+const TAB_ANALISES = 5;
+
+// Abas da página; a linha azul desliza até a aba ativa (medida nos elementos, igual dentro do scale)
+function TabBar({ tab, tabRefs }: { tab: number; tabRefs?: any }) {
+  const els = useRef<(HTMLSpanElement | null)[]>([]);
+  const [bar, setBar] = useState({ x: 0, w: 0 });
+  useLayoutEffect(() => {
+    const measure = () => { const el = els.current[tab]; if (el) setBar({ x: el.offsetLeft, w: el.offsetWidth }); };
+    measure();
+    document.fonts?.ready.then(measure);
+  }, [tab]);
+  return (
+    <div className="relative flex gap-7 mt-6 text-[14px] border-b" style={{ borderColor: C.line }}>
+      {TABS.map((t, i) => (
+        <span
+          key={t}
+          ref={el => { els.current[i] = el; if (tabRefs) tabRefs.current[i] = el; }}
+          className="pb-2.5 px-2 relative transition-colors duration-300"
+          style={{ color: i === tab ? C.blue : C.ink }}
+        >
+          {t}
+          {t === 'Minhas análises' && <span className="ml-2 text-[10.5px] font-semibold text-white rounded px-1.5 py-0.5" style={{ background: '#4CAF50' }}>Novo</span>}
+        </span>
+      ))}
+      {bar.w > 0 && <motion.span className="absolute left-0 bottom-0 h-[2px]" style={{ background: C.blue }} initial={false} animate={{ x: bar.x, width: bar.w }} transition={{ duration: 0.4, ease: [0.65, 0, 0.35, 1] }} />}
+    </div>
+  );
+}
+
+const card = 'bg-white rounded-xl border';
+
+// Aba Volume das admissões: aderência ao fluxo ideal + fluxo de navegação (sankey)
+const SANKEY = [
+  { label: 'Início', v: 100 },
+  { label: 'Convite enviado', v: 98 },
+  { label: 'Dados Exame', v: 90 },
+  { label: 'Envio documentação', v: 92 },
+  { label: 'Benefícios', v: 74 },
+  { label: 'Folha Pgto', v: 70 },
+  { label: 'Assinatura', v: 58 },
+  { label: 'Concluída', v: 54 },
+];
+const SK_W = 1090;
+const SK_H = 230;
+const NODE_W = 16;
+
+function VolumeContent() {
+  const step = (SK_W - NODE_W - 70) / (SANKEY.length - 1);
+  const k = (SK_H - 50) / 100;
+  const nodes = SANKEY.map((n, i) => ({ ...n, x: i * step, y: 4 + i * 6, h: n.v * k }));
+  const band = (x0: number, y0: number, x1: number, y1: number, h: number) => {
+    const m = (x0 + x1) / 2;
+    return `M${x0},${y0} C${m},${y0} ${m},${y1} ${x1},${y1} L${x1},${y1 + h} C${m},${y1 + h} ${m},${y0 + h} ${x0},${y0 + h} Z`;
+  };
+  // Quem pulou etapas: duas saídas pequenas em vermelho
+  const skips = [
+    { from: 1, at: 2, to: 3, label: 'Pularam 1 (Dados Exame)' },
+    { from: 3, at: 4, to: 5, label: 'Pularam 1 (Benefícios)' },
+  ];
+  const seg = [{ w: 81, c: '#2E8540' }, { w: 5, c: '#E59A2B' }, { w: 2, c: '#D93030' }];
+  return (
+    <>
+      <div className={`${card} mt-4 px-5 pt-4 pb-4`} style={{ borderColor: C.line }}>
+        <p className="flex items-center gap-1.5 text-[15px] font-medium">Aderência das admissões concluídas ao fluxo ideal no período <Info size={15} color={C.sub} /></p>
+        <div className="flex items-center gap-3 mt-5">
+          <span className="text-[11px] shrink-0" style={{ width: 120, color: C.sub }}>Admissões concluídas</span>
+          <div className="relative flex-1 h-[22px]">
+            <div className="absolute inset-0 flex">
+              {seg.map((p, i) => (
+                <motion.span key={i} className="block h-full" style={{ width: `${p.w}%`, background: p.c, transformOrigin: 'left' }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 0.2 + i * 0.35, ease: grow }} />
+              ))}
+              <motion.span className="ml-2 text-[11px] font-semibold self-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>88</motion.span>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-between text-[11px] mt-1.5" style={{ marginLeft: 132, color: C.sub }}>
+          {[0, 20, 40, 60, 80, 100].map(t => <span key={t}>{t}</span>)}
+        </div>
+        <div className="flex justify-center gap-6 text-[11px] mt-3" style={{ color: C.sub }}>
+          {[['#2E8540', 'Passaram por todas as etapas'], ['#E59A2B', 'Pularam 1 etapa'], ['#D93030', 'Pularam múltiplas etapas']].map(([c, l]) => (
+            <span key={l} className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full" style={{ background: c }} />{l}</span>
+          ))}
+        </div>
+      </div>
+
+      <div className={`${card} mt-4 px-5 pt-4`} style={{ borderColor: C.line, height: 320 }}>
+        <p className="flex items-center gap-1.5 text-[15px] font-medium">Fluxo de navegação das admissões concluídas no período <Info size={15} color={C.sub} /></p>
+        <svg className="mt-5 overflow-visible" width={SK_W} height={SK_H}>
+          <defs>
+            <clipPath id="vol-reveal"><motion.rect x={-10} y={-10} height={SK_H + 20} initial={{ width: 0 }} animate={{ width: SK_W + 20 }} transition={{ duration: 1.8, ease: 'easeInOut' }} /></clipPath>
+          </defs>
+          <g clipPath="url(#vol-reveal)">
+            {nodes.slice(0, -1).map((n, i) => {
+              const next = nodes[i + 1];
+              const h = Math.min(n.h, next.h);
+              return <path key={i} d={band(n.x + NODE_W, n.y, next.x, next.y, h)} fill={COLORS[i]} fillOpacity={0.2} />;
+            })}
+            {skips.map(sk => {
+              const a = nodes[sk.from], m = nodes[sk.at], b = nodes[sk.to];
+              const ry = m.y + m.h + 14;
+              return (
+                <g key={sk.label}>
+                  <path d={band(a.x + NODE_W, a.y + a.h - 5, m.x, ry, 5)} fill="#D93030" fillOpacity={0.2} />
+                  <path d={band(m.x + NODE_W, ry, b.x, b.y + b.h - 5, 5)} fill="#D93030" fillOpacity={0.2} />
+                  <rect x={m.x} y={ry} width={NODE_W} height={7} fill="#D93030" />
+                  <text x={m.x + NODE_W + 6} y={ry + 7} fontSize={10.5} fill={C.ink}>{sk.label}</text>
+                </g>
+              );
+            })}
+            {nodes.map((n, i) => (
+              <g key={n.label}>
+                <rect x={n.x} y={n.y} width={NODE_W} height={n.h} fill={COLORS[i]} />
+                <text x={n.x + NODE_W + 6} y={n.y + n.h / 2} fontSize={11} fill={C.ink} dominantBaseline="middle">{n.label}</text>
+              </g>
+            ))}
+          </g>
+        </svg>
+      </div>
+    </>
+  );
+}
+
+// Aba Minhas análises: indicadores e gráficos montados pelo próprio RH
+const CARGOS = [
+  { label: 'Analista', v: 4 }, { label: 'Dev Senior', v: 8 }, { label: 'Coordenador', v: 12 },
+  { label: 'Estagiário', v: 3 }, { label: 'Gerente', v: 15 }, { label: 'Diretor', v: 5 },
+];
+
+function AnalisesContent() {
+  const kpis = [
+    { title: 'Admissões concluídas no período', value: <Counter to={654} play /> },
+    { title: 'Candidatos que desistiram/saíram no período', value: <Counter to={42} play delay={0.1} /> },
+    { title: 'Tempo até aceite do convite no período', value: <><Counter to={1.2} decimals={1} play delay={0.2} /> dias</> },
+    { title: 'Tempo até último documento no período', value: <><Counter to={3.5} decimals={1} play delay={0.3} /> dias</> },
+  ];
+  const BAR_H = 170;
+  return (
+    <>
+      <div className="grid grid-cols-4 gap-4 mt-4">
+        {kpis.map((kp, i) => (
+          <motion.div key={kp.title} className={`${card} px-5 py-4`} style={{ borderColor: C.line, height: 124 }} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: i * 0.1, ease: grow }}>
+            <div className="flex justify-between gap-2">
+              <p className="flex gap-2 text-[13px] leading-[1.35]"><LayoutGrid size={13} color={C.muted} className="shrink-0 mt-0.5" />{kp.title}</p>
+              <span className="flex gap-1 shrink-0" style={{ color: C.sub }}><Info size={15} /><MoreVertical size={15} /></span>
+            </div>
+            <p className="text-[32px] leading-none mt-4 tabular-nums">{kp.value}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <motion.div className={`${card} px-5 pt-4`} style={{ borderColor: C.line, height: 320 }} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3, ease: grow }}>
+          <div className="flex justify-between">
+            <p className="flex items-center gap-2 text-[15px] font-medium"><LayoutGrid size={14} color={C.muted} /> Tempo médio de admissões por cargo no período <Info size={15} color={C.sub} /></p>
+            <MoreVertical size={15} color={C.sub} />
+          </div>
+          <div className="relative mt-8 ml-10 mr-4" style={{ height: BAR_H + 20 }}>
+            {[15, 12, 9, 6, 3, 0].map((t, i) => (
+              <div key={t} className="absolute left-0 right-0 border-t" style={{ top: 20 + (i / 5) * BAR_H, borderColor: '#EEF0F2' }}>
+                <span className="absolute -left-8 -top-2 text-[11px] w-5 text-right" style={{ color: C.sub }}>{t}</span>
+              </div>
+            ))}
+            <div className="absolute inset-0 flex">
+              {CARGOS.map((b, i) => (
+                <div key={b.label} className="relative flex-1 flex flex-col items-center justify-end">
+                  <motion.span className="text-[11px] font-semibold mb-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 + i * 0.08 }}>{b.v}</motion.span>
+                  <motion.span className="block rounded-t-[3px]" style={{ width: 62, height: (b.v / 15) * BAR_H, background: '#2F6FE4', transformOrigin: 'bottom' }} initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 0.9, delay: 0.45 + i * 0.08, ease: grow }} />
+                  <span className="absolute -bottom-6 text-[11px]" style={{ color: C.sub }}>{b.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+        <motion.div className="rounded-xl border-2 border-dashed flex flex-col items-center justify-center text-center" style={{ borderColor: C.line, height: 320, background: '#FAFBFC' }} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4, ease: grow }}>
+          <span className="flex items-center justify-center w-11 h-11 rounded-full" style={{ background: '#E8EEFB', color: C.blue }}><BarChart3 size={20} /></span>
+          <p className="text-[15px] font-semibold mt-4">Adicione um novo gráfico</p>
+          <p className="text-[12.5px] mt-1.5 max-w-[240px]" style={{ color: C.sub }}>Comece sua análise criando visualizações personalizadas.</p>
+        </motion.div>
+      </div>
+    </>
+  );
+}
+
 // `key` declarado porque o projeto não tem @types/react instalado
-function AnalisarDadosScreen({ view, play, toggleRefs }: { view: View; play: boolean; toggleRefs: any; key?: number }) {
+function AnalisarDadosScreen({ view, play, toggleRefs, tab = 0, tabRefs }: { view: View; play: boolean; toggleRefs: any; tab?: number; tabRefs?: any; key?: number }) {
   const rail = [Briefcase, ClipboardList, Settings, Users, Puzzle, BarChart3, LogOut];
   const kpis = [
     { title: 'Taxa de admissões concluídas no período', value: <><Counter to={88} decimals={1} play={play} delay={0.2} />%</>, sub: <><b>88</b> concluídas de <b>100</b> iniciadas</> },
@@ -184,16 +372,11 @@ function AnalisarDadosScreen({ view, play, toggleRefs }: { view: View; play: boo
           <span className="flex items-center gap-1.5 rounded-full border-2 px-4 py-1.5 text-[13px] font-medium" style={{ borderColor: C.navy }}><ListFilter size={14} /> Filtros</span>
         </div>
 
-        <div className="flex gap-7 mt-6 text-[14px] border-b" style={{ borderColor: C.line }}>
-          {['Resumo', 'Volume das admissões', 'Eficiência operacional', 'Documentos', 'Diversidade', 'Minhas análises'].map((t, i) => (
-            <span key={t} className="pb-2.5 px-2 relative" style={{ color: i === 0 ? C.blue : C.ink }}>
-              {t}
-              {t === 'Minhas análises' && <span className="ml-2 text-[10.5px] font-semibold text-white rounded px-1.5 py-0.5" style={{ background: '#4CAF50' }}>Novo</span>}
-              {i === 0 && <span className="absolute left-0 right-0 bottom-0 h-[2px]" style={{ background: C.blue }} />}
-            </span>
-          ))}
-        </div>
+        <TabBar tab={tab} tabRefs={tabRefs} />
 
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div key={tab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+        {tab === 0 && (<>
         <div className="grid grid-cols-4 gap-4 mt-4">
           {kpis.map((k, i) => (
             <motion.div key={k.title} className="bg-white rounded-xl border px-5 py-4" style={{ borderColor: C.line, height: 160 }} initial={play ? { opacity: 0, y: 12 } : false} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: i * 0.1, ease: grow }}>
@@ -242,6 +425,11 @@ function AnalisarDadosScreen({ view, play, toggleRefs }: { view: View; play: boo
             </AnimatePresence>
           </div>
         </motion.div>
+        </>)}
+        {tab === TAB_VOLUME && <VolumeContent />}
+        {tab === TAB_ANALISES && <AnalisesContent />}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -303,6 +491,60 @@ export function DashboardLaptopMotion() {
       label="Notebook com o Dashboard de Admissão: números do resumo e funil alternando entre barras, linha e funil"
     >
       <AnalisarDadosScreen key={cycle} view={view} play={play} toggleRefs={toggleRefs} />
+    </LaptopMockup>
+  );
+}
+
+// Seção de handoff: o cursor navega entre Resumo, Volume das admissões e Minhas análises
+export function DashboardHandoffMotion() {
+  const { viewRef, width, inView } = useLaptopViewport();
+  const stageRef = useRef<HTMLDivElement>(null);
+  const toggleRefs = useRef<Record<string, HTMLSpanElement | null>>({});
+  const tabRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const [tab, setTab] = useState(0);
+  const [cursor, setCursor] = useState<Cursor>({ x: 1150, y: 760, visible: false, down: false });
+
+  useEffect(() => {
+    if (!inView || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    const token = { cancelled: false };
+
+    const clickTab = async (i: number) => {
+      setCursor(c => ({ ...c, ...stagePoint(stageRef.current, tabRefs.current[i]), visible: true }));
+      await wait(1100, token);
+      setCursor(c => ({ ...c, down: true }));
+      await wait(160, token);
+      setCursor(c => ({ ...c, down: false }));
+      setTab(i);
+    };
+
+    const run = async () => {
+      await wait(3400, token);
+      while (!token.cancelled) {
+        await clickTab(TAB_VOLUME);
+        await wait(4200, token);
+        await clickTab(TAB_ANALISES);
+        await wait(4200, token);
+        await clickTab(0);
+        await wait(3800, token);
+      }
+    };
+
+    run().catch(() => {});
+    return () => { token.cancelled = true; };
+  }, [inView]);
+
+  const urls = ['resumo', 'volume', '', '', '', 'minhas-analises'];
+  return (
+    <LaptopMockup
+      viewRef={viewRef}
+      width={width}
+      stageRef={stageRef}
+      tabs={[{ title: 'Analisar dados', url: `app.gupy.io/admissao/analisar-dados/${urls[tab]}` }]}
+      activeTab={0}
+      cursor={cursor}
+      label="Notebook com o Dashboard de Admissão codado: o cursor navega entre Resumo, Volume das admissões e Minhas análises"
+    >
+      <AnalisarDadosScreen view="barras" play toggleRefs={toggleRefs} tab={tab} tabRefs={tabRefs} />
     </LaptopMockup>
   );
 }

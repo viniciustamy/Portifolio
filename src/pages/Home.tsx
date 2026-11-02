@@ -94,6 +94,8 @@ function CaseCard({ project }: { project: ProjectData; key?: string }) {
         </div>
       )}
       <div className={`relative z-10 ${thumbBg ? 'row-start-1 md:col-start-1 md:self-end p-6 pb-5 md:pl-10 md:pb-10 xl:pl-12 xl:pb-12 md:pr-4' : ''} ${textColor}`}>
+        {/* No mobile o motion rola por baixo do texto: fundo da cor do card com fade embaixo protege a leitura */}
+        {thumbBg && <span aria-hidden="true" className="md:hidden absolute inset-x-0 top-0 -bottom-8 -z-10 pointer-events-none" style={{ background: `linear-gradient(to bottom, ${thumbBg} calc(100% - 32px), ${thumbBg}00)` }} />}
         {/* Tempo de leitura em cima (discreto), título e a descrição curta embaixo; case futuro mostra "Em breve" */}
         {comingSoon ? (
           <span className="inline-block rounded-full border border-current/30 px-3 py-1 text-[12px] font-semibold mb-3 opacity-90">Em breve</span>
