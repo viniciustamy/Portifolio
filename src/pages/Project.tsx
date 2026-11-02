@@ -11,6 +11,10 @@ import { useAssistedPageScroll } from '../hooks/useAssistedPageScroll';
 import { Button } from '../components/ui/Button';
 import { Typography } from '../components/ui/Typography';
 import { AtuacaoInfo, HAS_OWN_ATUACAO } from '../components/AtuacaoInfo';
+import { CaseSummary } from '../components/CaseSummary';
+
+// Cases da Home que abrem com o resumo (papel, ano, time e TL;DR)
+const CASES_WITH_SUMMARY = ['devolutiva', 'dashboard-admissao', 'admin-global-docs', 'kba-senha'];
 import { DevolutivaLaptopMotion } from '../components/DevolutivaLaptopMotion';
 import { DashboardLaptopMotion } from '../components/DashboardLaptopMotion';
 import { MetricasCesMotion } from '../components/MetricasCesMotion';
@@ -298,6 +302,9 @@ export default function Project() {
               />
             </motion.div>
           )}
+
+          {/* Resumo do case (só os cases principais) */}
+          {CASES_WITH_SUMMARY.includes(project.id) && <CaseSummary project={project} />}
 
           <div
             onClick={handleImageClick}

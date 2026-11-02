@@ -148,7 +148,7 @@ export const projects = [
     tldr: {
       problem: 'O dashboard mostrava o passado, mas o RH precisava agir sobre admissões em risco, agora.',
       action: 'Liderei o Discovery, prototipei com IA, testei com clientes e apoiei o handoff técnico.',
-      result: 'Redefinimos a direção do produto: de indicadores históricos para uma visão de risco e previsibilidade.'
+      result: 'Nova direção, de indicadores históricos para risco em tempo real, validada com 6 clientes estratégicos e com satisfação média de 4,3 de 5 nos novos gráficos.'
     },
     bg: 'bg-[#E1DCD3]',
     heroBg: 'bg-[#E1DCD3]',
@@ -200,7 +200,7 @@ export const projects = [
     tldr: {
       problem: 'Recuperação de acesso era um dos principais motivos de contato com o suporte.',
       action: 'Conduzi a descoberta, desenhei o fluxo self-service via KBA e validei cenários com prototipação em IA.',
-      result: 'Potencial de redução relevante no volume de tickets, com mais autonomia e menos tempo de espera para o candidato.'
+      result: 'No rollout, ~70% de quem tentou recuperou a conta sozinho, em 1 a 2 minutos em vez de 24 a 48 horas úteis. Meta de ~70% menos tickets de recuperação.'
     },
     bg: 'bg-[#B1BDC4]',
     heroBg: 'bg-[#B1BDC4]',

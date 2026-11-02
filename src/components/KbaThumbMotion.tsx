@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ChevronRight, CircleCheck, Headphones, Home, Info, Lock, MoreVertical, TriangleAlert, Wifi } from 'lucide-react';
+import { ChevronDown, ChevronRight, CircleCheck, Eye, Headphones, Home, Info, Lock, Mail, MoreVertical, Smartphone, TriangleAlert, Wifi } from 'lucide-react';
 import { typeText, wait } from './DevolutivaIaMotion';
 import { IPhoneFrame } from './IPhoneFrame';
 
@@ -9,6 +9,9 @@ import { IPhoneFrame } from './IPhoneFrame';
  * sobre o fundo azul do card. Parada, mostra a tela "Recuperação de conta". Em foco: toque em
  * "Iniciar verificação" → as 4 perguntas passam rápido → "Alterar e-mail" é preenchido →
  * tela de sucesso, e recomeça. Toques aparecem como um círculo (não há cursor no celular).
+ *
+ * full (seção de handoff do case): começa antes, no login → "Esqueceu a senha?" → CPF digitado →
+ * opções de envio → "Recuperar conta", e não solta os confetes no fim.
  */
 
 const STAGE_W = 700;
@@ -51,8 +54,9 @@ export const QUESTIONS = [
 ];
 
 export const EMAIL = 'candidato@gmail.com';
+const CPF = '156.927.344-87';
 
-type Screen = 'start' | 'q0' | 'q1' | 'q2' | 'q3' | 'email' | 'success';
+type Screen = 'login' | 'forgot' | 'options' | 'start' | 'q0' | 'q1' | 'q2' | 'q3' | 'email' | 'success';
 type Tap = { x: number; y: number; id: number } | null;
 
 const ease = [0.65, 0, 0.35, 1] as const;
@@ -67,6 +71,89 @@ function PrimaryButton({ children, color = C.blue, enabled = true, pressed = fal
     >
       {children}
     </motion.span>
+  );
+}
+
+function OutlineButton({ children, pressed = false, tap }: { children: any; pressed?: boolean; tap?: string }) {
+  return (
+    <motion.span
+      data-tap={tap}
+      className="flex items-center justify-center gap-2 rounded-full border-2 text-[16px] font-medium"
+      style={{ height: 46, borderColor: C.navy, color: C.navy }}
+      animate={{ scale: pressed ? 0.96 : 1 }}
+      transition={{ duration: 0.12 }}
+    >
+      {children}
+    </motion.span>
+  );
+}
+
+const Label = ({ children }: { children: any }) => <p className="text-[14px]" style={{ color: C.sub }}>{children}</p>;
+const Input = ({ children = null, active = false }: { children?: any; active?: boolean }) => (
+  <div className="mt-2 rounded-lg border px-3 flex items-center justify-between text-[16px]" style={{ height: 44, borderColor: active ? C.blue : C.line, boxShadow: active ? '0 0 0 3px rgb(10 61 255 / .12)' : 'none' }}>
+    {children}
+  </div>
+);
+const Caret = () => <span className="inline-block w-[2px] h-[18px] ml-[1px] animate-pulse" style={{ background: C.blue }} />;
+
+// Login: o candidato toca em "Esqueceu a senha?"
+function LoginScreen({ pressed }: { pressed: boolean }) {
+  return (
+    <div className="px-6 pt-6">
+      <Label>Idioma</Label>
+      <Input>Português <ChevronDown size={18} color={C.sub} /></Input>
+      <p className="text-[24px] font-semibold leading-tight mt-6">Entrar com sua conta</p>
+      <div className="mt-4"><Label>E-mail ou CPF <span style={{ color: '#D93030' }}>*</span></Label><Input /></div>
+      <div className="mt-4"><Label>Senha <span style={{ color: '#D93030' }}>*</span></Label><Input><span /><Eye size={18} color={C.sub} /></Input></div>
+      <motion.p data-tap="forgot" className="inline-block text-[14px] mt-4" style={{ color: C.blue }} animate={{ opacity: pressed ? 0.5 : 1 }}>Esqueceu a senha?</motion.p>
+      <div className="mt-5 flex flex-col gap-3">
+        <PrimaryButton enabled={false}>Acessar conta</PrimaryButton>
+        <OutlineButton>Entrar sem senha</OutlineButton>
+      </div>
+      <p className="text-center text-[15px] mt-5">Ou entrar com</p>
+      <div className="grid grid-cols-2 gap-3 mt-4">
+        <OutlineButton><span className="font-bold">G</span> Google</OutlineButton>
+        <OutlineButton><span className="text-[11px] font-bold text-white rounded-[3px] px-[3px]" style={{ background: C.navy }}>in</span> LinkedIn</OutlineButton>
+      </div>
+    </div>
+  );
+}
+
+// Esqueceu a senha: o CPF é digitado e o "Continuar" habilita
+function ForgotScreen({ cpf, pressed }: { cpf: string; pressed: boolean }) {
+  const typing = cpf.length < CPF.length;
+  return (
+    <div className="px-6 pt-7">
+      <p className="text-[24px] font-semibold leading-tight">Esqueceu a senha?</p>
+      <p className="text-[15px] leading-[1.45] mt-2">Para redefinir a sua senha, primeiramente insira seu e-mail ou CPF.</p>
+      <div className="mt-6">
+        <Label>E-mail ou CPF</Label>
+        <Input active={typing}><span>{cpf}{typing && <Caret />}</span></Input>
+        <p className="text-[12.5px] leading-[1.45] mt-2" style={{ color: C.sub }}>Certifique-se que o e-mail ou CPF é o mesmo utilizado nos processos seletivos na Gupy.</p>
+      </div>
+      <div className="mt-7">
+        <PrimaryButton color={C.navy} enabled={!typing} pressed={pressed}>Continuar</PrimaryButton>
+      </div>
+      <p className="text-center text-[12px] mt-6" style={{ color: C.sub }}>Powered by Gupy</p>
+    </div>
+  );
+}
+
+// Opções de envio: sem acesso ao e-mail nem ao celular, o candidato vai em "Recuperar conta"
+function OptionsScreen({ pressed }: { pressed: boolean }) {
+  return (
+    <div className="px-6 pt-7">
+      <p className="text-[24px] font-semibold leading-tight">Esqueceu a senha?</p>
+      <p className="text-[15px] leading-[1.45] mt-2">Escolha uma das opções abaixo para redefinir sua senha:</p>
+      <div className="mt-6"><Label>E-mail ou CPF</Label><p className="text-[16px] mt-2">ema***********@gmail.com</p></div>
+      <div className="mt-4"><PrimaryButton color={C.navy}><Mail size={18} /> Receber link via e-mail</PrimaryButton></div>
+      <div className="mt-6"><Label>Celular</Label><p className="text-[16px] mt-2">(+5531) 9****-**41</p></div>
+      <div className="mt-4"><PrimaryButton color={C.navy}><Smartphone size={18} /> Receber código por SMS</PrimaryButton></div>
+      <div className="border-t my-6" style={{ borderColor: '#E1E3E6' }} />
+      <p className="text-center text-[15px]">Não tem acesso ao e-mail ou celular?</p>
+      <div className="mt-4"><OutlineButton tap="recover" pressed={pressed}>Recuperar conta</OutlineButton></div>
+      <p className="text-center text-[12px] mt-6" style={{ color: C.sub }}>Powered by Gupy</p>
+    </div>
   );
 }
 
@@ -177,15 +264,16 @@ function SuccessScreen() {
   );
 }
 
-export function KbaThumbMotion({ active }: { active: boolean }) {
+export function KbaThumbMotion({ active, full = false }: { active: boolean; full?: boolean }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const phoneRef = useRef<HTMLDivElement>(null);
 
   const [size, setSize] = useState({ w: 0, h: 0 });
-  const [screen, setScreen] = useState<Screen>('start');
+  const [screen, setScreen] = useState<Screen>(full ? 'login' : 'start');
   const [selected, setSelected] = useState(false);
   const [pressed, setPressed] = useState(false);
   const [emails, setEmails] = useState({ first: '', second: '' });
+  const [cpf, setCpf] = useState('');
   const [tap, setTap] = useState<Tap>(null);
 
   const scale = size.w / STAGE_W;
@@ -202,7 +290,8 @@ export function KbaThumbMotion({ active }: { active: boolean }) {
 
   useEffect(() => {
     const reset = () => {
-      setScreen('start');
+      setScreen(full ? 'login' : 'start');
+      setCpf('');
       setSelected(false);
       setPressed(false);
       setEmails({ first: '', second: '' });
@@ -234,10 +323,41 @@ export function KbaThumbMotion({ active }: { active: boolean }) {
       return (btn.getBoundingClientRect().top + btn.getBoundingClientRect().height / 2 - phone.getBoundingClientRect().top) / k;
     };
 
+    // Centro de um elemento marcado com data-tap (coordenadas do celular)
+    const pointOf = (name: string) => {
+      const phone = phoneRef.current;
+      const el = phone?.querySelector<HTMLElement>(`[data-screen] [data-tap="${name}"]`);
+      if (!phone || !el) return { x: PHONE_W / 2, y: 400 };
+      const p = phone.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      const k = p.width / PHONE_W;
+      return { x: (r.left + r.width / 2 - p.left) / k, y: (r.top + r.height / 2 - p.top) / k };
+    };
+
     const run = async () => {
       while (!token.cancelled) {
         reset();
         await wait(1100, token);
+
+        if (full) {
+          // 0. Login → Esqueceu a senha → CPF → opções → Recuperar conta
+          const forgot = pointOf('forgot');
+          await tapAt(forgot.x, forgot.y);
+          await wait(150, token);
+          setScreen('forgot');
+          await wait(700, token);
+          await typeText(CPF, 1100, setCpf, token);
+          await wait(500, token);
+          await tapAt(PHONE_W / 2, buttonY());
+          await wait(150, token);
+          setScreen('options');
+          await wait(1600, token);
+          const recover = pointOf('recover');
+          await tapAt(recover.x, recover.y);
+          await wait(150, token);
+          setScreen('start');
+          await wait(1100, token);
+        }
 
         // 1. Iniciar verificação
         await tapAt(PHONE_W / 2, buttonY());
@@ -272,9 +392,12 @@ export function KbaThumbMotion({ active }: { active: boolean }) {
 
     run().catch(() => {});
     return () => { token.cancelled = true; };
-  }, [active]);
+  }, [active, full]);
 
   const content = (() => {
+    if (screen === 'login') return <LoginScreen pressed={pressed} />;
+    if (screen === 'forgot') return <ForgotScreen cpf={cpf} pressed={pressed} />;
+    if (screen === 'options') return <OptionsScreen pressed={pressed} />;
     if (screen === 'start') return <StartScreen pressed={pressed} />;
     if (screen === 'email') return <EmailScreen first={emails.first} second={emails.second} pressed={pressed} />;
     if (screen === 'success') return <SuccessScreen />;
@@ -288,7 +411,7 @@ export function KbaThumbMotion({ active }: { active: boolean }) {
         <div className="absolute left-0 top-0 origin-top-left font-sans" style={{ width: STAGE_W, height: stageH, transform: `scale(${scale})`, color: C.ink }}>
           {/* Confetes atrás do celular quando chega na tela de sucesso */}
           <AnimatePresence>
-            {screen === 'success' && (
+            {screen === 'success' && !full && (
               <motion.div key="confetti" className="absolute pointer-events-none" style={{ left: STAGE_W / 2, top: stageH + 20 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
                 {CONFETTI.map((p, i) => (
                   <motion.span

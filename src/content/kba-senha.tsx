@@ -32,7 +32,7 @@ import k14 from '../assets/images/KBA/Completa/k-14.png';
 import kbaDiscoveryImg from '../assets/images/KBA/KBA-Discovery.png';
 import kbaEstrategiaImg from '../assets/images/KBA/KBA-Estratégia.png';
 import kbaIaImg from '../assets/images/KBA/KBA-IA.png';
-import kbaHandoffImg from '../assets/images/KBA/KBA-Handoff.png';
+import { KbaHandoffMotion } from '../components/KbaHandoffMotion';
 
 
 const H2 = 'font-serif text-3xl font-bold text-[#241510] mb-4';
@@ -249,7 +249,7 @@ export const KbaSenhaContent = () => {
                   <span key={item} className="rounded-full border border-white/20 px-4 py-2 text-[14px] text-white/85">{item}</span>
                 ))}
               </div>
-              <img src={kbaHandoffImg} alt="Documentação completa e handoff" className="w-full h-auto object-contain" />
+              <KbaHandoffMotion />
             </div>
           </div>
 
