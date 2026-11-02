@@ -18,6 +18,7 @@ const IaDiaDiaContent = lazyContent(() => import("./content/ia-dia-dia"), "IaDia
 const OrquestracaoAgentesContent = lazyContent(() => import("./content/orquestracao-agentes"), "OrquestracaoAgentesContent");
 const FrameworkDynamicsContent = lazyContent(() => import("./content/framework-dynamics"), "FrameworkDynamicsContent");
 const AprendizadosRhContent = lazyContent(() => import("./content/aprendizados-rh"), "AprendizadosRhContent");
+const MindiContent = lazyContent(() => import("./content/mindi"), "MindiContent");
 const MetricasExperienciaContent = lazyContent(() => import("./content/metricas-experiencia"), "MetricasExperienciaContent");
 
 
@@ -131,6 +132,30 @@ export const projects = [
     content: <DevolutivaContent />
   },
   {
+    id: 'mindi',
+    title: 'Lançando um app do zero na App Store',
+    tag: 'Criando um app de filmes e séries para mim e meus amigos, totalmente com IA',
+    description: 'Como criei o Mindi, um app para gerenciar e descobrir filmes e séries, do zero à App Store, com IA em todas as etapas.',
+    role: 'Product Designer e desenvolvedor',
+    roles: ['Product Design', 'Desenvolvimento com IA'],
+    tools: ['Figma', 'Google AI Studio', 'Claude Code', 'Codemagic'],
+    team: ['Projeto pessoal'],
+    year: '2025 – 2026',
+    platform: 'iOS',
+    readingTime: '5 min de leitura',
+    tldr: {
+      problem: 'O app de filmes que eu usava foi descontinuado e nenhum outro tinha a mesma profundidade de informação.',
+      action: 'Desenhei e construí o app sozinho com IA: do Figma ao vibe code, conectando TMDB, OMDb, Wikidata e Gemini, até o build iOS pela nuvem.',
+      result: 'App testado com ~18 pessoas num lançamento orgânico e nova versão em revisão na App Store.'
+    },
+    thumbBg: '#484AAC',
+    bg: 'bg-[#09090B]',
+    heroBg: 'bg-[#09090B]',
+    textColor: 'text-white',
+    tagColor: 'text-white/75',
+    content: <MindiContent />
+  },
+  {
     id: 'dashboard-admissao',
     title: 'Redesenhando o Dashboard de Admissão',
     tag: 'Personalizando visão estratégica e handoff com IA',
@@ -207,27 +232,6 @@ export const projects = [
     textColor: 'text-[#241510]',
     tagColor: 'text-[#9E4322]',
     content: <KbaSenhaContent />
-  },
-  {
-    // Case em produção: aparece na Home com "Em breve" e ainda não tem página
-    id: 'mindi',
-    title: 'Lançando um app do zero na App Store',
-    tag: 'Criando um app de filmes e séries para mim e meus amigos, totalmente com IA',
-    description: 'Como criei o Mindi, um app para gerenciar e descobrir filmes e séries, do zero à App Store, com IA em todas as etapas.',
-    role: 'Product Designer',
-    roles: ['Product Design', 'Desenvolvimento com IA'],
-    tools: ['Claude Code', 'Cursor', 'Figma'],
-    team: ['Projeto pessoal'],
-    year: '2026',
-    platform: 'iOS',
-    readingTime: 'Em breve',
-    comingSoon: true,
-    thumbBg: '#484AAC',
-    bg: 'bg-[#09090B]',
-    heroBg: 'bg-[#09090B]',
-    textColor: 'text-white',
-    tagColor: 'text-white/75',
-    content: null
   },
   {
     id: 'analise-metricas',

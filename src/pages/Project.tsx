@@ -14,11 +14,12 @@ import { AtuacaoInfo, HAS_OWN_ATUACAO } from '../components/AtuacaoInfo';
 import { CaseSummary } from '../components/CaseSummary';
 
 // Cases da Home que abrem com o resumo (papel, ano, time e TL;DR)
-const CASES_WITH_SUMMARY = ['devolutiva', 'dashboard-admissao', 'admin-global-docs', 'kba-senha'];
+const CASES_WITH_SUMMARY = ['devolutiva', 'mindi', 'dashboard-admissao', 'admin-global-docs', 'kba-senha'];
 import { DevolutivaLaptopMotion } from '../components/DevolutivaLaptopMotion';
 import { DashboardLaptopMotion } from '../components/DashboardLaptopMotion';
 import { MetricasCesMotion } from '../components/MetricasCesMotion';
 import { KbaHeroMotion } from '../components/KbaHeroMotion';
+import { MindiHeroMotion } from '../components/MindiHeroMotion';
 
 // Cases cujo hero é um motion (notebook ou composição) no lugar da imagem de capa
 const LAPTOP_HEROES: Record<string, () => any> = {
@@ -26,6 +27,7 @@ const LAPTOP_HEROES: Record<string, () => any> = {
   'dashboard-admissao': DashboardLaptopMotion,
   'analise-metricas': MetricasCesMotion,
   'kba-senha': KbaHeroMotion,
+  mindi: MindiHeroMotion,
 };
 
 // Cases com apresentação em slides (carregada só ao abrir)
