@@ -39,7 +39,7 @@ function FeatureBanner({ feature, kicker, title, text, reverse }: { feature: Min
         <h3 className="font-serif text-[26px] font-bold text-white leading-tight mt-2">{title}</h3>
         <p className="text-[15px] leading-relaxed mt-3" style={{ color: '#A1A1AA' }}>{text}</p>
       </div>
-      <div className="relative h-[460px] md:h-[560px]" style={{ background: 'radial-gradient(circle at 50% 40%, rgb(72 74 172 / .35), transparent 70%)' }}>
+      <div className="relative h-[460px] md:h-[560px]">
         <MindiFeatureMotion feature={feature} />
       </div>
     </div>

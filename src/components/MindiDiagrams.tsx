@@ -228,12 +228,25 @@ const MATH = [
   { label: 'Nota do público', detail: 'Média 7,2 no TMDB, com milhares de votos: 0,4 acima da referência de 6,8, vezes 6', v: 2.3 },
 ];
 
-function Panel({ n, title, children }: { n: number; title: string; children: any }) {
+// Um passo do fluxo: trilho à esquerda com o número e a linha que leva ao próximo passo
+function EngineStep({ n, title, sub, dashed, children }: { n: number; title: string; sub: string; dashed?: boolean; children: any }) {
   return (
-    <div className="rounded-2xl bg-white p-6" style={{ border: `1px solid ${C.line}` }}>
-      <p className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.08em]" style={{ color: C.soft }}><span className="flex items-center justify-center w-6 h-6 rounded-full text-[11px] text-white" style={{ background: C.accent }}>{n}</span>{title}</p>
-      <div className="mt-4">{children}</div>
-    </div>
+    <motion.div className="relative flex gap-4 md:gap-7" initial="off" whileInView="on" viewport={{ once: true, amount: 0.15 }}>
+      <div className="relative flex flex-col items-center shrink-0 w-9">
+        <motion.span className="relative z-10 flex items-center justify-center w-9 h-9 mt-[18px] rounded-full text-[14px] font-bold text-white" style={{ background: C.accent, boxShadow: `0 0 0 6px #fff` }} variants={{ off: { scale: 0.6, opacity: 0 }, on: { scale: 1, opacity: 1 } }} transition={{ type: 'spring', stiffness: 260, damping: 18 }}>{n}</motion.span>
+        <motion.span aria-hidden="true" className="flex-1 w-0 mt-2 origin-top" style={{ borderLeft: `1.5px ${dashed ? 'dashed' : 'solid'} #C9BDB4` }} variants={{ off: { scaleY: 0 }, on: { scaleY: 1 } }} transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }} />
+        <motion.span aria-hidden="true" variants={{ off: { opacity: 0 }, on: { opacity: 1 } }} transition={{ delay: 1 }} className="absolute -bottom-[10px] border-x-[5px] border-x-transparent border-t-[7px]" style={{ borderTopColor: '#B9AEA6' }} />
+      </div>
+      <motion.div className="flex-1 min-w-0 pb-12 md:pb-16" variants={{ off: { opacity: 0, y: 14 }, on: { opacity: 1, y: 0 } }} transition={{ duration: 0.5 }}>
+        <div className="rounded-2xl bg-white overflow-hidden" style={{ border: `1px solid ${C.line}` }}>
+          <div className="px-5 md:px-7 py-4 md:py-5" style={{ background: C.card, borderBottom: `1px solid ${C.line}` }}>
+            <h3 className="font-serif font-bold text-[19px] md:text-[21px] leading-snug" style={{ color: C.ink }}>{title}</h3>
+            <p className="text-[14px] leading-relaxed mt-1" style={{ color: C.sub }}>{sub}</p>
+          </div>
+          <div className="p-5 md:p-7">{children}</div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -241,55 +254,52 @@ export function MindiEngineExample() {
   const total = MATH.reduce((acc, m) => acc + m.v, 0);
   const fmt = (v: number) => v.toLocaleString('pt-BR');
   return (
-    <div className="not-prose flex flex-col gap-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Panel n={1} title="A pessoa avalia 5 filmes">
-          <p className="text-[13.5px] mb-4" style={{ color: C.sub }}>No cadastro, escolheu Ficção científica e Aventura e disse que evita Terror. Depois avaliou:</p>
-          <div className="flex flex-col gap-2.5">
-            {RATED.map((r, i) => (
-              <motion.div key={r.title} className="flex items-center gap-3" initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                <img src={r.poster} alt="" className="w-8 h-12 rounded-[5px] object-cover" />
-                <span className="flex-1 text-[14px] font-medium" style={{ color: C.ink }}>{r.title}</span>
-                <span className="text-[13px]" style={{ color: C.sub }}>{r.emoji} {r.label}</span>
-                <span className="w-9 text-right text-[13px] font-bold tabular-nums" style={{ color: r.w === '0' ? C.soft : C.accent }}>{r.w}</span>
-              </motion.div>
-            ))}
-          </div>
-          <p className="text-[12px] mt-4" style={{ color: C.soft }}>Cada nota vira um peso: de +7 para Obra-prima até −8 para Péssimo.</p>
-        </Panel>
+    <div className="not-prose">
+      <EngineStep n={1} title="A pessoa avalia cinco filmes" sub="No cadastro, escolheu Ficção científica e Aventura e disse que evita Terror. Cada nota vira um peso, de +7 para Obra-prima até −8 para Péssimo.">
+        <div className="flex flex-col gap-3 md:grid md:grid-cols-5 md:gap-4">
+          {RATED.map((r, i) => (
+            <motion.div key={r.title} className="grid grid-cols-[40px_1fr] content-center gap-x-3 md:block" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 + i * 0.08 }}>
+              <img src={r.poster} alt={`Pôster de ${r.title}`} className="row-span-2 w-10 md:w-full rounded-md md:rounded-lg object-cover" style={{ aspectRatio: '2 / 3' }} />
+              <p className="self-end text-[14px] md:text-[12.5px] font-medium leading-snug md:mt-2 md:line-clamp-2" style={{ color: C.ink }}>{r.title}</p>
+              <p className="self-start flex items-center justify-between gap-3 text-[13px] md:text-[12px] md:mt-0.5" style={{ color: C.sub }}><span className="whitespace-nowrap">{r.emoji} {r.label}</span><b className="tabular-nums" style={{ color: r.w === '0' ? C.soft : C.accent }}>{r.w}</b></p>
+            </motion.div>
+          ))}
+        </div>
+      </EngineStep>
 
-        <Panel n={2} title="O app monta o perfil de gosto">
-          <p className="text-[13.5px] mb-4" style={{ color: C.sub }}>O peso de cada nota vai para os gêneros, o diretor e o elenco do filme.</p>
-          <div className="flex flex-col gap-2.5">
-            {PROFILE.map((p, i) => (
-              <div key={p.label}>
-                <div className="flex justify-between text-[13.5px]"><span className="font-medium" style={{ color: C.ink }}>{p.label}</span><span className="font-bold tabular-nums" style={{ color: p.v < 0 ? '#C0392B' : C.ink }}>{p.v > 0 ? '+' : ''}{p.v}</span></div>
-                <div className="relative h-1.5 rounded-full mt-1.5" style={{ background: '#F0EBE6' }}>
-                  <motion.span className="absolute top-0 bottom-0 rounded-full" style={{ background: p.v < 0 ? '#E07A6E' : C.accent, left: p.v < 0 ? 'auto' : 0, right: p.v < 0 ? 0 : 'auto' }} initial={{ width: 0 }} whileInView={{ width: `${(Math.abs(p.v) / 27) * 100}%` }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 + i * 0.08 }} />
-                </div>
-                <p className="text-[11.5px] mt-1" style={{ color: C.soft }}>{p.note}</p>
+      <EngineStep n={2} title="O app monta o perfil de gosto" sub="O peso de cada nota vai para os gêneros, o diretor e o elenco do filme. Os gêneros do cadastro já começam com +5.">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3">
+          {PROFILE.map((p, i) => (
+            <div key={p.label}>
+              <div className="flex justify-between text-[14px]"><span className="font-medium" style={{ color: C.ink }}>{p.label}</span><span className="font-bold tabular-nums" style={{ color: p.v < 0 ? '#C0392B' : C.ink }}>{p.v > 0 ? '+' : ''}{p.v}</span></div>
+              <div className="relative h-1.5 rounded-full mt-1.5" style={{ background: '#F0EBE6' }}>
+                <motion.span className="absolute top-0 bottom-0 rounded-full" style={{ background: p.v < 0 ? '#E07A6E' : C.accent, left: p.v < 0 ? 'auto' : 0, right: p.v < 0 ? 0 : 'auto' }} initial={{ width: 0 }} whileInView={{ width: `${(Math.abs(p.v) / 27) * 100}%` }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 + i * 0.08 }} />
               </div>
-            ))}
+              <p className="text-[12px] mt-1" style={{ color: C.soft }}>{p.note}</p>
+            </div>
+          ))}
+          <div className="md:self-end">
+            <p className="text-[14px] font-medium" style={{ color: C.ink }}>Diretores</p>
+            <p className="text-[13.5px] mt-1" style={{ color: C.sub }}><b style={{ color: C.ink }}>Christopher Nolan +12</b> · Denis Villeneuve +4,5</p>
           </div>
-          <p className="text-[13px] mt-4 pt-3" style={{ color: C.sub, borderTop: `1px solid ${C.line}` }}>Diretores: <b style={{ color: C.ink }}>Christopher Nolan +12</b> · Denis Villeneuve +4,5</p>
-        </Panel>
-      </div>
+        </div>
+      </EngineStep>
 
-      <Panel n={3} title="Busca candidatos e tira o que já foi visto">
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-          <p className="text-[14px] leading-relaxed md:max-w-[52%]" style={{ color: C.sub }}>
-            Os filmes com nota de Bom para cima viram <b style={{ color: C.ink }}>sementes</b>. O TMDB devolve títulos parecidos com cada uma, e tudo o que a pessoa já avaliou, viu ou dispensou sai da lista antes da conta. É por isso que a Início nunca repete o que você já viu.
+      <EngineStep n={3} title="Busca candidatos e tira o que já foi visto" sub="Os filmes com nota de Bom para cima viram sementes, e o TMDB devolve títulos parecidos com cada uma.">
+        <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+          <p className="text-[14px] leading-relaxed md:flex-1" style={{ color: C.sub }}>
+            Tudo o que a pessoa já avaliou, viu ou dispensou sai da lista antes da conta. É por isso que a Início nunca repete o que você já viu.
           </p>
-          <div className="flex items-center gap-2 text-[13px]" style={{ color: C.sub }}>
+          <div className="flex flex-wrap items-center gap-2 text-[13px]" style={{ color: C.sub }}>
             <span className="rounded-full px-3 py-1.5" style={{ background: C.card, border: `1px solid ${C.line}` }}>Parecidos com A Origem</span>
             <span>→</span>
             <span className="rounded-full px-3 py-1.5 line-through" style={{ background: C.card, border: `1px solid ${C.line}` }}>Interestelar</span>
             <span className="rounded-full px-3 py-1.5 font-semibold text-white" style={{ background: C.accent }}>Tenet</span>
           </div>
         </div>
-      </Panel>
+      </EngineStep>
 
-      <Panel n={4} title="Calcula a afinidade de cada candidato">
+      <EngineStep n={4} dashed title="Calcula a afinidade de cada candidato" sub="Cada título começa em 50 e ganha ou perde pontos pelo quanto combina com o perfil.">
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-8">
           <div className="flex md:flex-col items-center gap-4 md:w-[150px]">
             <img src={tm('k68nPLbIST6NP96JmTxmZijEvCA.jpg')} alt="Pôster de Tenet" className="w-[110px] md:w-[150px] rounded-xl object-cover" style={{ aspectRatio: '2 / 3' }} />
@@ -316,13 +326,16 @@ export function MindiEngineExample() {
             </p>
           </div>
         </div>
-      </Panel>
+      </EngineStep>
 
-      <div className="flex items-start gap-4 rounded-2xl p-6" style={{ background: C.cream }}>
-        <span className="text-[22px] leading-none" style={{ color: C.accent }}>↺</span>
-        <p className="text-[14.5px] leading-relaxed" style={{ color: C.ink }}>
-          <b>O ciclo fecha na próxima nota.</b> Se a pessoa der Obra-prima para Tenet, ele sai da Início e vai para o Histórico, Ação sobe de 10 para 17 e Nolan de +12 para +18. A próxima rodada já pesa mais filmes de ação, e cada avaliação deixa o feed mais certeiro.
-        </p>
+      {/* Fim do trilho: a próxima nota recomeça o ciclo */}
+      <div className="flex gap-4 md:gap-7">
+        <motion.span className="flex items-center justify-center shrink-0 w-9 h-9 mt-[14px] rounded-full text-[18px] font-bold" style={{ background: C.cream, color: C.accent, border: `1.5px dashed ${C.accent}` }} initial={{ scale: 0.6, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ once: true }} transition={{ type: 'spring', stiffness: 260, damping: 18 }}>↺</motion.span>
+        <div className="flex-1 rounded-2xl p-5 md:p-6" style={{ background: C.cream }}>
+          <p className="text-[14.5px] leading-relaxed" style={{ color: C.ink }}>
+            <b>O ciclo fecha na próxima nota.</b> Se a pessoa der Obra-prima para Tenet, ele sai da Início e vai para o Histórico, Ação sobe de 10 para 17 e Nolan de +12 para +18. A próxima rodada já pesa mais filmes de ação, e cada avaliação volta para o passo 1 deixando o feed mais certeiro.
+          </p>
+        </div>
       </div>
     </div>
   );

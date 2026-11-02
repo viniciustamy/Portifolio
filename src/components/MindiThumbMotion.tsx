@@ -51,7 +51,8 @@ export const STREAMING = {
   netflix: img('w92', 'rK1KljqmbvO9HQa1PBFLILWah72.png'),
   prime: img('w92', 'gMZdpavHmxFNnLpMHwVxfqeux2g.png'),
 };
-const DUNA_BG = img('w780', 'eZ239CUp1d6OryZEBPnO2n87gMG.jpg');
+const LARANJA_BG = img('w780', 'nLFxvLokHe3bQmrmAfljIfax2jQ.jpg');
+const LARANJA_LOGO = img('w500', 'aWOIciatGHPvaPYuuZdMC74Hfx0.png');
 export const GUARDIOES_BG = img('w780', 'uLtVbjvS1O7gXL8lUOwsFOH4man.jpg');
 export const GUARDIOES_LOGO = img('w500', 'bMqfA9CQVZqClAMKZCRBdDChNe4.png');
 const ORIGEM_POSTER = img('w342', '9e3Dz7aCANy5aRUQF745IlNloJ1.jpg');
@@ -229,7 +230,7 @@ function HomeScreen({ pressedPoster, pressedSecond = false }: { pressedPoster: b
     <div style={{ background: C.bg }}>
       {/* Destaque do carrossel, com o fundo do filme ocupando a tela */}
       <div className="relative" style={{ height: HERO_H }}>
-        <img src={DUNA_BG} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={LARANJA_BG} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: '40% center' }} />
         <TopBar />
         <span className="absolute inset-0" style={{ background: `linear-gradient(to bottom, rgb(9 9 11 / .35) 0%, rgb(9 9 11 / .1) 30%, rgb(9 9 11 / .75) 62%, ${C.bg} 92%)` }} />
         {/* Filmes / Séries */}
@@ -239,10 +240,10 @@ function HomeScreen({ pressedPoster, pressedSecond = false }: { pressedPoster: b
         </div>
         <div className="absolute inset-x-0 flex flex-col items-center text-center" style={{ top: 300 }}>
           <span className="flex items-center gap-1.5 rounded-full px-3 py-1 text-[13px] font-semibold" style={{ background: C.primary }}><Flame size={13} fill="currentColor" /> 82% de afinidade</span>
-          <p className="text-[34px] font-extrabold tracking-[0.06em] uppercase leading-none mt-4" style={{ textShadow: '0 2px 12px rgb(0 0 0 / .5)' }}>Duna: Parte Dois</p>
-          <p className="text-[13px] mt-3" style={{ color: C.sub }}>2024 • 167 min</p>
-          <div className="flex gap-2 mt-3.5"><Chip>Ficção científica</Chip><Chip>Aventura</Chip></div>
-          <div className="mt-4"><Ratings imdb="8.5" rotten="92%" tmdb="8.1" /></div>
+          <img src={LARANJA_LOGO} alt="Laranja Mecânica" className="h-[62px] max-w-[290px] object-contain mt-4" style={{ filter: 'drop-shadow(0 2px 12px rgb(0 0 0 / .5))' }} />
+          <p className="text-[13px] mt-3" style={{ color: C.sub }}>1971 • 137 min</p>
+          <div className="flex gap-2 mt-3.5"><Chip>Crime</Chip><Chip>Ficção científica</Chip></div>
+          <div className="mt-4"><Ratings imdb="8.3" rotten="86%" tmdb="8.2" /></div>
           <div className="flex gap-3 mt-6">
             <ActionButton><Bookmark size={16} /> Salvar</ActionButton>
             <ActionButton><Star size={16} /> Avaliar</ActionButton>

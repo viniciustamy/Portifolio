@@ -24,7 +24,7 @@ export const IPhoneFrame = forwardRef<HTMLDivElement, Props>(function IPhoneFram
       <div
         ref={ref}
         className="absolute overflow-hidden"
-        style={{ left, top, width, height: SCREEN.h * k, borderRadius: SCREEN.r * k, background }}
+        style={{ left, top, width, height: SCREEN.h * k, borderRadius: SCREEN.r * k, clipPath: `inset(0 round ${SCREEN.r * k}px)`, background }}
       >
         {children}
       </div>
