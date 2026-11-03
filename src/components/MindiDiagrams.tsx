@@ -1,9 +1,14 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { Apple, Bell, Bot, Clapperboard, Database, Eraser, Gauge, GitMerge, GitPullRequest, Hammer, KeyRound, LayoutDashboard, Shuffle, Smartphone, Star, Trophy, Upload, UserRound } from 'lucide-react';
+import { Apple, Bell, Bot, Clapperboard, Database, Eraser, Gauge, GitMerge, GitPullRequest, KeyRound, LayoutDashboard, Shuffle, Smartphone, Star, Trophy, Upload, UserRound } from 'lucide-react';
 import { FigmaLogo, GithubLogo } from './AiWorkflowDiagram';
 import claudeLogo from '../assets/images/Logos IA/Claude.webp';
-import aiStudioLogo from '../assets/images/Logos IA/Google IA Studio.png';
+import aiStudioLogo from '../assets/images/Logos IA/Google IA Studio.webp';
+import base44Logo from '../assets/images/Logos IA/Base44.png';
+import lovableLogo from '../assets/images/Logos IA/Lovable.webp';
+import codemagicLogo from '../assets/images/Logos IA/Codemagic.png';
+import testflightLogo from '../assets/images/Logos IA/TestFlight.png';
+import appStoreLogo from '../assets/images/Logos IA/App Store.webp';
 
 /*
  * Diagramas do case Mindi: a linha do tempo das ferramentas (Figma → vibe code → Claude Code),
@@ -15,21 +20,11 @@ const C = { ink: '#241510', sub: '#6F625B', soft: '#8A7F78', line: '#E2DCD4', ac
 
 /* ---------------------------------- Linha do tempo ---------------------------------- */
 
-// Lovable e Base44: marcas simplificadas (coração em degradê e o "44"), no lugar dos logos oficiais
-function LovableMark() {
-  return (
-    <svg viewBox="0 0 24 24" width={30} height={30}>
-      <defs><linearGradient id="lv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FF8A3D" /><stop offset=".5" stopColor="#FF3D7F" /><stop offset="1" stopColor="#5B6CFF" /></linearGradient></defs>
-      <path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 4.5 6.6 4.5c2.2 0 3.7 1.2 5.4 3 1.7-1.8 3.2-3 5.4-3 3.7 0 5.7 3.9 4.2 7.3C19.5 16.4 12 21 12 21z" fill="url(#lv)" />
-    </svg>
-  );
-}
-const Base44Mark = () => <span className="text-[15px] font-black tracking-tight" style={{ color: '#FF6A2B' }}>B44</span>;
 
 const TIMELINE = [
   { when: '~2020', tool: 'Figma', logo: <span className="scale-[0.62] block"><FigmaLogo /></span>, text: 'Anos desenhando o app que eu queria usar, sem conseguir tirá-lo do papel sozinho.' },
-  { when: '2025', tool: 'Base44', logo: <Base44Mark />, text: 'Primeiro teste com vibe code: virava site rápido, mas parava nas integrações.' },
-  { when: '2025', tool: 'Lovable', logo: <LovableMark />, text: 'Mais controle da interface, ainda sem dar conta de um app completo.' },
+  { when: '2025', tool: 'Base44', logo: <img src={base44Logo} alt="" className="w-8 h-8 object-contain" />, text: 'Primeiro teste com vibe code: virava site rápido, mas parava nas integrações.' },
+  { when: '2025', tool: 'Lovable', logo: <img src={lovableLogo} alt="" className="w-7 h-7 object-contain" />, text: 'Mais controle da interface, ainda sem dar conta de um app completo.' },
   { when: '2025', tool: 'Google AI Studio', logo: <img src={aiStudioLogo} alt="" className="w-8 h-8 object-contain" />, text: 'A base do app: API do TMDB, protótipo publicado e a primeira rodada de testes.' },
   { when: '2026', tool: 'Claude Code', logo: <img src={claudeLogo} alt="" className="w-8 h-8 object-contain" />, text: 'Revisei o app inteiro. O código ganhou estrutura e virou app iOS.', highlight: true },
 ];
@@ -347,9 +342,9 @@ const PIPELINE: FlowStep[] = [
   { logo: <img src={claudeLogo} alt="" className="w-6 h-6 object-contain" />, title: 'Claude Code', text: 'Desenvolvo no Windows, numa branch por funcionalidade.' },
   { Icon: GitPullRequest, logo: <span className="scale-[0.45] block"><GithubLogo /></span>, title: 'Pull request', text: 'Cada mudança sobe para o GitHub como PR, com a descrição do que mudou.' },
   { Icon: GitMerge, title: 'Merge na main', text: 'Reviso o PR e faço o merge.' },
-  { Icon: Hammer, title: 'Codemagic', text: 'Um Mac mini na nuvem gera o build iOS, assina o app e numera a versão.' },
-  { Icon: Smartphone, title: 'TestFlight', text: 'A versão chega no meu iPhone e no dos testadores.' },
-  { Icon: Apple, title: 'App Store', text: 'Envio para a revisão da Apple.', highlight: true },
+  { logo: <img src={codemagicLogo} alt="" className="w-6 h-6 object-contain" />, title: 'Codemagic', text: 'Um Mac mini na nuvem gera o build iOS, assina o app e numera a versão.' },
+  { logo: <img src={testflightLogo} alt="" className="w-7 h-7 object-contain" />, title: 'TestFlight', text: 'A versão chega no meu iPhone e no dos testadores.' },
+  { logo: <img src={appStoreLogo} alt="" className="w-7 h-7 object-contain" />, title: 'App Store', text: 'Envio para a revisão da Apple.', highlight: true },
 ];
 
 export function MindiPipeline() {
