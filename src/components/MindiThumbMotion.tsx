@@ -106,9 +106,9 @@ const LOGO_PATHS = [
   "M841.713 241C825.301 241 817.095 233.514 817.095 218.542V22.4576C817.095 14.6365 818.981 8.93834 822.751 5.363C826.521 1.78766 832.509 0 840.715 0C856.905 0 865 7.48586 865 22.4576V218.542C865 226.14 863.115 231.838 859.345 235.637C855.796 239.212 849.919 241 841.713 241Z",
 ];
 
-function Logo() {
+export function Logo({ height = 19 }: { height?: number }) {
   return (
-    <svg viewBox="0 0 865 241" fill="currentColor" style={{ height: 19, width: 'auto' }} aria-hidden="true">
+    <svg viewBox="0 0 865 241" fill="currentColor" style={{ height, width: 'auto' }} aria-hidden="true">
       {LOGO_PATHS.map(d => <path key={d.slice(0, 12)} d={d} />)}
     </svg>
   );

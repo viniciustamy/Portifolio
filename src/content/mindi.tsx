@@ -3,6 +3,7 @@ import { MindiFeatureMotion, type MindiFeature } from '../components/MindiFeatur
 import { MindiArchitectureMap, MindiEngineExample, MindiPipeline, MindiTimeline } from '../components/MindiDiagrams';
 import { Eraser, Fingerprint, MessageCircle, Smile } from 'lucide-react';
 import { MindiAdminMotion } from '../components/MindiAdminMotion';
+import { MindiDesignSystemMotion } from '../components/MindiDesignSystemMotion';
 
 /*
  * Case do Mindi (projeto pessoal, app de filmes e séries na App Store): a história do app, as
@@ -146,6 +147,21 @@ export const MindiContent = () => (
       <div className="not-prose">
         <MindiAdminMotion />
         <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">As abas do admin: visão geral da base, uso do app, usuários, erros e notificações. Na aba de usuários, nomes e e-mails são fictícios.</p>
+      </div>
+    </div>
+
+    {/* Design system */}
+    <div className="mb-32">
+      <h2 id="design-system" className={H2}>Um design system que o código cobra</h2>
+      <p className={LEAD}>
+        Com a IA escrevendo boa parte do código, cada tela nova tendia a inventar um tamanho de texto, um cinza ou um ícone diferente. Para manter o app coerente, escrevi as regras num DESIGN.md: cores, tipografia, cantos, movimento, vibração e os componentes que já existem.
+      </p>
+      <p className={LEAD}>
+        O mesmo conteúdo vive numa página /ds, só na web, com os componentes de verdade funcionando. E um lint, o npm run lint:design, lê o código e barra o que foge da regra antes do PR: tamanho de texto fora da escala, cor solta do Tailwind, peso acima de semibold, o ícone de brilhos. O Claude Code lê o DESIGN.md antes de mexer numa tela, e o lint confere o resultado.
+      </p>
+      <div className="not-prose">
+        <MindiDesignSystemMotion />
+        <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">A página /ds do app, com os mesmos textos e componentes: fundamentos, componentes e as regras que o lint confere.</p>
       </div>
     </div>
 
