@@ -90,6 +90,51 @@ export const MindiContent = () => (
       </div>
     </div>
 
+    {/* Motor de recomendação */}
+    <div className="mb-32">
+      <h2 id="motor" className={H2}>Como o app decide o que recomendar</h2>
+      <p className={LEAD}>
+        A Início não depende de IA generativa: é um motor próprio, que roda no aparelho e que fui afinando a cada rodada de uso. Para ficar concreto, este é o caminho de uma pessoa que acabou de entrar e avaliou cinco filmes, com as regras e os pesos reais do código.
+      </p>
+      <MindiEngineExample />
+    </div>
+
+    {/* Arquitetura */}
+    <div className="mb-32">
+      <h2 id="por-baixo" className={H2}>Várias APIs conversando</h2>
+      <p className={LEAD}>
+        Nenhuma fonte sozinha tinha tudo o que o app antigo mostrava. Então fui conectando APIs: o TMDB entrega o código do IMDb, que abre a consulta das notas na OMDb, e o identificador do Wikidata, que traz os prêmios. As chaves ficam numa Cloud Function, nunca no app, e o Firebase guarda contas, notas e o cache compartilhado.
+      </p>
+      <MindiArchitectureMap />
+    </div>
+
+    {/* Design system */}
+    <div className="mb-32">
+      <h2 id="design-system" className={H2}>Um design system que o código cobra</h2>
+      <p className={LEAD}>
+        Com a IA escrevendo boa parte do código, cada tela nova tendia a inventar um tamanho de texto, um cinza ou um ícone diferente. Para manter o app coerente, escrevi as regras num DESIGN.md: cores, tipografia, cantos, movimento, vibração e os componentes que já existem.
+      </p>
+      <p className={LEAD}>
+        O mesmo conteúdo vive numa página /ds, só na web, com os componentes de verdade funcionando. E um lint, o npm run lint:design, lê o código e barra o que foge da regra antes do PR: tamanho de texto fora da escala, cor solta do Tailwind, peso acima de semibold, o ícone de brilhos. O Claude Code lê o DESIGN.md antes de mexer numa tela, e o lint confere o resultado.
+      </p>
+      <div className="not-prose">
+        <MindiDesignSystemMotion />
+        <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">A página /ds do app, com os mesmos textos e componentes: fundamentos, componentes e as regras que o lint confere.</p>
+      </div>
+    </div>
+
+    {/* Analytics */}
+    <div className="mb-32">
+      <h2 id="admin" className={H2}>Um analytics para acompanhar o app</h2>
+      <p className={LEAD}>
+        Construí um painel web, fora do app do iPhone, para acompanhar a ativação, o uso, as notificações e os erros. É onde vejo em que etapa as pessoas param e o que quebrou antes que alguém precise me avisar.
+      </p>
+      <div className="not-prose">
+        <MindiAdminMotion />
+        <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">As abas do analytics: visão geral da base, uso do app, usuários, erros e notificações. Na aba de usuários, nomes e e-mails são fictícios.</p>
+      </div>
+    </div>
+
     {/* Aprendizados */}
     <div className="mb-32">
       <h2 id="aprendizados" className={H2}>O que aprendi vendo os amigos usarem</h2>
@@ -109,62 +154,6 @@ export const MindiContent = () => (
           </li>
         ))}
       </ol>
-      <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
-        <div className="border border-[#E2DCD4] rounded-2xl p-7">
-          <p className="font-serif text-[32px] font-bold text-[#241510] leading-tight">~18 pessoas</p>
-          <p className="text-[15px] text-[#6F625B] leading-relaxed mt-2">na primeira rodada de testes, num lançamento orgânico.</p>
-        </div>
-        <div className="border border-[#E2DCD4] rounded-2xl p-7">
-          <p className="font-serif text-[32px] font-bold text-[#241510] leading-tight">Na App Store</p>
-          <p className="text-[15px] text-[#6F625B] leading-relaxed mt-2">aprovado pela Apple e disponível para baixar no iPhone.</p>
-          <AppStoreBadge url={MINDI_APP_STORE_URL} className="mt-5" />
-        </div>
-      </div>
-    </div>
-
-    {/* Motor de recomendação */}
-    <div className="mb-32">
-      <h2 id="motor" className={H2}>Como o app decide o que recomendar</h2>
-      <p className={LEAD}>
-        A Início não depende de IA generativa: é um motor próprio, que roda no aparelho e que fui afinando a cada rodada de uso. Para ficar concreto, este é o caminho de uma pessoa que acabou de entrar e avaliou cinco filmes, com as regras e os pesos reais do código.
-      </p>
-      <MindiEngineExample />
-    </div>
-
-    {/* Arquitetura */}
-    <div className="mb-32">
-      <h2 id="por-baixo" className={H2}>Várias APIs conversando</h2>
-      <p className={LEAD}>
-        Nenhuma fonte sozinha tinha tudo o que o app antigo mostrava. Então fui conectando APIs: o TMDB entrega o código do IMDb, que abre a consulta das notas na OMDb, e o identificador do Wikidata, que traz os prêmios. As chaves ficam numa Cloud Function, nunca no app, e o Firebase guarda contas, notas e o cache compartilhado.
-      </p>
-      <MindiArchitectureMap />
-    </div>
-
-    {/* Admin */}
-    <div className="mb-32">
-      <h2 id="admin" className={H2}>Um admin para acompanhar o app</h2>
-      <p className={LEAD}>
-        Construí um painel web, fora do app do iPhone, para acompanhar a ativação, o uso, as notificações e os erros. É onde vejo em que etapa as pessoas param e o que quebrou antes que alguém precise me avisar.
-      </p>
-      <div className="not-prose">
-        <MindiAdminMotion />
-        <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">As abas do admin: visão geral da base, uso do app, usuários, erros e notificações. Na aba de usuários, nomes e e-mails são fictícios.</p>
-      </div>
-    </div>
-
-    {/* Design system */}
-    <div className="mb-32">
-      <h2 id="design-system" className={H2}>Um design system que o código cobra</h2>
-      <p className={LEAD}>
-        Com a IA escrevendo boa parte do código, cada tela nova tendia a inventar um tamanho de texto, um cinza ou um ícone diferente. Para manter o app coerente, escrevi as regras num DESIGN.md: cores, tipografia, cantos, movimento, vibração e os componentes que já existem.
-      </p>
-      <p className={LEAD}>
-        O mesmo conteúdo vive numa página /ds, só na web, com os componentes de verdade funcionando. E um lint, o npm run lint:design, lê o código e barra o que foge da regra antes do PR: tamanho de texto fora da escala, cor solta do Tailwind, peso acima de semibold, o ícone de brilhos. O Claude Code lê o DESIGN.md antes de mexer numa tela, e o lint confere o resultado.
-      </p>
-      <div className="not-prose">
-        <MindiDesignSystemMotion />
-        <p className="text-center text-sm text-[#6F625B] mt-4 font-medium">A página /ds do app, com os mesmos textos e componentes: fundamentos, componentes e as regras que o lint confere.</p>
-      </div>
     </div>
 
     {/* Pipeline */}

@@ -227,7 +227,7 @@ function AdminScreen({ tab, tabRefs }: { tab: number; tabRefs: any }) {
     <div className="absolute inset-0 font-sans overflow-hidden" style={{ width: APP_W, background: C.bg, color: C.text }}>
       <div className="mx-auto" style={{ width: 1120, paddingTop: 22 }}>
         <div className="flex items-center justify-between">
-          <span className="flex items-center gap-3"><Logo height={20} /><span className="text-[13px]" style={{ color: C.sub }}>Admin</span></span>
+          <span className="flex items-center gap-3"><Logo height={20} /><span className="text-[13px]" style={{ color: C.sub }}>Analytics</span></span>
           <span className="flex items-center gap-4 text-[12.5px]" style={{ color: C.sub }}>
             Atualizado às 19:24
             <span className="flex items-center gap-2 rounded-full px-3.5 py-1.5 font-semibold" style={{ background: C.track, color: C.text }}><RefreshCw size={13} /> Atualizar</span>

@@ -16,6 +16,8 @@ import { FerramentasMotion, HistoricoMotion, VisibilidadeMotion } from './Proble
 import { MapaZoomMotion, ZoomTour, type TourStep } from './MapaZoomMotion';
 import { DashboardThumbMotion } from './DashboardThumbMotion';
 import { MindiThumbMotion } from './MindiThumbMotion';
+import { AppStoreBadge } from './AppStoreBadge';
+import { MINDI_APP_STORE_URL } from '../links';
 import { User as PersonIcon } from '@phosphor-icons/react';
 import { VersoesPrototipoMotion } from './VersoesPrototipoMotion';
 import { AiWorkflowDiagram } from './AiWorkflowDiagram';
@@ -729,16 +731,16 @@ const Aprendizados = () => (
 // Outros cases: o mesmo motion da thumb da Home e o que cada um mostra sobre IA no processo
 const OUTROS = [
   {
-    Motion: DashboardThumbMotion, bg: '#F1F2F6', dark: false, motionProps: {}, kicker: 'Gupy · 2025', title: 'Redesenhando o Dashboard de Admissão',
+    Motion: DashboardThumbMotion, bg: '#F1F2F6', dark: false, motionProps: {}, appStore: false, kicker: 'Gupy · 2025', title: 'Redesenhando o Dashboard de Admissão',
     points: ['IA na compilação das pesquisas e na síntese dos testes com clientes', 'Protótipos de média fidelidade gerados e evoluídos no AI Studio', 'Um dos primeiros projetos entregues via GitHub, com handoff em código pelo Cursor'],
   },
   {
-    Motion: MindiThumbMotion, bg: '#484AAC', dark: true, motionProps: { stageW: 820, phoneTop: 0, showNav: false }, kicker: 'Projeto pessoal · no ar na App Store', title: 'Lançando um app do zero na App Store usando IA',
+    Motion: MindiThumbMotion, bg: '#484AAC', dark: true, motionProps: { stageW: 820, phoneTop: 0, showNav: false }, appStore: true, kicker: 'Projeto pessoal · no ar na App Store', title: 'Lançando um app do zero na App Store usando IA',
     points: ['Na Gupy, cheguei a entregar código muito próximo do que ia para o desenvolvimento', 'No Mindi, desenvolvi o app de verdade e publiquei na App Store com o Claude Code', 'Revisei segurança, dados e publicação de ponta a ponta'],
   },
 ];
 
-// Card na cor da thumb: tag e título em cima, motion embaixo. Com o mouse, sobe uma barra de vidro
+// Card na cor da thumb: tag e título em cima, motion embaixo (no Mindi, o selo da App Store no canto inferior esquerdo). Com o mouse, sobe uma barra de vidro
 // fosco com os diferenciais do case.
 function OutroCaseCard({ c, i }: { c: typeof OUTROS[number]; i: number; key?: string }) {
   const [open, setOpen] = useState(false);
@@ -747,8 +749,9 @@ function OutroCaseCard({ c, i }: { c: typeof OUTROS[number]; i: number; key?: st
       <div className="absolute inset-0" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
         <div className="relative z-10 px-10 pt-9">
           <p className="text-[14px] font-semibold m-0" style={{ color: c.dark ? 'rgb(255 255 255 / .75)' : C.accent }}>{c.kicker}</p>
-          <p className="text-[32px] font-bold leading-tight tracking-tight mt-2 m-0 max-w-[560px]" style={{ color: c.dark ? '#fff' : C.ink }}>{c.title}</p>
+          <p className={`text-[32px] font-bold leading-tight tracking-tight mt-2 m-0 max-w-[560px]`} style={{ color: c.dark ? '#fff' : C.ink }}>{c.title}</p>
         </div>
+        {c.appStore && <AppStoreBadge url={MINDI_APP_STORE_URL} compact className="absolute z-10 left-10 bottom-8" />}
         <div className="absolute inset-0 top-[184px] left-10"><c.Motion active {...(c.motionProps || {})} /></div>
         <motion.div
           className="absolute left-4 right-4 bottom-4 z-20 rounded-[22px] px-8 pt-6 pb-7"
@@ -829,13 +832,27 @@ export const SLIDES: { id: string; Comp: () => any }[] = [
 // Começa parado; play/pausa e reiniciar. Nos 2 últimos minutos fica em terracota.
 const DURATIONS = [15, 20, 25, 30];
 
+// O estado fica no sessionStorage (com a hora em que começou a correr), então o timer continua
+// contando ao abrir a demo da nova versão e voltar, ou ao fechar e reabrir a apresentação.
+const TIMER_KEY = 'devolutiva-timer';
+type TimerState = { duration: number; base: number; startedAt: number | null };
+function loadTimer(): TimerState {
+  try {
+    const s = JSON.parse(sessionStorage.getItem(TIMER_KEY) || 'null');
+    if (s && typeof s.duration === 'number' && typeof s.base === 'number') return { duration: s.duration, base: s.base, startedAt: typeof s.startedAt === 'number' ? s.startedAt : null };
+  } catch {}
+  return { duration: 15, base: 0, startedAt: null };
+}
+
 function PresentationTimer() {
-  const [duration, setDuration] = useState(15);
-  const [running, setRunning] = useState(false);
-  const [elapsed, setElapsed] = useState(0); // segundos já corridos
-  const startRef = useRef<number | null>(null);
-  const baseRef = useRef(0);
+  const [st, setSt] = useState(loadTimer);
+  const [now, setNow] = useState(() => Date.now());
   const [menu, setMenu] = useState(false);
+  const duration = st.duration;
+  const running = st.startedAt !== null;
+  const elapsed = st.base + (st.startedAt !== null ? Math.max(0, now - st.startedAt) / 1000 : 0); // segundos já corridos
+
+  useEffect(() => { try { sessionStorage.setItem(TIMER_KEY, JSON.stringify(st)); } catch {} }, [st]);
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Fecha o menu de duração ao clicar fora
@@ -848,11 +865,9 @@ function PresentationTimer() {
 
   useEffect(() => {
     if (!running) return;
-    startRef.current = Date.now();
-    const tick = () => setElapsed(baseRef.current + (Date.now() - (startRef.current as number)) / 1000);
-    tick();
-    const t = setInterval(tick, 1000);
-    return () => { clearInterval(t); baseRef.current += (Date.now() - (startRef.current as number)) / 1000; };
+    setNow(Date.now());
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
   }, [running]);
 
   const total = duration * 60;
@@ -861,10 +876,13 @@ function PresentationTimer() {
   const done = left <= 0 && elapsed > 0;
   const urgent = !done && running && minutes <= 2;
   const started = elapsed > 0;
-  useEffect(() => { if (done) setRunning(false); }, [done]);
+  useEffect(() => { if (done && running) setSt(s => ({ ...s, base: s.duration * 60, startedAt: null })); }, [done, running]);
 
-  const reset = () => { setRunning(false); baseRef.current = 0; setElapsed(0); };
-  const pick = (d: number) => { setDuration(d); reset(); setMenu(false); };
+  const toggle = () => setSt(s => s.startedAt === null
+    ? { ...s, startedAt: Date.now() }
+    : { ...s, base: s.base + (Date.now() - s.startedAt) / 1000, startedAt: null });
+  const reset = () => setSt(s => ({ ...s, base: 0, startedAt: null }));
+  const pick = (d: number) => { setSt({ duration: d, base: 0, startedAt: null }); setMenu(false); };
   const R = 15;
   const C = 2 * Math.PI * R;
   const color = done || urgent ? '#E0A889' : '#fff';
@@ -893,7 +911,7 @@ function PresentationTimer() {
         </AnimatePresence>
       </div>
       <span className="text-[12px] whitespace-nowrap" style={{ color: done || urgent ? '#E0A889' : undefined }}>{done ? 'Tempo esgotado' : started ? 'min restantes' : 'min'}</span>
-      <button type="button" onClick={() => setRunning(v => !v)} disabled={done} className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 cursor-pointer disabled:opacity-30" aria-label={running ? 'Pausar timer' : 'Iniciar timer'}>{running ? <Pause size={16} /> : <Play size={16} />}</button>
+      <button type="button" onClick={toggle} disabled={done} className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 cursor-pointer disabled:opacity-30" aria-label={running ? 'Pausar timer' : 'Iniciar timer'}>{running ? <Pause size={16} /> : <Play size={16} />}</button>
       {started && <button type="button" onClick={reset} className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 cursor-pointer" aria-label="Reiniciar timer"><RotateCcw size={15} /></button>}
     </div>
   );

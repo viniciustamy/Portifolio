@@ -12,7 +12,6 @@ import { Button } from '../components/ui/Button';
 import { Typography } from '../components/ui/Typography';
 import { AtuacaoInfo, HAS_OWN_ATUACAO } from '../components/AtuacaoInfo';
 import { CaseSummary } from '../components/CaseSummary';
-import { AppStoreBadge } from '../components/AppStoreBadge';
 
 // Cases da Home que abrem com o resumo (papel, ano, time e TL;DR)
 const CASES_WITH_SUMMARY = ['devolutiva', 'mindi', 'dashboard-admissao', 'admin-global-docs', 'kba-senha'];
@@ -23,6 +22,9 @@ import { KbaHeroMotion } from '../components/KbaHeroMotion';
 import { MindiHeroMotion } from '../components/MindiHeroMotion';
 
 // Cases cujo hero é um motion (notebook ou composição) no lugar da imagem de capa
+// Cases em que a atuação já fica clara ao longo do texto, sem o bloco "Minha atuação" no fim
+const WITHOUT_ATUACAO = ['mindi'];
+
 const LAPTOP_HEROES: Record<string, () => any> = {
   devolutiva: DevolutivaLaptopMotion,
   'dashboard-admissao': DashboardLaptopMotion,
@@ -276,8 +278,6 @@ export default function Project() {
             <Typography variant="lead" className="md:text-xl text-muted-foreground leading-relaxed mb-6 mt-0">
               {project.description}
             </Typography>
-            {/* App publicado: o selo da loja logo abaixo do subtítulo */}
-            {(project as { appStoreUrl?: string }).appStoreUrl && <AppStoreBadge url={(project as { appStoreUrl?: string }).appStoreUrl!} className="-mt-1" />}
           </div>
 
           {/* Hero Image / Animation (Main Image) */}
@@ -368,7 +368,7 @@ export default function Project() {
           </div>
 
           {/* Minha atuação: papel, time, ferramentas e métodos (para quem não tem a seção no conteúdo) */}
-          {!HAS_OWN_ATUACAO.includes(project.id) && (
+          {!HAS_OWN_ATUACAO.includes(project.id) && !WITHOUT_ATUACAO.includes(project.id) && (
             <div className="mt-24">
               <h2 id="minha-atuacao" className="font-serif text-3xl font-bold text-[#241510] mb-8">Minha atuação</h2>
               <AtuacaoInfo projectId={project.id} />
