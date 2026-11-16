@@ -4,6 +4,8 @@ import { MindiArchitectureMap, MindiEngineExample, MindiPipeline, MindiTimeline 
 import { Eraser, Fingerprint, MessageCircle, Smile } from 'lucide-react';
 import { MindiAdminMotion } from '../components/MindiAdminMotion';
 import { MindiDesignSystemMotion } from '../components/MindiDesignSystemMotion';
+import { AppStoreBadge } from '../components/AppStoreBadge';
+import { MINDI_APP_STORE_URL } from '../links';
 
 /*
  * Case do Mindi (projeto pessoal, app de filmes e séries na App Store): a história do app, as
@@ -108,15 +110,15 @@ export const MindiContent = () => (
         ))}
       </ol>
       <div className="not-prose grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
-        {[
-          ['~18 pessoas', 'na primeira rodada de testes, num lançamento orgânico.'],
-          ['App Store', 'nova versão em revisão pela Apple, já testada pelo TestFlight.'],
-        ].map(([value, label]) => (
-          <div key={value} className="border border-[#E2DCD4] rounded-2xl p-7">
-            <p className="font-serif text-[32px] font-bold text-[#241510] leading-tight">{value}</p>
-            <p className="text-[15px] text-[#6F625B] leading-relaxed mt-2">{label}</p>
-          </div>
-        ))}
+        <div className="border border-[#E2DCD4] rounded-2xl p-7">
+          <p className="font-serif text-[32px] font-bold text-[#241510] leading-tight">~18 pessoas</p>
+          <p className="text-[15px] text-[#6F625B] leading-relaxed mt-2">na primeira rodada de testes, num lançamento orgânico.</p>
+        </div>
+        <div className="border border-[#E2DCD4] rounded-2xl p-7">
+          <p className="font-serif text-[32px] font-bold text-[#241510] leading-tight">Na App Store</p>
+          <p className="text-[15px] text-[#6F625B] leading-relaxed mt-2">aprovado pela Apple e disponível para baixar no iPhone.</p>
+          <AppStoreBadge url={MINDI_APP_STORE_URL} className="mt-5" />
+        </div>
       </div>
     </div>
 
@@ -172,6 +174,14 @@ export const MindiContent = () => (
         Publicar um app iOS normalmente exige um Mac. Sem um, montei o caminho pela nuvem: o app é React com Capacitor, e o Codemagic faz o build num Mac mini remoto toda vez que eu peço.
       </p>
       <MindiPipeline />
+      {/* Fim do caminho: o app no ar */}
+      <div className="not-prose mt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-5 rounded-2xl p-7 bg-[#F6EAE3]">
+        <div>
+          <p className="font-serif text-[24px] font-bold text-[#241510] leading-tight">O Mindi já está na App Store</p>
+          <p className="text-[15px] text-[#6F625B] leading-relaxed mt-1.5">Passou na revisão da Apple e já pode ser baixado no iPhone.</p>
+        </div>
+        <AppStoreBadge url={MINDI_APP_STORE_URL} className="shrink-0" />
+      </div>
     </div>
   </div>
 );

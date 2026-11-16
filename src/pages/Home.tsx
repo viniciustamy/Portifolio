@@ -12,6 +12,7 @@ import { AdminThumbMotion } from '../components/AdminThumbMotion';
 import { KbaThumbMotion } from '../components/KbaThumbMotion';
 import { MindiThumbMotion } from '../components/MindiThumbMotion';
 import { SocialLinks } from '../components/SocialLinks';
+import { AppStoreBadge } from '../components/AppStoreBadge';
 
 // Currículo em public/curriculo.pdf; baixa com o nome abaixo
 const RESUME_URL = '/curriculo.pdf';
@@ -60,6 +61,7 @@ function CaseCard({ project }: { project: ProjectData; key?: string }) {
   // Cor de fundo da thumb vale para quem tem imagem ou motion próprio
   const thumbBg = project.thumbnail || caseMotions[project.id] ? project.thumbBg : undefined;
   const comingSoon = Boolean((project as { comingSoon?: boolean }).comingSoon);
+  const appStoreUrl = (project as { appStoreUrl?: string }).appStoreUrl;
   const lightText = thumbBg ? isDark(thumbBg) : false;
   const textColor = thumbBg ? (lightText ? 'text-white' : 'text-[#241510]') : project.textColor;
   const tagColor = thumbBg ? (lightText ? 'text-white/75' : 'text-[#6F625B]') : project.tagColor;
@@ -104,6 +106,8 @@ function CaseCard({ project }: { project: ProjectData; key?: string }) {
           {project.title}
         </h3>
         <p className="text-[16px] font-medium opacity-90">{project.tag}</p>
+        {/* App já publicado: o selo abre a loja sem entrar no case */}
+        {appStoreUrl && <AppStoreBadge url={appStoreUrl} inLink className="mt-5" />}
       </div>
     </Link>
   );

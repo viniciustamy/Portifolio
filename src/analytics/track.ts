@@ -140,9 +140,11 @@ export function startTracking() {
   window.setInterval(flush, 15000);
   // Só links de saída (e-mail, currículo, redes, sites externos) viram clique
   document.addEventListener('click', e => {
-    const a = (e.target as HTMLElement | null)?.closest?.('a');
-    if (!a) return;
-    const label = linkLabel(a);
+    const target = e.target as HTMLElement | null;
+    // data-track vale mesmo fora de um link (o selo da App Store dentro do card da Home)
+    const tracked = target?.closest?.<HTMLElement>('[data-track]')?.dataset.track;
+    const a = target?.closest?.('a');
+    const label = tracked ?? (a ? linkLabel(a) : null);
     if (!label) return;
     addDoc(collection(db, 'clicks'), {
       label,

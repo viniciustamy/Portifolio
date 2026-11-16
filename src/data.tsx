@@ -1,4 +1,5 @@
 import React from 'react';
+import { MINDI_APP_STORE_URL } from './links';
 
 import thumbDashboard from './assets/images/Thumbs/Thumb Dashboard.png';
 import thumbDevolutiva from './assets/images/Thumbs/Thumb Devolutiva.png';
@@ -146,8 +147,9 @@ export const projects = [
     tldr: {
       problem: 'O app de filmes que eu usava foi descontinuado e nenhum outro tinha a mesma profundidade de informação.',
       action: 'Desenhei e construí o app sozinho com IA: do Figma ao vibe code, conectando TMDB, OMDb, Wikidata e Gemini, até o build iOS pela nuvem.',
-      result: 'App testado com ~18 pessoas num lançamento orgânico e nova versão em revisão na App Store.'
+      result: 'App testado com ~18 pessoas num lançamento orgânico e publicado na App Store, disponível para baixar.'
     },
+    appStoreUrl: MINDI_APP_STORE_URL,
     thumbBg: '#484AAC',
     bg: 'bg-[#09090B]',
     heroBg: 'bg-[#09090B]',

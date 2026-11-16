@@ -344,7 +344,7 @@ const PIPELINE: FlowStep[] = [
   { Icon: GitMerge, title: 'Merge na main', text: 'Reviso o PR e faço o merge.' },
   { logo: <img src={codemagicLogo} alt="" className="w-6 h-6 object-contain" />, title: 'Codemagic', text: 'Um Mac mini na nuvem gera o build iOS, assina o app e numera a versão.' },
   { logo: <img src={testflightLogo} alt="" className="w-7 h-7 object-contain" />, title: 'TestFlight', text: 'A versão chega no meu iPhone e no dos testadores.' },
-  { logo: <img src={appStoreLogo} alt="" className="w-7 h-7 object-contain" />, title: 'App Store', text: 'Envio para a revisão da Apple.', highlight: true },
+  { logo: <img src={appStoreLogo} alt="" className="w-7 h-7 object-contain" />, title: 'App Store', text: 'Passou na revisão da Apple e está disponível para baixar.', highlight: true },
 ];
 
 export function MindiPipeline() {

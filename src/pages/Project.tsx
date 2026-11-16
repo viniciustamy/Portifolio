@@ -12,6 +12,7 @@ import { Button } from '../components/ui/Button';
 import { Typography } from '../components/ui/Typography';
 import { AtuacaoInfo, HAS_OWN_ATUACAO } from '../components/AtuacaoInfo';
 import { CaseSummary } from '../components/CaseSummary';
+import { AppStoreBadge } from '../components/AppStoreBadge';
 
 // Cases da Home que abrem com o resumo (papel, ano, time e TL;DR)
 const CASES_WITH_SUMMARY = ['devolutiva', 'mindi', 'dashboard-admissao', 'admin-global-docs', 'kba-senha'];
@@ -275,6 +276,8 @@ export default function Project() {
             <Typography variant="lead" className="md:text-xl text-muted-foreground leading-relaxed mb-6 mt-0">
               {project.description}
             </Typography>
+            {/* App publicado: o selo da loja logo abaixo do subtítulo */}
+            {(project as { appStoreUrl?: string }).appStoreUrl && <AppStoreBadge url={(project as { appStoreUrl?: string }).appStoreUrl!} className="-mt-1" />}
           </div>
 
           {/* Hero Image / Animation (Main Image) */}
