@@ -70,5 +70,11 @@
         }
       ]
     }
+  ],
+  "firestore": [
+    {
+      "database": "ai-studio-portfolioviniciu-8d82df70-1df8-477f-93e0-11facb0aabe9",
+      "rules": "firestore.rules"
+    }
   ]
 }

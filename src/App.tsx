@@ -7,9 +7,19 @@ import Docs from './pages/Docs';
 import { ProjectsProvider } from './context/ProjectsContext';
 import { Lightbox } from './components/Lightbox';
 import { AnimatePresence } from 'motion/react';
+import { lazy, Suspense, useEffect } from 'react';
+import { startTracking, trackView } from './analytics/track';
+
+// O painel fica fora do bundle principal e não tem link no site
+const Analytics = lazy(() => import('./pages/Analytics'));
 
 function AnimatedRoutes() {
   const location = useLocation();
+  useEffect(() => {
+    if (location.pathname.startsWith('/analytics')) return;
+    startTracking();
+    trackView(location.pathname);
+  }, [location.pathname]);
   return (
     <AnimatePresence mode="wait">
       <div key={location.pathname} className="contents">
@@ -20,6 +30,7 @@ function AnimatedRoutes() {
             <Route path="sobre-mim" element={<About />} />
             <Route path="documentos" element={<Docs />} />
           </Route>
+          <Route path="analytics" element={<Suspense fallback={null}><Analytics /></Suspense>} />
         </Routes>
       </div>
     </AnimatePresence>
